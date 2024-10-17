@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta
+            name="author"
+            content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.84.0"/>
+    <title>Headers · Bootstrap v5.0</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="css/headers.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="css/search_bar.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<nav class="header_tennis navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+
+    <div class="container">
+        <a href="/" class="d-flex align-items-center  mb-md-0 me-md-auto  text-decoration-none">
+            <span class="fs-4 ">SC</span>
+            <img src="img/icon.svg" alt="Tennis" width="28" height="28"/>
+            <span class="fs-4">RE B</span>
+            <img src="img/icon.svg" alt="Tennis" width="28" height="28"/>
+            <span class="fs-4">ARD</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu_bar"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu_bar">
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">
+                        <img src="img/sep.svg" alt="Tennis"/>New Match
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img src="img/sep.svg" alt="Tennis"/>Players
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img src="img/sep.svg" alt="Tennis"/>Matches
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="container page_content ">
+
+
+    <div class="row justify-content-md-center mb-3 ">
+        <div class="col-lg-9 themed-grid-col text-center">A simple project for keeping score in a tennis match. Inspired
+            by
+            <a href="https://zhukovsd.github.io/java-backend-learning-course/projects/tennis-scoreboard/">Sergey Zhukov
+                Java Roadmap</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <img src="img/sep.svg" alt="Tennis" width="28" height="28"/>
+    </div>
+
+    <div class="row justify-content-md-center mb-6">
+        <div class="col-lg-8 themed-grid-col text-center"> To create a new match, click the New Match button.</div>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <img src="img/sep.svg" alt="Tennis" width="28" height="28"/>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <div class="col-lg-8 themed-grid-col text-center"> To view all players, click Players button.</div>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <img src="img/sep.svg" alt="Tennis" width="28" height="28"/>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <div class="col-lg-8 themed-grid-col text-center">To view all completed matches, click Matches.</div>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <img src="img/sep.svg" alt="Tennis" width="28" height="28"/>
+    </div>
+
+    <div class="row justify-content-md-center mb-3">
+        <div class="col-lg-9 themed-grid-col text-center">hello fsadfsad аыва ipsum dolor sit amet consectetur
+            adipisicing elit.
+            Perspiciatis quis adipisci doloremque eligendi, maxime fugiat voluptatem culpa tenetur veniam asperiores
+            minus provident obcaecati cumque laboriosam saepe magni nam. Adipisci, dolorem dignissimos nostrum nemo
+            animi reiciendis! Distinctio sapiente ab ipsum fugit, blanditiis animi, modi officia numquam ipsam unde,
+            dolores nisi id.
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- pagination -->
+
+
+<div class="container">
+
+    <div class="row justify-content-md-center mb-3 ">
+        <div class="col-lg-9  themed-grid-col ">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>Matches</h3>
+                <div class="search-box">
+                    <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" class="input-search" placeholder="Type to Search...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center mb-3 ">
+        <div class="col-lg-9 themed-grid-col text-center">
+
+            <!--            <h3>Matches</h3>-->
+            <!--            <br>-->
+
+            <!--            <div class="search-box ">-->
+
+            <!--                <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>-->
+            <!--                <input type="text" class="input-search" placeholder="Type to Search...">-->
+            <!--            </div>-->
+
+            <table class="table match_table">
+
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Player 1</th>
+                    <th scope="col">Player 2</th>
+                    <th scope="col">Winner</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">32</th>
+                    <td>Ma 34rtgewrg gserger g rgdrk</td>
+                    <td>Ott sdfqwferq erge ergqer ferqfo</td>
+                    <td>@msdfs sdf safsd werweadgsad do</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry the Bird</td>
+                    <td></td>
+                    <td>@twitter</td>
+                </tr>
+                <th scope="row">1</th>
+                <td>Ma 34rtgewrg gserger g rgdrk</td>
+                <td>Ott sdfqwferq erge ergqer ferqfo</td>
+                <td>@msdfs sdf safsd werweadgsad do</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry the Bird</td>
+                    <td></td>
+                    <td>@twitter</td>
+                </tr>
+                <th scope="row">1</th>
+                <td>Ma 34rtgewrg gserger g rgdrk</td>
+                <td>Ott sdfqwferq erge ergqer ferqfo</td>
+                <td>@msdfs sdf safsd werweadgsad do</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry the Bird</td>
+                    <td></td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- foooter -->
+<footer class="footer mt-auto py-3 bg-dark">
+
+
+    <span class="text-muted">© 2021 Company, Inc</span>
+
+    <ul class="footer_links">
+        <a href="https://t.me/MrShoffen" class="contact_link">
+            <!--            <img src="img/telegram_icon.svg" alt="Telegram" width="44" height="44">-->
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+
+        <a href="https://github.com/MrShoffen" class="contact_link">
+            <!--            <img src="img/github_icon.svg" alt="Github" width="40" height="40">-->
+            <i class="fa-brands fa-github"></i>
+        </a>
+
+    </ul>
+
+</footer>
+
+
+<script src="js/search_bar_script.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

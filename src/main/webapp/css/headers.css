@@ -1,0 +1,120 @@
+body {
+
+    font-family: "Roboto", sans-serif;
+    background-color: #333;
+    color: rgb(210, 210, 210)
+
+}
+
+
+/* //header */
+
+.fs-4 {
+    letter-spacing: 3px;
+    color: rgb(210, 210, 210)
+}
+
+.nav-item:hover {
+    background-color: #a6d388;
+    color: #333;
+}
+
+.nav-item img {
+    margin-left: 18px; /* Добавьте отступ, если нужен промежуток между изображением и ссылкой */
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    padding-bottom: 3px;
+}
+
+.nav-link {
+    display: block; /* Заставляем ссылку занимать всю ширину */
+    width: 100%; /* Дополнительно обеспечиваем полную ширину */
+    text-decoration: none; /* Убираем подчеркивание, если нужно */
+}
+
+
+/* content */
+.page_content {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding-top: 65px;
+    padding-bottom: 40px;
+
+}
+
+
+/* pagination */
+
+
+.match_table {
+    color: rgb(210, 210, 210);
+}
+
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    background: #a6d388;
+    color: #333;
+    border-color: rgb(112, 112, 112);
+}
+
+.pagination {
+    margin-bottom: 60px;
+}
+
+.page-item.active .page-link {
+    background: #548a35;
+    color: #333;
+    border-color: rgb(210, 210, 210);
+    z-index: -1;
+}
+
+
+.page-item.disabled .page-link {
+    background: rgba(175, 175, 175, 0.46);
+    color: rgb(243, 242, 242);
+    border-color: rgb(210, 210, 210);
+}
+
+
+.pagination > li > a {
+    background-color: #333;
+    color: rgb(210, 210, 210);
+    border-color: rgb(210, 210, 210);
+}
+
+
+/* /foooter */
+.footer {
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;;
+    color: rgb(210, 210, 210)
+}
+
+.footer_links {
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+
+.contact_link, .contact_link:hover, .contact_link i {
+    color: inherit; /* Устанавливает цвет текста ссылки в цвет, наследуемый от родительского элемента */
+    text-decoration: none; /* Убирает подчеркивание */
+    font-size: 30px;
+}

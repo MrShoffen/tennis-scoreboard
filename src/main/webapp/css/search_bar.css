@@ -1,0 +1,55 @@
+
+
+.search-box {
+    width: 100%; /* Занимает всю ширину родительской колонки */
+    position: relative;
+    float: right;
+    margin: 0px;
+    display: flex; /* Используйте flexbox для выравнивания элементов */
+    align-items: center; /* Вертикальное выравнивание */
+    justify-content: flex-end; /* Выровнять дочерние элементы вправо */
+}
+
+.input-search {
+    margin-left: 10px;
+    height: 50px;
+    width: 100%; /* Сначала занимает минимальную ширину, гибкая настройка позже */
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 10px;
+    background-color: #548a35;
+    padding-right: 40px;
+    color: rgb(210, 210, 210);
+    transition: all 150ms linear;
+    max-width: 50px; /* Начальная максимальная ширина для режима свернутого поиска */
+    flex-grow: 1; /* Позволяет инпуту расширяться */
+}
+
+.btn-search {
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    position: absolute;
+    right: 0px;
+    color: rgb(210, 210, 210);
+    background-color: transparent;
+    pointer-events: painted;
+    margin-left: 10px; /* Отступ слева для кнопки */
+}
+
+.btn-search:focus ~ .input-search,
+.input-search:focus {
+    max-width: 100%; /* Позволяет инпуту расширяться при фокусе */
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, .5);
+    transition: all 250ms linear;
+}
