@@ -1,11 +1,12 @@
 package org.mrshoffen.repository;
 
 import jakarta.inject.Inject;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.criteria.JpaCriteriaQuery;
 import org.mrshoffen.entity.BaseEntity;
 
 import java.io.Serializable;
@@ -25,18 +26,21 @@ public abstract class BaseRepository<K extends Serializable, E extends BaseEntit
     }
 
 
+
+
     @Override
-    public List<E> findAll() {
+    public long size() {
 
-        @Cleanup
-        Session session = sessionFactory.openSession();
+        @Cleanup Session session = sessionFactory.openSession();
 
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 
-        CriteriaQuery<E> criteria = session.getCriteriaBuilder().createQuery(entityClass);
+        CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
 
-        criteria.from(entityClass);
+        Root<E> from = criteria.from(entityClass);
+        criteria.select(criteriaBuilder.count(from));
 
-        return session.createQuery(criteria).getResultList();
+        return session.createQuery(criteria).getSingleResult();
 
     }
 }

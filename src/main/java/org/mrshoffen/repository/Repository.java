@@ -12,4 +12,8 @@ public interface Repository <K extends Serializable, E extends BaseEntity<K>> {
     List<E> findAll();
 
     Optional<E> findById(K id);
+
+    List<E> findWithPagination(int page, int pageSize);
+
+    long size();
 }
