@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
-//@WebServlet("/matches")
+@WebServlet(urlPatterns = "/matches-data", name = "MatchData")
 public class MatchesServlet extends BaseHttpServlet {
 
 
@@ -24,27 +24,25 @@ public class MatchesServlet extends BaseHttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.setCharacterEncoding(StandardCharsets.UTF_8.name());
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
+        String expectedPageSize = req.getParameter("expected_page_size");
+        if(expectedPageSize != null){
 
-
-        req.getRequestDispatcher(JspHelper.getPath("matches")).forward(req, resp);
-//        req.getRequestDispatcher("/pages/matches.jsp").forward(req, resp);
-
-
-
+        }
         ///
-//        String pageNumber = req.getParameter("page_number");
-//        String playerName = req.getParameter("filter_by_player_name");
-//
-//        int page = parsePageNumberParameter(pageNumber);
-//
-//
-//        List<MatchResponseDto> matchesWithPagination = matchService.findMatchesWithPagination(page, 5);
-//
-//       writeJsonValueToResponse(resp,matchesWithPagination);
+        String pageNumber = req.getParameter("page_number");
+        String playerName = req.getParameter("filter_by_player_name");
+
+        int page = parsePageNumberParameter(pageNumber);
+
+
+        List<MatchResponseDto> matchesWithPagination = matchService.findAllMatches();
+
+        long l = matchService.sizeAllMatches();
+
+
+
+        writeJsonValueToResponse(resp,matchesWithPagination);
     }
 
     private int parsePageNumberParameter(String pageNumber) {

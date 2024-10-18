@@ -30,4 +30,14 @@ public class MatchService {
                 .collect(toList());
     }
 
+    public long sizeAllMatches() {
+        return matchRepository.size();
+    }
+
+    public List<MatchResponseDto> findAllMatches() {
+        return matchRepository.findAll().stream()
+                .map(matchMapper::toDto)
+                .collect(toList());
+    }
+
 }
