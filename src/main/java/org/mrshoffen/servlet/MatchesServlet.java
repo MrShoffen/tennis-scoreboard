@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mrshoffen.dto.response.MatchPageResponseDto;
 import org.mrshoffen.dto.response.MatchResponseDto;
 import org.mrshoffen.service.MatchService;
 import org.mrshoffen.utils.JspHelper;
@@ -25,10 +26,7 @@ public class MatchesServlet extends BaseHttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String expectedPageSize = req.getParameter("expected_page_size");
-        if(expectedPageSize != null){
 
-        }
         ///
         String pageNumber = req.getParameter("page_number");
         String playerName = req.getParameter("filter_by_player_name");
@@ -36,13 +34,18 @@ public class MatchesServlet extends BaseHttpServlet {
         int page = parsePageNumberParameter(pageNumber);
 
 
-        List<MatchResponseDto> matchesWithPagination = matchService.findAllMatches();
+        int pageSize = 5;
+        List<MatchResponseDto> matchesWithPagination = matchService.findMatchesWithPagination(page, pageSize);
 
-        long l = matchService.sizeAllMatches();
+        long size = matchService.sizeAllMatches();
+
+        MatchPageResponseDto matchPageResponseDto = new MatchPageResponseDto(matchesWithPagination,
+                (int) size,
+
+                (int) Math.ceilDiv(size, pageSize));
 
 
-
-        writeJsonValueToResponse(resp,matchesWithPagination);
+        writeJsonValueToResponse(resp, matchPageResponseDto);
     }
 
     private int parsePageNumberParameter(String pageNumber) {

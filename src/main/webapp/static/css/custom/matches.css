@@ -37,7 +37,11 @@ body {
     color: #333;
     border-color: rgb(210, 210, 210);
     z-index: -1;
+
+    pointer-events: none;
+    cursor: default;
 }
+
 
 
 .page-item.disabled .page-link {
@@ -45,6 +49,13 @@ body {
     color: rgb(243, 242, 242);
     border-color: rgb(210, 210, 210);
 }
+
+.page-item.disabled-custom .page-link{
+    background: #333;
+    color: rgb(243, 242, 242);
+    border-color: rgb(210, 210, 210);
+}
+
 
 
 .pagination > li > a {
