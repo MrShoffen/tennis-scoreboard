@@ -18,7 +18,6 @@ war {
 }
 
 
-
 repositories {
     mavenCentral()
 }
@@ -27,7 +26,7 @@ dependencies {
 
     implementation 'com.h2database:h2:2.3.232'
 
-// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+
     implementation 'org.hibernate.orm:hibernate-core:6.6.1.Final'
 
     //servlet
@@ -41,7 +40,9 @@ dependencies {
     //DI
     implementation 'com.google.inject:guice:7.0.0'
 
-
+    //MapStruct
+    implementation 'org.mapstruct:mapstruct:1.6.2'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
 
 
     testImplementation platform('org.junit:junit-bom:5.11.1')
