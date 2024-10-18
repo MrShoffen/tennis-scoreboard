@@ -30,6 +30,9 @@ dependencies {
 // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
     implementation 'org.hibernate.orm:hibernate-core:6.6.1.Final'
 
+    //servlet
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
 
     //lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.34'

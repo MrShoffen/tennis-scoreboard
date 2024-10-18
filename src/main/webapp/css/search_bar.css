@@ -51,5 +51,5 @@
     border-radius: 10px;
     background-color: transparent;
     border: 1px solid rgba(255, 255, 255, .5);
-    transition: all 250ms linear;
+    transition: all 150ms linear;
 }
