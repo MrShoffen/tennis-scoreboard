@@ -4,7 +4,7 @@ import com.google.inject.*;
 import jakarta.inject.Singleton;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import mapper.MatchMapper;
+import org.mrshoffen.mapper.MatchMapper;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.mapstruct.factory.Mappers;

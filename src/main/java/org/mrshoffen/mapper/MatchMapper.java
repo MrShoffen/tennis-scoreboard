@@ -1,4 +1,4 @@
-package mapper;
+package org.mrshoffen.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

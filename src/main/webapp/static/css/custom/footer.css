@@ -1,0 +1,29 @@
+.footer {
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;;
+    color: rgb(210, 210, 210)
+}
+
+.footer_links {
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+
+.contact_link, .contact_link:hover, .contact_link i {
+    color: inherit; /* Устанавливает цвет текста ссылки в цвет, наследуемый от родительского элемента */
+    text-decoration: none; /* Убирает подчеркивание */
+    font-size: 30px;
+}
