@@ -13,6 +13,15 @@ function loadPage(params) {
 }
 
 
+// window.addEventListener('popstate',function (event){
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const page = {
+//         page_number: + urlParams.get('page_number') || 1
+//     };
+//
+//     requestMatches(page);
+// })
+
 
 document.addEventListener('DOMContentLoaded', function () {
     // alert(page);
