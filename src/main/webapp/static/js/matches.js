@@ -1,8 +1,27 @@
 const host = "/tennis-scoreboard";
 
+//
+function loadPage(params) {
+
+    let l = {name: 'anna', size: 5};
+
+    const par = new URLSearchParams(params);
+
+
+    const url = host + "/matches?" + par.toString();
+    window.history.pushState(null, null, url);
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
-    requestMatches({page_number: 1});
+    // alert(page);
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = {
+        page_number: + urlParams.get('page_number') || 1
+    };
+
+    requestMatches(page);
 });
 
 
@@ -21,6 +40,7 @@ function requestMatches(params) {
         .catch(error => {
             alert("hee")
         });
+    loadPage(params);
 }
 
 function fillMatchesTable(data) {
@@ -45,12 +65,16 @@ function setupPagination(totalPages, currentPage) {
 
     pagination.innerHTML = '';
 
+    console.log(totalPages + ' ' + currentPage)
+
     let prevElement = createPageButton(pagination, 'Prev');
     if (currentPage === 1) {
+        console.log('should disable')
         prevElement.classList.add('disabled')
     } else {
-        prevElement.addEventListener('click', function () {
-            requestMatches({page_number: currentPage - 1})
+        prevElement.addEventListener('click', function (event) {
+            event.preventDefault();
+            requestMatches({page_number: --currentPage});
         });
     }
 
@@ -65,10 +89,12 @@ function setupPagination(totalPages, currentPage) {
     if (currentPage === totalPages) {
         nextElement.classList.add('disabled');
     } else {
-        nextElement.addEventListener('click', function () {
-            requestMatches({page_number: currentPage + 1})
+        nextElement.addEventListener('click', function (event) {
+            event.preventDefault();
+            requestMatches({page_number: ++currentPage})
         });
     }
+
 
 }
 
@@ -93,10 +119,12 @@ function checkCurrentNumberPageActive(currentPage, checkedNumber, pageElement) {
     if (currentPage === checkedNumber) {
         pageElement.classList.add('active')
     } else {
-        pageElement.addEventListener('click', function () {
+        pageElement.addEventListener('click', function (event) {
+            event.preventDefault();
             requestMatches({page_number: checkedNumber})
         });
     }
+
 }
 
 function setupSixOrMorePages(totalPages, currentPage, pagination) {
@@ -113,7 +141,8 @@ function setupSixOrMorePages(totalPages, currentPage, pagination) {
     } else {
         const middlePage = Math.floor(totalPages / 2);
         let middle = createPageButton(pagination, middlePage);
-        middle.addEventListener('click', function () {
+        middle.addEventListener('click', function (event) {
+            event.preventDefault();
             requestMatches({page_number: middlePage});
         });
     }
