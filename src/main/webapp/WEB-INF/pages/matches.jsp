@@ -30,28 +30,23 @@
 
 <div class="container match_container">
 
-    <div class="row justify-content-md-center mb-3 ">
+    <div class="row justify-content-md-center mb-3 matches-title">
         <div class="col-lg-9  themed-grid-col ">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-center align-items-center">
                 <h3>Matches</h3>
-                <%@ include file="util/search_bar.html" %>
             </div>
+
         </div>
     </div>
 
-    <div class="row justify-content-md-center mb-3 ">
+    <div class="row justify-content-md-center mb-3 matches-per-page">
         <div class="col-lg-9  themed-grid-col ">
             <div class="d-flex justify-content-between align-items-center">
-                <div>Matches per page</div>
-                
-                <%@ include file="util/page_size_select.html"%>
-
+                <%@ include file="util/page_size_selector_plugin.html" %>
+                <%@ include file="util/search_bar_plugin.html" %>
             </div>
         </div>
     </div>
-
-
-
 
     <div class="row justify-content-md-center mb-3 ">
         <div class="col-lg-9 themed-grid-col text-center">
@@ -63,38 +58,16 @@
                     <th scope="col">#</th>
                     <th scope="col">Player 1</th>
                     <th scope="col">Player 2</th>
-                    <th scope="col">Winner</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>Jacob</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Larry the Bird</td>
-                    <td>Anna</td>
-                    <td>Anna</td>
+                <%-- table content--%>
                 </tbody>
             </table>
-
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center match_pagination">
-
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                </ul>
-            </nav>
-
-
-
-
         </div>
     </div>
+    
+    <%@ include file="util/pagination_plugin.html"%>
 
 </div>
 

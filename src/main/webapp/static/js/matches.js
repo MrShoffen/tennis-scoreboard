@@ -9,17 +9,26 @@ document.addEventListener('DOMContentLoaded', function () {
     requestMatches(extractParamsFromUrl());
 });
 
+
+function updateCurrentSearch() {
+    const currentSearch = document.querySelector('.current-search');
+
+    const player = extractParamsFromUrl().player_name;
+    if (player.trim()) {
+        const currentSearchLabel = document.querySelector('.current-search-label');
+        currentSearchLabel.textContent = player;
+        currentSearch.style.display = 'block';
+    } else {
+        currentSearch.style.display = 'none';
+    }
+}
+
 function buildRequest(page_number, page_size, player_name) {
     return {
         page_number: +page_number,
         page_size: +page_size,
         player_name: player_name
     };
-}
-
-function selectedSearchName() {
-    const input = document.querySelector('.input-search');
-    return input.value;
 }
 
 function extractParamsFromUrl() {
@@ -39,21 +48,21 @@ function configureSearchBox() {
     const input = document.querySelector('.input-search');
     const searchBox = document.querySelector('.search-box');
 
-    const currentSearchLabel = document.querySelector('.current-search');
+    const currentSearchClearButton = document.querySelector('.btn-clear-current-search');
 
 
     function handleSearch() {
         let backgroundColor = window.getComputedStyle(input).backgroundColor;
         if (backgroundColor === "rgba(0, 0, 0, 0)" && input.value.trim()) {
 
+            input.value = input.value.trim();
             requestMatches(
-                buildRequest(1, selectedSize(), selectedSearchName())
+                buildRequest(1, selectedSize(), input.value)
             );
         } else {
             buttonClear.style.display = 'block';
             input.focus();
             input.classList.add('input-search-full')
-            currentSearchLabel.style.display = 'none';
         }
 
     }
@@ -66,50 +75,24 @@ function configureSearchBox() {
         }
     });
 
-    buttonClear.addEventListener('click', function () {
-
-        input.value = '';
-        currentSearchLabel.style.display = 'none'
-
+    currentSearchClearButton.addEventListener('click', function () {
         requestMatches(
-            buildRequest(1, selectedSize(), selectedSearchName())
+            buildRequest(1, selectedSize(), '')
         );
-        if (!input.classList.contains('input-search-full')) {
-            buttonClear.style.display = 'none';
-        }
 
+    })
+
+    buttonClear.addEventListener('click', function () {
+        input.value = '';
     })
 
     const collapseForm = () => {
 
         input.classList.remove('input-search-full');
-        if (!extractParamsFromUrl().player_name) {
-            buttonClear.style.display = 'none';
-        }
 
-        if (extractParamsFromUrl().player_name.trim() && !input.classList.contains('input-search-full')) {
-            currentSearchLabel.textContent = extractParamsFromUrl().player_name;
-            currentSearchLabel.style.display = 'block';
-        }
-        // }
-        // if (extractParamsFromUrl().player_name.trim() && !input.classList.contains('input-search-full')) {
-        //     currentSearchLabel.style.display = 'block'
+        buttonClear.style.display = 'none';
 
-        // if (input.value.trim() === '') {  // Проверять, если поле пустое
-        //
-        //     if (!extractParamsFromUrl().player_name) {
-        //         buttonClear.style.display = 'none';
-        //     }
-        //     input.classList.remove('input-search-full');
-        //
-        // } else if (input.value.trim() === extractParamsFromUrl().player_name.trim()) {
-        //     input.classList.remove('input-search-full');
-        //
-        //     currentSearchLabel.textContent = extractParamsFromUrl().player_name;
-        // }
-        // if (extractParamsFromUrl().player_name.trim() && !input.classList.contains('input-search-full')) {
-        //     currentSearchLabel.style.display = 'block';
-        // }
+
     };
 
     // Обработка кликов вне формы
@@ -158,7 +141,7 @@ function configureRadioButtons() {
     radioButtons.forEach(radioButton => {
         radioButton.addEventListener('change', () => {
             requestMatches(
-                buildRequest(1, selectedSize(), selectedSearchName())
+                buildRequest(1, selectedSize(), extractParamsFromUrl().player_name)
             );
         });
     });
@@ -181,6 +164,8 @@ function requestMatches(params) {
             alert("hee")
         });
     loadPage(params);
+    updateCurrentSearch();
+
 }
 
 function fillMatchesTable(data) {
@@ -189,12 +174,28 @@ function fillMatchesTable(data) {
 
     data.forEach(match => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-                        <td>${match.id}</td>
-                        <td>${match.firstPlayer}</td>
-                        <td>${match.secondPlayer}</td>
-                        <td>${match.winner}</td>
-                    `;
+
+        let id = document.createElement('td');
+        id.innerHTML = match.id
+        row.appendChild(id);
+
+        let player1 = document.createElement('td');
+        player1.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>": "");
+        row.appendChild(player1);
+
+        let player2 = document.createElement('td');
+        player2.innerHTML = match.secondPlayer  + (match.secondPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>": "");
+        row.appendChild(player2);
+
+
+
+        // row.innerHTML =
+        //     " +
+        //     "<td>${match.firstPlayer}</td>" +
+        //     "<td>${match.secondPlayer}</td>" +
+        //     "<td>${match.winner}</td>"
+        // ;
+
         tbody.appendChild(row);
     });
 }

@@ -1,0 +1,122 @@
+.search-box {
+    width: 100%;
+    position: relative;
+    float: right;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+
+.input-search {
+    margin-left: 10px;
+    height: 50px;
+    width: 100%;
+    border-style: none;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 10px;
+    background-color: #548a35;
+    padding: 10px 40px 10px 10px;
+    color: rgb(210, 210, 210);
+    transition: all 150ms linear;
+    max-width: 50px;
+    flex-grow: 1;
+}
+
+.btn-search {
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    position: absolute;
+    right: 0px;
+    color: rgb(210, 210, 210);
+    background-color: transparent;
+    pointer-events: painted;
+    margin-left: 10px;
+}
+
+.btn-clear{
+    display: none;
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    position: absolute;
+    right: 50px;
+    color: rgb(210, 210, 210);
+    background-color: transparent;
+    margin-left: 10px;
+}
+
+.current-search{
+    display: none;
+}
+
+.current-search-label{
+    width: 200px;
+
+    height: 35px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    position: absolute;
+
+    border: 2px solid rgb(210, 210, 210);
+
+    padding-right: 40px;
+    padding-left: 5px;
+    right: 0px;
+    top: 56px;
+    color: rgb(210, 210, 210);
+    background-color: transparent;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    z-index: -1;
+}
+
+.btn-clear-current-search {
+    /* Изначально скрыта */
+    position: absolute;
+    right: 0px;
+    top: 56px;
+    width: 35px;
+    height: 35px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+
+    color: rgb(210, 210, 210);
+    background-color: transparent;
+
+}
+
+
+
+.input-search-full{
+        max-width: 100%;
+        border-radius: 10px;
+        background-color: transparent;
+        border: 1px solid rgba(255, 255, 255, .5);
+        transition: all 150ms linear;
+        padding-right: 85px;
+}
+
+
