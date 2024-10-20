@@ -40,6 +40,20 @@
     </div>
 
     <div class="row justify-content-md-center mb-3 ">
+        <div class="col-lg-9  themed-grid-col ">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>Matches per page</div>
+                
+                <%@ include file="util/page_size_select.html"%>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row justify-content-md-center mb-3 ">
         <div class="col-lg-9 themed-grid-col text-center">
 
             <table class="table match_table">

@@ -1,6 +1,128 @@
 const host = "/tennis-scoreboard";
 
-//
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    configureRadioButtons();
+    configureSearchBox();
+
+    requestMatches(extractParamsFromUrl());
+});
+
+function buildRequest(page_number, page_size, player_name) {
+    return {
+        page_number: +page_number,
+        page_size: +page_size,
+        player_name: player_name
+    };
+}
+
+function selectedSearchName() {
+    const input = document.querySelector('.input-search');
+    return input.value;
+}
+
+function extractParamsFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    return buildRequest(urlParams.get('page_number') || 1,
+        urlParams.get('page_size') || selectedSize(),
+        urlParams.get('player_name') || '')
+
+
+}
+
+function configureSearchBox() {
+    const buttonSearch = document.querySelector('.btn-search');
+    const buttonClear = document.querySelector('.btn-clear');
+
+    const input = document.querySelector('.input-search');
+    const searchBox = document.querySelector('.search-box');
+
+    const currentSearchLabel = document.querySelector('.current-search');
+
+
+    function handleSearch() {
+        let backgroundColor = window.getComputedStyle(input).backgroundColor;
+        if (backgroundColor === "rgba(0, 0, 0, 0)" && input.value.trim()) {
+
+            requestMatches(
+                buildRequest(1, selectedSize(), selectedSearchName())
+            );
+        } else {
+            buttonClear.style.display = 'block';
+            input.focus();
+            input.classList.add('input-search-full')
+            currentSearchLabel.style.display = 'none';
+        }
+
+    }
+
+    buttonSearch.addEventListener('click', handleSearch);
+
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    });
+
+    buttonClear.addEventListener('click', function () {
+
+        input.value = '';
+        currentSearchLabel.style.display = 'none'
+
+        requestMatches(
+            buildRequest(1, selectedSize(), selectedSearchName())
+        );
+        if (!input.classList.contains('input-search-full')) {
+            buttonClear.style.display = 'none';
+        }
+
+    })
+
+    const collapseForm = () => {
+
+        input.classList.remove('input-search-full');
+        if (!extractParamsFromUrl().player_name) {
+            buttonClear.style.display = 'none';
+        }
+
+        if (extractParamsFromUrl().player_name.trim() && !input.classList.contains('input-search-full')) {
+            currentSearchLabel.textContent = extractParamsFromUrl().player_name;
+            currentSearchLabel.style.display = 'block';
+        }
+        // }
+        // if (extractParamsFromUrl().player_name.trim() && !input.classList.contains('input-search-full')) {
+        //     currentSearchLabel.style.display = 'block'
+
+        // if (input.value.trim() === '') {  // Проверять, если поле пустое
+        //
+        //     if (!extractParamsFromUrl().player_name) {
+        //         buttonClear.style.display = 'none';
+        //     }
+        //     input.classList.remove('input-search-full');
+        //
+        // } else if (input.value.trim() === extractParamsFromUrl().player_name.trim()) {
+        //     input.classList.remove('input-search-full');
+        //
+        //     currentSearchLabel.textContent = extractParamsFromUrl().player_name;
+        // }
+        // if (extractParamsFromUrl().player_name.trim() && !input.classList.contains('input-search-full')) {
+        //     currentSearchLabel.style.display = 'block';
+        // }
+    };
+
+    // Обработка кликов вне формы
+    document.addEventListener('click', function (event) {
+        if (!searchBox.contains(event.target)) {  // Если клик вне формы
+            collapseForm();
+        }
+    });
+
+
+}
+
+
 function loadPage(params) {
 
     let l = {name: 'anna', size: 5};
@@ -12,26 +134,35 @@ function loadPage(params) {
     window.history.pushState(null, null, url);
 }
 
+function selectedSize() {
+    const selectedRadio = document.querySelector('input[name="page_size"]:checked');
+    if (selectedRadio) {
+        const selectedValue = selectedRadio.id; // или selectedRadio.value, если значение будет храниться в атрибуте value
+        return selectedValue;
+    }
+}
 
-// window.addEventListener('popstate',function (event){
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const page = {
-//         page_number: + urlParams.get('page_number') || 1
-//     };
-//
-//     requestMatches(page);
-// })
+function configureRadioButtons() {
+    const params = new URLSearchParams(window.location.search);
+    const selectedPage = params.get('page_size');
+    console.log(selectedPage)
 
+    if (selectedPage) {
+        const radioToCheck = document.getElementById(selectedPage);
+        if (radioToCheck) {
+            radioToCheck.checked = true;
+        }
+    }
 
-document.addEventListener('DOMContentLoaded', function () {
-    // alert(page);
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = {
-        page_number: + urlParams.get('page_number') || 1
-    };
-
-    requestMatches(page);
-});
+    const radioButtons = document.querySelectorAll('input[name="page_size"]');
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', () => {
+            requestMatches(
+                buildRequest(1, selectedSize(), selectedSearchName())
+            );
+        });
+    });
+}
 
 
 function requestMatches(params) {
@@ -44,7 +175,7 @@ function requestMatches(params) {
         .then(json => {
             fillMatchesTable(json.matches);
 
-            setupPagination(json.totalPages, params.page_number);
+            setupPagination(json.totalPages, params);
         })
         .catch(error => {
             alert("hee")
@@ -69,49 +200,52 @@ function fillMatchesTable(data) {
 }
 
 
-function setupPagination(totalPages, currentPage) {
+function setupPagination(totalPages, params) {
     let pagination = document.querySelector('.match_pagination');
 
     pagination.innerHTML = '';
 
-    console.log(totalPages + ' ' + currentPage)
 
     let prevElement = createPageButton(pagination, 'Prev');
-    if (currentPage === 1) {
-        console.log('should disable')
+    if (params.page_number === 1) {
         prevElement.classList.add('disabled')
     } else {
         prevElement.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches({page_number: --currentPage});
+            requestMatches(
+                buildRequest(--params.page_number, params.page_size, params.player_name)
+            );
         });
     }
 
 
     if (totalPages >= 6) {
-        setupSixOrMorePages(totalPages, currentPage, pagination);
+        setupSixOrMorePages(totalPages, params, pagination);
     } else {
-        setupFiveOrLessPages(totalPages, currentPage, pagination);
+        setupFiveOrLessPages(totalPages, params, pagination);
     }
 
     let nextElement = createPageButton(pagination, 'Next');
-    if (currentPage === totalPages) {
+    if (params.page_number === totalPages) {
         nextElement.classList.add('disabled');
     } else {
         nextElement.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches({page_number: ++currentPage})
+            requestMatches(
+                buildRequest(++params.page_number, params.page_size, params.player_name)
+            )
+
         });
     }
 
 
 }
 
-function setupFiveOrLessPages(totalPages, currentPage, pagination) {
+function setupFiveOrLessPages(totalPages, params, pagination) {
     for (let i = 1; i <= totalPages; i++) {
         const button = createPageButton(pagination, i)
 
-        checkCurrentNumberPageActive(currentPage, i, button)
+        checkCurrentNumberPageActive(params, i, button)
     }
 }
 
@@ -124,35 +258,39 @@ function createPageButton(pagination, name) {
     return liElement;
 }
 
-function checkCurrentNumberPageActive(currentPage, checkedNumber, pageElement) {
-    if (currentPage === checkedNumber) {
+function checkCurrentNumberPageActive(params, checkedNumber, pageElement) {
+    if (params.page_number === checkedNumber) {
         pageElement.classList.add('active')
     } else {
         pageElement.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches({page_number: checkedNumber})
+            requestMatches(
+                buildRequest(checkedNumber, params.page_size, params.player_name)
+            )
         });
     }
 
 }
 
-function setupSixOrMorePages(totalPages, currentPage, pagination) {
+function setupSixOrMorePages(totalPages, params, pagination) {
 
     let first = createPageButton(pagination, 1);
-    checkCurrentNumberPageActive(currentPage, 1, first);
+    checkCurrentNumberPageActive(params, 1, first);
 
     let prevMiddle = createPageButton(pagination, '...');
     prevMiddle.classList.add('disabled', 'disabled-custom');
 
-    if (currentPage !== 1 && currentPage !== totalPages) {
-        let middle = createPageButton(pagination, currentPage);
+    if (params.page_number !== 1 && params.page_number !== totalPages) {
+        let middle = createPageButton(pagination, params.page_number);
         middle.classList.add('active');
     } else {
         const middlePage = Math.floor(totalPages / 2);
         let middle = createPageButton(pagination, middlePage);
         middle.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches({page_number: middlePage});
+            requestMatches(
+                buildRequest(middlePage, params.page_size, params.player_name)
+            );
         });
     }
 
@@ -160,5 +298,5 @@ function setupSixOrMorePages(totalPages, currentPage, pagination) {
     postMiddle.classList.add('disabled', 'disabled-custom');
 
     let last = createPageButton(pagination, totalPages);
-    checkCurrentNumberPageActive(currentPage, totalPages, last)
+    checkCurrentNumberPageActive(params, totalPages, last)
 }

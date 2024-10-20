@@ -28,19 +28,5 @@ public abstract class BaseRepository<K extends Serializable, E extends BaseEntit
 
 
 
-    @Override
-    public long size() {
 
-        @Cleanup Session session = sessionFactory.openSession();
-
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-
-        CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
-
-        Root<E> from = criteria.from(entityClass);
-        criteria.select(criteriaBuilder.count(from));
-
-        return session.createQuery(criteria).getSingleResult();
-
-    }
 }

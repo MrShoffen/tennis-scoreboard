@@ -6,13 +6,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.response.MatchPageResponseDto;
-import org.mrshoffen.dto.response.MatchResponseDto;
+import org.mrshoffen.dto.request.MatchPageRequestDto;
 import org.mrshoffen.service.MatchService;
-import org.mrshoffen.utils.JspHelper;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 
 @WebServlet(urlPatterns = "/matches-data", name = "MatchData")
@@ -29,23 +26,17 @@ public class MatchesServlet extends BaseHttpServlet {
 
         ///
         String pageNumber = req.getParameter("page_number");
-        String playerName = req.getParameter("filter_by_player_name");
+        String pageSize = req.getParameter("page_size");
+        String playerName = req.getParameter("player_name");
 
-        int page = parsePageNumberParameter(pageNumber);
-
-
-        int pageSize = 5;
-        List<MatchResponseDto> matchesWithPagination = matchService.findMatchesWithPagination(page, pageSize);
-
-        long size = matchService.sizeAllMatches();
-
-        MatchPageResponseDto matchPageResponseDto = new MatchPageResponseDto(matchesWithPagination,
-                (int) size,
-
-                (int) Math.ceilDiv(size, pageSize));
+        MatchPageRequestDto requestDto = new MatchPageRequestDto(pageNumber,pageSize, playerName );
 
 
-        writeJsonValueToResponse(resp, matchPageResponseDto);
+        MatchPageResponseDto responseDto  = matchService.findMatchesWithPaginationFilteredByName(requestDto);
+
+
+
+        writeJsonValueToResponse(resp, responseDto);
     }
 
     private int parsePageNumberParameter(String pageNumber) {

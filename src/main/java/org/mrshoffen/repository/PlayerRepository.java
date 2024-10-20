@@ -4,7 +4,6 @@ import jakarta.inject.Inject;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mrshoffen.entity.Match;
 import org.mrshoffen.entity.Player;
 
 import java.util.List;
@@ -31,13 +30,18 @@ public class PlayerRepository extends BaseRepository<Integer, Player> {
     }
 
     @Override
-    public List<Player> findWithPagination(int page, int pageSize) {
+    public List<Player> findWithPagination(int pageNumber, int pageSize, String playerName) {
         @Cleanup Session session = sessionFactory.openSession();
 
         return session.createQuery("SELECT p from Player p ORDER BY p.id", Player.class)
-                .setFirstResult((page - 1) * pageSize)
+                .setFirstResult((pageNumber - 1) * pageSize)
                 .setMaxResults(pageSize)
                 .list();
+    }
+
+    @Override
+    public long sizeFilteredByPlayerName(String name) {
+        return 0;
     }
 
 
