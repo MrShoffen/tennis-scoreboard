@@ -1,19 +1,42 @@
-const host = "/tennis-scoreboard";
+const context = "/tennis-scoreboard";
+
+const frontend = "/matches";
+
+const apiJSON = "/matches-data";
 
 
 document.addEventListener('DOMContentLoaded', function () {
+    configurePageSizePlugin();
+    configureSearchBarPlugin();
 
-    configureRadioButtons();
-    configureSearchBox();
-
-    requestMatches(extractParamsFromUrl());
+    updatePage(currentRequest());
 });
 
+
+function configurePageSizePlugin() {
+    const selectedPage = currentRequest().page_size;
+
+    if (selectedPage) {
+        const radioToCheck = document.getElementById(selectedPage);
+        if (radioToCheck) {
+            radioToCheck.checked = true;
+        }
+    }
+
+    const radioButtons = document.querySelectorAll('input[name="page_size"]');
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', () => {
+            updatePage(
+                buildRequest(1, selectedSize(), currentRequest().player_name)
+            );
+        });
+    });
+}
 
 function updateCurrentSearch() {
     const currentSearch = document.querySelector('.current-search');
 
-    const player = extractParamsFromUrl().player_name;
+    const player = currentRequest().player_name;
     if (player.trim()) {
         const currentSearchLabel = document.querySelector('.current-search-label');
         currentSearchLabel.textContent = player;
@@ -31,89 +54,70 @@ function buildRequest(page_number, page_size, player_name) {
     };
 }
 
-function extractParamsFromUrl() {
+function currentRequest() {
     const urlParams = new URLSearchParams(window.location.search);
 
     return buildRequest(urlParams.get('page_number') || 1,
         urlParams.get('page_size') || selectedSize(),
         urlParams.get('player_name') || '')
 
-
 }
 
-function configureSearchBox() {
-    const buttonSearch = document.querySelector('.btn-search');
-    const buttonClear = document.querySelector('.btn-clear');
 
-    const input = document.querySelector('.input-search');
+function configureSearchBarPlugin() {
     const searchBox = document.querySelector('.search-box');
 
-    const currentSearchClearButton = document.querySelector('.btn-clear-current-search');
+    const buttonSearch = document.querySelector('.btn-search');
+    const buttonClearForm = document.querySelector('.btn-clear');
+    const inputForm = document.querySelector('.input-search');
+
+    const buttonClearCurrentSearchLabel = document.querySelector('.btn-clear-current-search');
 
 
     function handleSearch() {
-        let backgroundColor = window.getComputedStyle(input).backgroundColor;
-        if (backgroundColor === "rgba(0, 0, 0, 0)" && input.value.trim()) {
+        let backgroundColor = window.getComputedStyle(inputForm).backgroundColor;
+        if (backgroundColor === "rgba(0, 0, 0, 0)" && inputForm.value.trim()) {
 
-            input.value = input.value.trim();
-            requestMatches(
-                buildRequest(1, selectedSize(), input.value)
+            inputForm.value = inputForm.value.trim();
+            updatePage(
+                buildRequest(1, currentRequest().page_size, inputForm.value)
             );
         } else {
-            buttonClear.style.display = 'block';
-            input.focus();
-            input.classList.add('input-search-full')
+            buttonClearForm.style.display = 'block';
+            inputForm.focus();
+            inputForm.classList.add('input-search-full')
         }
 
     }
 
     buttonSearch.addEventListener('click', handleSearch);
 
-    input.addEventListener('keydown', (event) => {
+    inputForm.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
     });
 
-    currentSearchClearButton.addEventListener('click', function () {
-        requestMatches(
-            buildRequest(1, selectedSize(), '')
+    buttonClearCurrentSearchLabel.addEventListener('click', function () {
+        updatePage(
+            buildRequest(1, currentRequest().page_size, '')
         );
-
     })
 
-    buttonClear.addEventListener('click', function () {
-        input.value = '';
+    buttonClearForm.addEventListener('click', function () {
+        inputForm.value = '';
     })
 
-    const collapseForm = () => {
-
-        input.classList.remove('input-search-full');
-
-        buttonClear.style.display = 'none';
-
-
-    };
-
-    // Обработка кликов вне формы
     document.addEventListener('click', function (event) {
         if (!searchBox.contains(event.target)) {  // Если клик вне формы
-            collapseForm();
+            inputForm.classList.remove('input-search-full');
+            buttonClearForm.style.display = 'none';
         }
     });
-
-
 }
 
-
-function loadPage(params) {
-
-    let l = {name: 'anna', size: 5};
-
-    const par = new URLSearchParams(params);
-
-
-    const url = host + "/matches?" + par.toString();
+function updateUrl(params) {
+    let url = context + frontend + '?' + new URLSearchParams(params);
     window.history.pushState(null, null, url);
 }
 
@@ -125,50 +129,26 @@ function selectedSize() {
     }
 }
 
-function configureRadioButtons() {
-    const params = new URLSearchParams(window.location.search);
-    const selectedPage = params.get('page_size');
-    console.log(selectedPage)
 
-    if (selectedPage) {
-        const radioToCheck = document.getElementById(selectedPage);
-        if (radioToCheck) {
-            radioToCheck.checked = true;
-        }
-    }
+function updatePage(params) {
 
-    const radioButtons = document.querySelectorAll('input[name="page_size"]');
-    radioButtons.forEach(radioButton => {
-        radioButton.addEventListener('change', () => {
-            requestMatches(
-                buildRequest(1, selectedSize(), extractParamsFromUrl().player_name)
-            );
-        });
-    });
-}
-
-
-function requestMatches(params) {
-
-    const par = new URLSearchParams(params).toString();
-    const url = host + "/matches-data?" + par;
+    const url = context + apiJSON + '?' + new URLSearchParams(params).toString();
 
     fetch(url)
         .then(response => response.json())
         .then(json => {
-            fillMatchesTable(json.matches);
+            fillDataTables(json.matches);
 
-            setupPagination(json.totalPages, params);
+            configurePaginationPlugin(json.totalPages, params);
         })
         .catch(error => {
             alert("hee")
         });
-    loadPage(params);
+    updateUrl(params);
     updateCurrentSearch();
-
 }
 
-function fillMatchesTable(data) {
+function fillDataTables(data) {
     const tbody = document.querySelector('.match_table tbody');
     tbody.innerHTML = '';
 
@@ -180,28 +160,20 @@ function fillMatchesTable(data) {
         row.appendChild(id);
 
         let player1 = document.createElement('td');
-        player1.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>": "");
+        player1.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
         row.appendChild(player1);
 
         let player2 = document.createElement('td');
-        player2.innerHTML = match.secondPlayer  + (match.secondPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>": "");
+        player2.innerHTML = match.secondPlayer + (match.secondPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
         row.appendChild(player2);
 
-
-
-        // row.innerHTML =
-        //     " +
-        //     "<td>${match.firstPlayer}</td>" +
-        //     "<td>${match.secondPlayer}</td>" +
-        //     "<td>${match.winner}</td>"
-        // ;
 
         tbody.appendChild(row);
     });
 }
 
 
-function setupPagination(totalPages, params) {
+function configurePaginationPlugin(totalPages, params) {
     let pagination = document.querySelector('.match_pagination');
 
     pagination.innerHTML = '';
@@ -213,7 +185,7 @@ function setupPagination(totalPages, params) {
     } else {
         prevElement.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches(
+            updatePage(
                 buildRequest(--params.page_number, params.page_size, params.player_name)
             );
         });
@@ -232,7 +204,7 @@ function setupPagination(totalPages, params) {
     } else {
         nextElement.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches(
+            updatePage(
                 buildRequest(++params.page_number, params.page_size, params.player_name)
             )
 
@@ -265,7 +237,7 @@ function checkCurrentNumberPageActive(params, checkedNumber, pageElement) {
     } else {
         pageElement.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches(
+            updatePage(
                 buildRequest(checkedNumber, params.page_size, params.player_name)
             )
         });
@@ -289,7 +261,7 @@ function setupSixOrMorePages(totalPages, params, pagination) {
         let middle = createPageButton(pagination, middlePage);
         middle.addEventListener('click', function (event) {
             event.preventDefault();
-            requestMatches(
+            updatePage(
                 buildRequest(middlePage, params.page_size, params.player_name)
             );
         });
