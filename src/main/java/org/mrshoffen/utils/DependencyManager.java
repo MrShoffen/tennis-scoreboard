@@ -8,6 +8,7 @@ import org.mrshoffen.mapper.MatchMapper;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.mapstruct.factory.Mappers;
+import org.mrshoffen.mapper.PlayerMapper;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DependencyManager extends AbstractModule {
@@ -34,6 +35,11 @@ public class DependencyManager extends AbstractModule {
     @Provides @Singleton
     private MatchMapper getMatchMapper(){
         return Mappers.getMapper(MatchMapper.class);
+    }
+
+    @Provides @Singleton
+    private PlayerMapper getPlayerMapper(){
+        return Mappers.getMapper(PlayerMapper.class);
     }
 
 

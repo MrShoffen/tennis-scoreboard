@@ -5,35 +5,29 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mrshoffen.dto.request.PlayerPageRequestDto;
 import org.mrshoffen.dto.response.PageResponseDto;
-import org.mrshoffen.dto.request.MatchPageRequestDto;
-import org.mrshoffen.service.MatchService;
+import org.mrshoffen.service.PlayerService;
 
 import java.io.IOException;
 
-
-@WebServlet(urlPatterns = "/matches-data", name = "MatchData")
-public class MatchesServlet extends BaseHttpServlet {
-
-
+@WebServlet(urlPatterns = "/players-data", name = "PlayerData")
+public class PlayersServlet extends BaseHttpServlet {
     @Inject
-    private MatchService matchService;
+    private PlayerService playerService;
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-        ///
         String pageNumber = req.getParameter("page_number");
         String pageSize = req.getParameter("page_size");
         String playerName = req.getParameter("player_name");
 
-        MatchPageRequestDto requestDto = new MatchPageRequestDto(pageNumber,pageSize, playerName );
+        PlayerPageRequestDto request = new PlayerPageRequestDto(pageNumber, pageSize, playerName);
 
 
-        PageResponseDto responseDto  = matchService.findMatchesWithPaginationFilteredByName(requestDto);
-
+        PageResponseDto responseDto  = playerService.findWithPaginationFilteredByName(request);
 
 
         writeJsonValueToResponse(resp, responseDto);
@@ -44,6 +38,4 @@ public class MatchesServlet extends BaseHttpServlet {
                 ? 1
                 : Integer.parseInt(pageNumber.trim());
     }
-
-
 }

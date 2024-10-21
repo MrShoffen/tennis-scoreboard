@@ -33,7 +33,7 @@
     <div class="row justify-content-md-center mb-3 item-title">
         <div class="col-lg-9  themed-grid-col ">
             <div class="d-flex justify-content-center align-items-center">
-                <h3>Matches</h3>
+                <h3>Players</h3>
             </div>
 
         </div>
@@ -56,8 +56,8 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Player 1</th>
-                    <th scope="col">Player 2</th>
+                    <th scope="col">Player</th>
+                    <th scope="col">Count</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,7 +76,7 @@
 <script src="static/js/bootstrap.bundle.min.js"></script>
 
 <script src="app.js"></script>
-<script src="static/js/matches.js"></script>
+<script src="static/js/players.js"></script>
 <script src="static/js/info_page.js"></script>
 
 </body>

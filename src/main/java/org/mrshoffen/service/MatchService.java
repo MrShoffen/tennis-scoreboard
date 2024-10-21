@@ -1,7 +1,7 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
-import org.mrshoffen.dto.response.MatchPageResponseDto;
+import org.mrshoffen.dto.response.PageResponseDto;
 import org.mrshoffen.dto.request.MatchPageRequestDto;
 import org.mrshoffen.mapper.MatchMapper;
 import org.mrshoffen.dto.response.MatchResponseDto;
@@ -33,7 +33,7 @@ public class MatchService {
                 .collect(toList());
     }
 
-    public MatchPageResponseDto findMatchesWithPaginationFilteredByName(MatchPageRequestDto requestDto) {
+    public PageResponseDto findMatchesWithPaginationFilteredByName(MatchPageRequestDto requestDto) {
         //todo add validation
 
 
@@ -48,7 +48,7 @@ public class MatchService {
         long maxNumber = Math.ceilDiv(matchRepository.sizeFilteredByPlayerName(requestDto.playerName()),
                 parseInt(requestDto.pageSize()));
 
-        return new MatchPageResponseDto(matches, maxNumber);
+        return new PageResponseDto(matches, maxNumber);
     }
 
 

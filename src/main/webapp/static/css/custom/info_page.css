@@ -6,27 +6,34 @@ body {
     color: rgb(210, 210, 210);
 }
 
-.matches-title{
+.item-title{
     margin-bottom: 0 !important;
 }
 
-.match_container{
+.item-container{
     padding-top:80px;
 }
 
-.matches-per-page{
+.items-per-page{
     padding-top: 0;
     padding-bottom: 25px;
 }
 
-.table_matches{
+.table-items{
     padding-top: 65px;
 }
 
-.match_table {
+.item-table {
     color: rgb(210, 210, 210);
 }
 
+td a {
+    color: rgb(210, 210, 210);
+    /*text-decoration: none;*/
+}
 
+td a:hover{
+    color: #548a35;
+}
 
 
