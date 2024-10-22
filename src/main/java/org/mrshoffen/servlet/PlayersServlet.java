@@ -5,16 +5,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mrshoffen.dto.request.PlayerPageRequestDto;
+import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.PageResponseDto;
-import org.mrshoffen.service.PlayerService;
+import org.mrshoffen.service.PlayersPersistenceService;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/players-data", name = "PlayerData")
+@WebServlet(urlPatterns = "/api/players", name = "PlayerData")
 public class PlayersServlet extends BaseHttpServlet {
     @Inject
-    private PlayerService playerService;
+    private PlayersPersistenceService playerService;
 
 
     @Override
@@ -24,7 +24,7 @@ public class PlayersServlet extends BaseHttpServlet {
         String pageSize = req.getParameter("page_size");
         String playerName = req.getParameter("player_name");
 
-        PlayerPageRequestDto request = new PlayerPageRequestDto(pageNumber, pageSize, playerName);
+        PageRequestDto request = new PageRequestDto(pageNumber, pageSize, playerName);
 
 
         PageResponseDto responseDto  = playerService.findWithPaginationFilteredByName(request);

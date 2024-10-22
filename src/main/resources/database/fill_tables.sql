@@ -29,6 +29,7 @@ INSERT into PLAYER (name) values ('Albert Krivich');
 INSERT into PLAYER (name) values ('Johnny');
 INSERT into PLAYER (name) values ('Tony Cringe');
 INSERT into PLAYER (name) values ('Antony Volk');
+INSERT into PLAYER (name) values ('John');
 
 INSERT INTO MATCH (player1, player2, winner) values (20, 28, 28);
 INSERT INTO MATCH (player1, player2, winner) values (12, 1, 12);
@@ -90,3 +91,4 @@ INSERT INTO MATCH (player1, player2, winner) values (21, 4, 21);
 INSERT INTO MATCH (player1, player2, winner) values (19, 6, 19);
 INSERT INTO MATCH (player1, player2, winner) values (20, 23, 23);
 INSERT INTO MATCH (player1, player2, winner) values (27, 29, 27);
+INSERT INTO MATCH (player1, player2, winner) values (27, 32, 32);

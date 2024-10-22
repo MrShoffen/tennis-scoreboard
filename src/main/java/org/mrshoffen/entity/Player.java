@@ -23,7 +23,7 @@ public class Player implements BaseEntity<Integer> {
     private Integer id;
 
     @Column(unique = true)
-
     private String name;
 
+    private Long matchesPlayed;
 }

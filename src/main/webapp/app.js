@@ -1,10 +1,10 @@
 const context = "/tennis-scoreboard";
 
-const matches_frontend = "/matches";
 
-const matches_apiJSON = "/matches-data";
+const matches_frontend = "/matches";
+const matches_api = "/api/matches";
 
 
 const players_frontend = "/players";
+const players_api = "/api/players";
 
-const players_apiJSON = "/players-data";

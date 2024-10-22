@@ -5,19 +5,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.PageResponseDto;
-import org.mrshoffen.dto.request.MatchPageRequestDto;
-import org.mrshoffen.service.MatchService;
+import org.mrshoffen.service.FinishedMatchesPersistenceService;
 
 import java.io.IOException;
 
 
-@WebServlet(urlPatterns = "/matches-data", name = "MatchData")
+@WebServlet(urlPatterns = "/api/matches", name = "MatchData")
 public class MatchesServlet extends BaseHttpServlet {
 
 
     @Inject
-    private MatchService matchService;
+    private FinishedMatchesPersistenceService matchService;
 
 
     @Override
@@ -29,7 +29,7 @@ public class MatchesServlet extends BaseHttpServlet {
         String pageSize = req.getParameter("page_size");
         String playerName = req.getParameter("player_name");
 
-        MatchPageRequestDto requestDto = new MatchPageRequestDto(pageNumber,pageSize, playerName );
+        PageRequestDto requestDto = new PageRequestDto(pageNumber,pageSize, playerName );
 
 
         PageResponseDto responseDto  = matchService.findMatchesWithPaginationFilteredByName(requestDto);

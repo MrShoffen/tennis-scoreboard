@@ -1,6 +1,6 @@
 const frontend = players_frontend;
 
-const apiJSON = players_apiJSON;
+const apiJSON = players_api;
 
 //dont touch
 function fillDataTables(data) {
@@ -19,10 +19,13 @@ function fillDataTables(data) {
         nameLink.innerHTML = player.name;
         //todo rework
         nameLink.href = context + matches_frontend + '?player_name=' + player.name;
-
         name.appendChild(nameLink);
-
         row.appendChild(name);
+
+        let winRate = document.createElement('td');
+        winRate.innerHTML = player.matchesPlayed;
+        row.appendChild(winRate);
+
 
 
         tbody.appendChild(row);

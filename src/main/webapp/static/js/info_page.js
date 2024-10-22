@@ -26,13 +26,35 @@ function configurePageSizePlugin() {
     });
 }
 
+
+function highlightText() {
+
+    let searchedValue = currentRequest().player_name.endsWith('%') ? currentRequest().player_name.slice(0, -1) : currentRequest().player_name;
+
+    const links = document.querySelectorAll('td > a'); // Все элементы <a>
+
+    const regex = new RegExp(searchedValue, 'gi');
+
+    if (searchedValue.trim()) {
+        links.forEach(link => {
+            if (link.textContent.match(regex)) {
+                link.innerHTML = link.innerHTML.replace(regex, (matched) => `<span class="highlight">${matched}</span>`);
+            }
+        });
+    }
+
+
+}
+
 function updateCurrentSearch() {
     const currentSearch = document.querySelector('.current-search');
 
     const player = currentRequest().player_name;
     if (player.trim()) {
         const currentSearchLabel = document.querySelector('.current-search-label');
-        currentSearchLabel.textContent = player;
+        let searchedText = player.endsWith('%') ? player.slice(0, -1) : player;
+
+        currentSearchLabel.textContent = searchedText;
         currentSearch.style.display = 'block';
     } else {
         currentSearch.style.display = 'none';
@@ -73,7 +95,7 @@ function configureSearchBarPlugin() {
 
             inputForm.value = inputForm.value.trim();
             updatePage(
-                buildRequest(1, currentRequest().page_size, inputForm.value)
+                buildRequest(1, currentRequest().page_size, inputForm.value + '%')
             );
         } else {
             buttonClearForm.style.display = 'block';
@@ -130,7 +152,7 @@ function updatePage(params) {
         .then(response => response.json())
         .then(json => {
             fillDataTables(json.items);
-
+            highlightText();
             configurePaginationPlugin(json.totalPages, params);
         })
         .catch(error => {

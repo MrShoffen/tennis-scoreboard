@@ -1,8 +1,8 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
+import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.PageResponseDto;
-import org.mrshoffen.dto.request.MatchPageRequestDto;
 import org.mrshoffen.mapper.MatchMapper;
 import org.mrshoffen.dto.response.MatchResponseDto;
 import org.mrshoffen.repository.MatchRepository;
@@ -12,14 +12,14 @@ import java.util.List;
 import static java.lang.Integer.*;
 import static java.util.stream.Collectors.*;
 
-public class MatchService {
+public class FinishedMatchesPersistenceService {
 
     private final MatchRepository matchRepository;
 
     private final MatchMapper matchMapper;
 
     @Inject
-    public MatchService(MatchRepository matchRepository, MatchMapper matchMapper) {
+    public FinishedMatchesPersistenceService(MatchRepository matchRepository, MatchMapper matchMapper) {
         this.matchRepository = matchRepository;
         this.matchMapper = matchMapper;
     }
@@ -33,11 +33,11 @@ public class MatchService {
                 .collect(toList());
     }
 
-    public PageResponseDto findMatchesWithPaginationFilteredByName(MatchPageRequestDto requestDto) {
+    public PageResponseDto findMatchesWithPaginationFilteredByName(PageRequestDto requestDto) {
         //todo add validation
 
 
-        List<MatchResponseDto> matches = matchRepository.findWithPagination(
+        List<MatchResponseDto> matches = matchRepository.findWithPaginationFilteredByName(
                         parseInt(requestDto.pageNumber()),
                         parseInt(requestDto.pageSize()),
                         requestDto.playerName()
@@ -45,10 +45,10 @@ public class MatchService {
                 .map(matchMapper::toDto)
                 .collect(toList());
 
-        long maxNumber = Math.ceilDiv(matchRepository.sizeFilteredByPlayerName(requestDto.playerName()),
+        long totalPages = Math.ceilDiv(matchRepository.numberOfEntitiesWithName(requestDto.playerName()),
                 parseInt(requestDto.pageSize()));
 
-        return new PageResponseDto(matches, maxNumber);
+        return new PageResponseDto(matches, totalPages);
     }
 
 

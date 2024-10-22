@@ -1,6 +1,6 @@
 const frontend = matches_frontend;
 
-const apiJSON = matches_apiJSON;
+const apiJSON = matches_api;
 
 //dont touch
 function fillDataTables(data) {
@@ -15,14 +15,23 @@ function fillDataTables(data) {
         row.appendChild(id);
 
         let player1 = document.createElement('td');
-        player1.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
+        let player1Link = document.createElement('a');
+        player1Link.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
+        player1Link.href = context + matches_frontend + '?player_name=' + match.firstPlayer + '&page_size=' + selectedSize();
+        player1.appendChild(player1Link)
         row.appendChild(player1);
 
         let player2 = document.createElement('td');
-        player2.innerHTML = match.secondPlayer + (match.secondPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
+        let player2Link = document.createElement('a');
+        player2Link.innerHTML = match.secondPlayer + (match.secondPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
+        player2Link.href = context + matches_frontend + '?player_name=' + match.secondPlayer + '&page_size=' + selectedSize();
+        player2.appendChild(player2Link)
         row.appendChild(player2);
 
 
         tbody.appendChild(row);
     });
+
+    // highlightText(searchedText);
+
 }

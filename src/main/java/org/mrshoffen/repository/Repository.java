@@ -13,7 +13,7 @@ public interface Repository <K extends Serializable, E extends BaseEntity<K>> {
 
     Optional<E> findById(K id);
 
-    List<E> findWithPagination(int pageNumber, int pageSize, String playerName);
+    List<E> findWithPaginationFilteredByName(int pageNumber, int pageSize, String playerName);
 
-    long sizeFilteredByPlayerName(String name);
+    Long numberOfEntitiesWithName(String name);
 }

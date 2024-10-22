@@ -33,7 +33,7 @@ public class PlayerRepository extends BaseRepository<Integer, Player> {
     }
 
     @Override
-    public List<Player> findWithPagination(int pageNumber, int pageSize, String playerName) {
+    public List<Player> findWithPaginationFilteredByName(int pageNumber, int pageSize, String playerName) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -45,7 +45,7 @@ public class PlayerRepository extends BaseRepository<Integer, Player> {
 
         List<Predicate> predicates = calculateNameFilterPredicate(playerName, cb, matches);
 
-        criteria.select(matches).where(predicates.toArray(new Predicate[0]));
+        criteria.select(matches).where(predicates.toArray(new Predicate[0])).orderBy(cb.asc(matches.get("id")));
 
         return session.createQuery(criteria)
                 .setFirstResult((pageNumber - 1) * pageSize)
@@ -55,7 +55,7 @@ public class PlayerRepository extends BaseRepository<Integer, Player> {
     }
 
     @Override
-    public long sizeFilteredByPlayerName(String name) {
+    public Long numberOfEntitiesWithName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();

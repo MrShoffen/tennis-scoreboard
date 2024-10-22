@@ -24,7 +24,7 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
     }
 
     @Override
-    public List<Match> findWithPagination(int pageNumber, int pageSize, String playerName) {
+    public List<Match> findWithPaginationFilteredByName(int pageNumber, int pageSize, String playerName) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -48,7 +48,7 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
     }
 
     @Override
-    public long sizeFilteredByPlayerName(String name) {
+    public Long numberOfEntitiesWithName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -68,8 +68,8 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
     private List<Predicate> calculateNameFilterPredicate(String playerName, CriteriaBuilder cb, Root<Match> matches) {
         List<Predicate> predicates = new ArrayList<>();
         if (playerName != null && !playerName.isBlank()) {
-            Predicate firstLike = cb.like(cb.lower(matches.get("firstPlayer").get("name")), "%" + playerName.toLowerCase() + "%");
-            Predicate secondLike = cb.like(cb.lower(matches.get("secondPlayer").get("name")), "%" + playerName.toLowerCase() + "%");
+            Predicate firstLike = cb.like(cb.lower(matches.get("firstPlayer").get("name")), "%" + playerName.toLowerCase() );
+            Predicate secondLike = cb.like(cb.lower(matches.get("secondPlayer").get("name")), "%" + playerName.toLowerCase() );
 
 
             predicates.add(cb.or(firstLike, secondLike));
