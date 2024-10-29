@@ -1,6 +1,17 @@
 package org.mrshoffen.dto.request;
 
-public record PageRequestDto(String pageNumber,
-                             String pageSize,
-                             String playerName) {
+import lombok.Builder;
+import lombok.Value;
+
+
+@Value
+@Builder
+public  class PageRequestDto {
+     Integer pageNumber;
+     Integer pageSize;
+
+
+     String playerName;
+
+     String orderBy;
 }

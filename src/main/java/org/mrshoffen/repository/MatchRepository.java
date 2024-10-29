@@ -48,7 +48,7 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
     }
 
     @Override
-    public Long numberOfEntitiesWithName(String name) {
+    public Integer numberOfEntitiesWithName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -60,9 +60,9 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
 
         List<Predicate> predicates = calculateNameFilterPredicate(name, cb, matches);
 
-        criteria.select(cb.count(matches)).where(predicates.toArray(new Predicate[0]));
+        criteria.select(cb.count(matches)).where(predicates.toArray(Predicate[]::new));
 
-        return session.createQuery(criteria).getSingleResult();
+        return session.createQuery(criteria).getSingleResult().intValue();
     }
 
     private List<Predicate> calculateNameFilterPredicate(String playerName, CriteriaBuilder cb, Root<Match> matches) {
@@ -70,7 +70,6 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
         if (playerName != null && !playerName.isBlank()) {
             Predicate firstLike = cb.like(cb.lower(matches.get("firstPlayer").get("name")), "%" + playerName.toLowerCase() );
             Predicate secondLike = cb.like(cb.lower(matches.get("secondPlayer").get("name")), "%" + playerName.toLowerCase() );
-
 
             predicates.add(cb.or(firstLike, secondLike));
         }

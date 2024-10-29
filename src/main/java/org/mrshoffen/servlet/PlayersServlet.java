@@ -13,6 +13,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/api/players", name = "PlayerData")
 public class PlayersServlet extends BaseHttpServlet {
+
     @Inject
     private PlayersPersistenceService playerService;
 
@@ -20,22 +21,11 @@ public class PlayersServlet extends BaseHttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String pageNumber = req.getParameter("page_number");
-        String pageSize = req.getParameter("page_size");
-        String playerName = req.getParameter("player_name");
+        PageRequestDto request = extractPageRequestDto(req);
 
-        PageRequestDto request = new PageRequestDto(pageNumber, pageSize, playerName);
-
-
-        PageResponseDto responseDto  = playerService.findWithPaginationFilteredByName(request);
-
+        PageResponseDto responseDto  = playerService.findPageFilteredByName(request);
 
         writeJsonValueToResponse(resp, responseDto);
     }
 
-    private int parsePageNumberParameter(String pageNumber) {
-        return pageNumber == null || pageNumber.isEmpty()
-                ? 1
-                : Integer.parseInt(pageNumber.trim());
-    }
 }

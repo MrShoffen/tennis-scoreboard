@@ -7,6 +7,9 @@ function fillDataTables(data) {
     const tbody = document.querySelector('.item-table tbody');
     tbody.innerHTML = '';
 
+
+
+
     data.forEach(match => {
         const row = document.createElement('tr');
 

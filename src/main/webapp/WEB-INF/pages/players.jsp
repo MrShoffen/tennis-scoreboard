@@ -64,7 +64,12 @@
                 <%-- table content--%>
                 </tbody>
             </table>
-        </div>
+
+            <div class="bouncing-ball-loader">
+                <!-- Вставьте ваш SVG-код ниже -->
+                <img src="static/img/main_icon.svg" alt="Tennis" width="28" height="28"/>
+            </div>
+
     </div>
     
     <%@ include file="util/pagination_plugin.html"%>

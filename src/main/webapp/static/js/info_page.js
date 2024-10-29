@@ -38,7 +38,13 @@ function highlightText() {
     if (searchedValue.trim()) {
         links.forEach(link => {
             if (link.textContent.match(regex)) {
-                link.innerHTML = link.innerHTML.replace(regex, (matched) => `<span class="highlight">${matched}</span>`);
+                let winner = link.children.length === 1;
+
+                link.innerHTML = link.textContent.replace(regex, (matched) => `<span class="highlight">${matched}</span>`);
+                if(winner) {
+                    link.innerHTML += '<i class="fa-solid fa-trophy"></i>'
+                }
+
             }
         });
     }
@@ -46,8 +52,10 @@ function highlightText() {
 
 }
 
+
 function updateCurrentSearch() {
     const currentSearch = document.querySelector('.current-search');
+
 
     const player = currentRequest().player_name;
     if (player.trim()) {
@@ -107,7 +115,8 @@ function configureSearchBarPlugin() {
 
     buttonSearch.addEventListener('click', handleSearch);
 
-    inputForm.addEventListener('keydown', (event) => {
+    inputForm.addEventListener(
+        'keydown', (event) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
@@ -133,7 +142,7 @@ function configureSearchBarPlugin() {
 
 function updateUrl(params) {
     let url = context + frontend + '?' + new URLSearchParams(params);
-    window.history.pushState(null, null, url);
+    window.history.replaceState(null, null, url);
 }
 
 function selectedSize() {
@@ -144,6 +153,13 @@ function selectedSize() {
 }
 
 
+function removeLoader() {
+    let loader = document.querySelector('.bouncing-ball-loader');
+    if (loader) {
+        loader.remove();
+    }
+}
+
 function updatePage(params) {
 
     const url = context + apiJSON + '?' + new URLSearchParams(params).toString();
@@ -151,7 +167,8 @@ function updatePage(params) {
     fetch(url)
         .then(response => response.json())
         .then(json => {
-            fillDataTables(json.items);
+            removeLoader();
+            fillDataTables(json.entities);
             highlightText();
             configurePaginationPlugin(json.totalPages, params);
         })

@@ -41,3 +41,29 @@ td a:hover{
     color: #333;
 }
 
+.bouncing-ball-loader {
+    display: flex;
+    align-items: flex-start; /* Прижимает содержимое к нижнему краю */
+    height: 100px; /* Устанавливает высоту div */
+    width: 100%; /* Занимает всю ширину родительского элемента */
+    justify-content: center; /* Центрирует содержимое по горизонтали */
+    /* Вы можете добавить дополнительные стили как фон, отступы и т.д. */
+}
+
+@keyframes bounce {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, 100px, 0);
+    }
+}
+
+.bouncing-ball-loader img {
+
+    animation: bounce 0.5s;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(.5, 0.05, 1, .5);
+    animation-iteration-count: infinite;
+}

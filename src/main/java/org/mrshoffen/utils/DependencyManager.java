@@ -8,6 +8,7 @@ import org.mrshoffen.mapper.MatchMapper;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.mapstruct.factory.Mappers;
+import org.mrshoffen.mapper.MatchMapperImpl;
 import org.mrshoffen.mapper.PlayerMapper;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -18,9 +19,6 @@ public class DependencyManager extends AbstractModule {
     public static Injector getInjector() {
         return INSTANCE;
     }
-
-
-
 
 
     @Provides @Singleton

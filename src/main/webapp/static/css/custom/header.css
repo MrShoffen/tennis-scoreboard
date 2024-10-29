@@ -1,1 +1,33 @@
-body{font-family:"Roboto",sans-serif}.fs-4{letter-spacing:3px;color:#d2d2d2}.nav-item:hover{background-color:#a6d388;color:#333}.nav-item img{margin-left:18px;margin-right:5px;width:20px;height:20px;padding-bottom:3px}.nav-link{display:block;width:100%;text-decoration:none}
+body {
+    font-family: "Roboto", sans-serif
+}
+
+.fs-4 {
+    letter-spacing: 3px;
+    color: #d2d2d2
+}
+
+.nav-item {
+    transition: background-color 0.3s ease, color 0.3s ease; /* Указываем, какие свойства анимировать и длительность */
+    border-radius: 8px;
+}
+
+.nav-item:hover {
+    background-color: #a6d388;
+    color: #333;
+    border-radius: 8px;
+}
+
+.nav-item img {
+    margin-left: 18px;
+    margin-right: 5px;
+    width: 17px;
+    height: 17px;
+    padding-bottom: 3px
+}
+
+.nav-link {
+    display: block;
+    width: 100%;
+    text-decoration: none
+}

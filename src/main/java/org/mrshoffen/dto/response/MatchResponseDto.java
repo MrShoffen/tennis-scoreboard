@@ -1,9 +1,14 @@
 package org.mrshoffen.dto.response;
 
 
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-public record MatchResponseDto(Integer id,
-                               String firstPlayer,
-                               String secondPlayer,
-                               String winner){
+@Getter
+@SuperBuilder
+public final class MatchResponseDto extends EntityResponseDto {
+
+    private String firstPlayer;
+    private String secondPlayer;
+    private String winner;
 }

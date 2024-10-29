@@ -25,8 +25,4 @@ public abstract class BaseRepository<K extends Serializable, E extends BaseEntit
         this.sessionFactory = sessionFactory;
     }
 
-
-
-
-
 }

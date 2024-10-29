@@ -9,7 +9,7 @@ import org.mrshoffen.repository.MatchRepository;
 
 import java.util.List;
 
-import static java.lang.Integer.*;
+import static java.lang.Math.*;
 import static java.util.stream.Collectors.*;
 
 public class FinishedMatchesPersistenceService {
@@ -26,29 +26,34 @@ public class FinishedMatchesPersistenceService {
 
 
 
-
     public List<MatchResponseDto> findAllMatches() {
         return matchRepository.findAll().stream()
                 .map(matchMapper::toDto)
                 .collect(toList());
     }
 
-    public PageResponseDto findMatchesWithPaginationFilteredByName(PageRequestDto requestDto) {
+    public PageResponseDto findPageFilteredByName(PageRequestDto requestDto) {
         //todo add validation
 
 
         List<MatchResponseDto> matches = matchRepository.findWithPaginationFilteredByName(
-                        parseInt(requestDto.pageNumber()),
-                        parseInt(requestDto.pageSize()),
-                        requestDto.playerName()
+                        requestDto.getPageNumber(),
+                        requestDto.getPageSize(),
+                        requestDto.getPlayerName()
                 ).stream()
                 .map(matchMapper::toDto)
                 .collect(toList());
 
-        long totalPages = Math.ceilDiv(matchRepository.numberOfEntitiesWithName(requestDto.playerName()),
-                parseInt(requestDto.pageSize()));
+        int totalPages = (int) ceilDiv(matchRepository.numberOfEntitiesWithName(requestDto.getPlayerName()),
+                requestDto.getPageSize());
 
-        return new PageResponseDto(matches, totalPages);
+        return  PageResponseDto.builder()
+                .entities(matches)
+                .pageNumber(requestDto.getPageNumber())
+                .pageSize(requestDto.getPageSize())
+                .totalPages(totalPages)
+                .build();
+
     }
 
 

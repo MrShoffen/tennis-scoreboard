@@ -15,7 +15,6 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/api/matches", name = "MatchData")
 public class MatchesServlet extends BaseHttpServlet {
 
-
     @Inject
     private FinishedMatchesPersistenceService matchService;
 
@@ -23,26 +22,11 @@ public class MatchesServlet extends BaseHttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        PageRequestDto pageRequestDto = extractPageRequestDto(req);
 
-        ///
-        String pageNumber = req.getParameter("page_number");
-        String pageSize = req.getParameter("page_size");
-        String playerName = req.getParameter("player_name");
-
-        PageRequestDto requestDto = new PageRequestDto(pageNumber,pageSize, playerName );
-
-
-        PageResponseDto responseDto  = matchService.findMatchesWithPaginationFilteredByName(requestDto);
-
-
+        PageResponseDto responseDto  = matchService.findPageFilteredByName(pageRequestDto);
 
         writeJsonValueToResponse(resp, responseDto);
-    }
-
-    private int parsePageNumberParameter(String pageNumber) {
-        return pageNumber == null || pageNumber.isEmpty()
-                ? 1
-                : Integer.parseInt(pageNumber.trim());
     }
 
 

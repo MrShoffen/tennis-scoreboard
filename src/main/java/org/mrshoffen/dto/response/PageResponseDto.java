@@ -1,7 +1,16 @@
 package org.mrshoffen.dto.response;
 
+import lombok.Builder;
+import lombok.Value;
+
 import java.util.List;
 
-public record PageResponseDto(List<?> items,
-                              long totalPages) {
+
+@Value
+@Builder
+public class PageResponseDto {
+    List<? extends EntityResponseDto> entities;
+    Integer pageNumber;
+    Integer pageSize;
+    Integer totalPages;
 }

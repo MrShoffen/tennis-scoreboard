@@ -2,17 +2,12 @@ package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
 import org.mrshoffen.dto.request.PageRequestDto;
-import org.mrshoffen.dto.response.MatchResponseDto;
 import org.mrshoffen.dto.response.PageResponseDto;
 import org.mrshoffen.dto.response.PlayerResponseDto;
-import org.mrshoffen.entity.Match;
 import org.mrshoffen.mapper.PlayerMapper;
 import org.mrshoffen.repository.MatchRepository;
 import org.mrshoffen.repository.PlayerRepository;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -32,42 +27,31 @@ public class PlayersPersistenceService {
         this.playerMapper = playerMapper;
     }
 
-
-    public List<MatchResponseDto> findAllMatches() {
-        return Collections.emptyList();
-    }
-//todo problem with LIKE -
-    public PageResponseDto findWithPaginationFilteredByName(PageRequestDto requestDto) {
+    //todo problem with LIKE -
+    public PageResponseDto findPageFilteredByName(PageRequestDto requestDto) {
         //todo add validation
 
 
         List<PlayerResponseDto> players = playerRepository.findWithPaginationFilteredByName(
-                        parseInt(requestDto.pageNumber()),
-                        parseInt(requestDto.pageSize()),
-                        requestDto.playerName()
+                        requestDto.getPageNumber(),
+                        requestDto.getPageSize(),
+                        requestDto.getPlayerName()
                 ).stream()
-                .peek(player -> player.setMatchesPlayed(matchRepository.numberOfEntitiesWithName(player.getName())))
                 .map(playerMapper::toDto)
+                .peek(dto -> dto.setMatchesPlayed(matchRepository.numberOfEntitiesWithName(dto.getName())))
                 .toList();
 
-        long totalPagesNumber = ceilDiv(playerRepository.numberOfEntitiesWithName(requestDto.playerName()),
-                parseInt(requestDto.pageSize()));
+        int totalPages = (int) ceilDiv(playerRepository.numberOfEntitiesWithName(requestDto.getPlayerName()),
+                requestDto.getPageSize());
 
 
-        return new PageResponseDto(players, totalPagesNumber);
+        return  PageResponseDto.builder()
+                .entities(players)
+                .pageNumber(requestDto.getPageNumber())
+                .pageSize(requestDto.getPageSize())
+                .totalPages(totalPages)
+                .build();
     }
 
-    private double calculateWinRate(String name) {
-        long matchesSize = matchRepository.numberOfEntitiesWithName(name);
-        List<Match> allMatches = matchRepository.findWithPaginationFilteredByName(1, (int) matchesSize, name);
-
-        long matchesWin = allMatches.stream()
-                .filter(match -> match.getWinner().getName().equals(name))
-                .count();
-
-        double v = BigDecimal.valueOf((double) matchesWin / matchesSize).setScale(4, RoundingMode.HALF_UP).doubleValue();
-        return v;
-
-    }
 
 }

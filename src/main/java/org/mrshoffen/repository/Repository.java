@@ -15,5 +15,5 @@ public interface Repository <K extends Serializable, E extends BaseEntity<K>> {
 
     List<E> findWithPaginationFilteredByName(int pageNumber, int pageSize, String playerName);
 
-    Long numberOfEntitiesWithName(String name);
+    Integer numberOfEntitiesWithName(String name);
 }

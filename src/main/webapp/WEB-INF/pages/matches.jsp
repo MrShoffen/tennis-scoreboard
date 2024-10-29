@@ -52,7 +52,6 @@
         <div class="col-lg-9 themed-grid-col text-center">
 
             <table class="table item-table">
-
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -61,13 +60,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <%-- table content--%>
+
                 </tbody>
             </table>
+
+            <div class="bouncing-ball-loader">
+                <img src="static/img/main_icon.svg" alt="Tennis" width="28" height="28"/>
+            </div>
+
         </div>
     </div>
-    
-    <%@ include file="util/pagination_plugin.html"%>
+
+
+
+
+    <%@ include file="util/pagination_plugin.html" %>
 
 </div>
 

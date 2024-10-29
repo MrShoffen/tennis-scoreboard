@@ -25,5 +25,4 @@ public class Player implements BaseEntity<Integer> {
     @Column(unique = true)
     private String name;
 
-    private Long matchesPlayed;
 }

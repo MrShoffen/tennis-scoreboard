@@ -42,7 +42,7 @@
     </div>
 
     <div class="row justify-content-md-center mb-3">
-        <img src="static/img/sep.svg" alt="Tennis" width="28" height="28"/>
+        <img src="static/img/sep.svg" alt="Tennis" width="20" height="20"/>
     </div>
 
     <div class="row justify-content-md-center mb-6">
@@ -50,7 +50,7 @@
     </div>
 
     <div class="row justify-content-md-center mb-3">
-        <img src="static/img/sep.svg" alt="Tennis" width="28" height="28"/>
+        <img src="static/img/sep.svg" alt="Tennis" width="20" height="20"/>
     </div>
 
     <div class="row justify-content-md-center mb-3">
@@ -58,7 +58,7 @@
     </div>
 
     <div class="row justify-content-md-center mb-3">
-        <img src="static/img/sep.svg" alt="Tennis" width="28" height="28"/>
+        <img src="static/img/sep.svg" alt="Tennis" width="20" height="20"/>
     </div>
 
     <div class="row justify-content-md-center mb-3">
@@ -66,16 +66,29 @@
     </div>
 
     <div class="row justify-content-md-center mb-3">
-        <img src="static/img/sep.svg" alt="Tennis" width="28" height="28"/>
+        <img src="static/img/sep.svg" alt="Tennis" width="20" height="20"/>
     </div>
 
     <div class="row justify-content-md-center mb-3">
-        <div class="col-lg-9 themed-grid-col text-center">hello fsadfsad аыва ipsum dolor sit amet consectetur
-            adipisicing elit.
-            Perspiciatis quis adipisci doloremque eligendi, maxime fugiat voluptatem culpa tenetur veniam asperiores
-            minus provident obcaecati cumque laboriosam saepe magni nam. Adipisci, dolorem dignissimos nostrum nemo
-            animi reiciendis! Distinctio sapiente ab ipsum fugit, blanditiis animi, modi officia numquam ipsam unde,
-            dolores nisi id.
+        <div class="col-lg-9 themed-grid-col text-center">
+            <h4>Technologies and resources used in the project</h4>
+            <hr>
+            <h5>Frontend</h5>
+
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Bootstrap 5 <a href="https://getbootstrap.com/docs/5.0/examples/">Examples</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">Fetch API</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Font Awesome <a href="https://fontawesome.com/">Icons</a><br>
+            <br>
+
+            <h5>Backend</h5>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Java 22 Core (with Jakarta Servlets)<br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Gradle<br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Hibernate ORM<br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Hibernate <a href="https://hibernate.org/validator/">Validator</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  H2 <a href="https://www.h2database.com/html/main.html">Database</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Guice <a href="https://github.com/google/guice/wiki/">Dependency Injection</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  MapStruct <a href="https://mapstruct.org/">Mapping</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Apache Tomcat 10 <a href="https://tomcat.apache.org/tomcat-10.1-doc/index.html">Servlet Container</a><br>
         </div>
     </div>
 
