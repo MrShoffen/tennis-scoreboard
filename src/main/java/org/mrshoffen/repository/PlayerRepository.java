@@ -12,28 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PlayerRepository extends BaseRepository<Integer, Player> {
-
+public class PlayerRepository extends BaseRepository<Player> {
 
     @Inject
     protected PlayerRepository(SessionFactory sessionFactory) {
-        super(Player.class, sessionFactory);
+        super(sessionFactory);
     }
 
-    @Override
-    public List<Player> findAll() {
+
+    public Optional<Player> findByName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
-
-        return session.createQuery("SELECT p FROM Player p", Player.class).list();
+        return session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class)
+                .setParameter("name", name)
+                .uniqueResultOptional();
     }
 
     @Override
-    public Optional<Player> findById(Integer id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Player> findWithPaginationFilteredByName(int pageNumber, int pageSize, String playerName) {
+    public List<Player> getAllWithOffsetAndLimit(Integer offset, Integer limit, String playerName) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -50,8 +45,8 @@ public class PlayerRepository extends BaseRepository<Integer, Player> {
         criteria.select(players).where(predicates.toArray(new Predicate[0])).orderBy(orders.get(0));
 
         return session.createQuery(criteria)
-                .setFirstResult((pageNumber - 1) * pageSize)
-                .setMaxResults(pageSize)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .list();
 
     }

@@ -29,6 +29,10 @@ public abstract class BaseHttpServlet extends HttpServlet {
         objectMapper.writeValue(resp.getWriter(), value);
     }
 
+    protected final <T> T readDtoFromJsonRequest(HttpServletRequest req, Class<T> dtoClass) throws IOException {
+        return objectMapper.readValue(req.getInputStream(), dtoClass);
+    }
+
 
     protected PageRequestDto extractPageRequestDto(HttpServletRequest req) {
         return PageRequestDto.builder()

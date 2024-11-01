@@ -6,12 +6,10 @@ import lombok.Value;
 
 @Value
 @Builder
-public  class PageRequestDto {
-     Integer pageNumber;
-     Integer pageSize;
+public class PageRequestDto {
+    Integer pageNumber;
+    Integer pageSize;
+    String playerName;
 
-
-     String playerName;
-
-     String orderBy;
+    String orderBy;
 }

@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "match")
-public class Match implements BaseEntity<Integer> {
-
+public class Match  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +31,4 @@ public class Match implements BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "winner")
     private Player winner;
-
-
 }

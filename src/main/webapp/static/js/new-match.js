@@ -40,6 +40,23 @@ document.addEventListener('click', function (event) {
 })
 
 
+function sendMatchCreationRequest(player1, player2) {
+    const request = {firstPlayer: player1, secondPlayer: player2};
+
+    const urlRequest = context + new_match_api;
+
+    fetch(urlRequest, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(request)
+    }).then(response => {
+        window.location.href = response.url;
+    });
+
+}
+
 function setupNewMatchButton() {
     let player1 = document.getElementById('player_1_form');
     let player2 = document.getElementById('player_2_form');
@@ -50,7 +67,7 @@ function setupNewMatchButton() {
         let firstCheck = checkInputForm(player1);
         let secondCheck = checkInputForm(player2);
         if (firstCheck && secondCheck) {
-            alert('nicee!')
+            sendMatchCreationRequest(player1.value.trim(), player2.value.trim());
         }
     })
 
@@ -73,7 +90,7 @@ function checkInputForm(player) {
     }
 
     const validPattern = /^[a-zA-Z]+[a-zA-Z-. ]*[a-zA-Z]+$/;
-    if(!validPattern.test(name) ){
+    if (!validPattern.test(name)) {
         errorPop.innerHTML = '';
         errorPop.innerHTML = `Incorrect name format!`;
         errorPop.classList.remove('invisible');
@@ -81,7 +98,7 @@ function checkInputForm(player) {
 
         return false;
     }
-    if(name.trim().length <=3){
+    if (name.trim().length <= 3) {
         errorPop.innerHTML = '';
         errorPop.innerHTML = `Name is too short`;
         errorPop.classList.remove('invisible');

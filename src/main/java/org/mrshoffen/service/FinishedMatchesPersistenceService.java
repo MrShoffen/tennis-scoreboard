@@ -25,32 +25,24 @@ public class FinishedMatchesPersistenceService {
     }
 
 
-
-    public List<MatchResponseDto> findAllMatches() {
-        return matchRepository.findAll().stream()
-                .map(matchMapper::toDto)
-                .collect(toList());
-    }
-
     public PageResponseDto findPageFilteredByName(PageRequestDto requestDto) {
         //todo add validation
 
+        Integer pageNumber = requestDto.getPageNumber();
+        Integer pageSize = requestDto.getPageSize();
+        String playerName = requestDto.getPlayerName();
 
-        List<MatchResponseDto> matches = matchRepository.findWithPaginationFilteredByName(
-                        requestDto.getPageNumber(),
-                        requestDto.getPageSize(),
-                        requestDto.getPlayerName()
-                ).stream()
+        List<MatchResponseDto> matches = matchRepository.getAllWithOffsetAndLimit(
+                        (pageNumber - 1) * pageSize, pageSize, playerName).stream()
                 .map(matchMapper::toDto)
                 .collect(toList());
 
-        int totalPages = ceilDiv(matchRepository.numberOfEntitiesWithName(requestDto.getPlayerName()),
-                requestDto.getPageSize());
+        int totalPages = ceilDiv(matchRepository.numberOfEntitiesWithName(playerName), pageSize);
 
-        return  PageResponseDto.builder()
+        return PageResponseDto.builder()
                 .entities(matches)
-                .pageNumber(requestDto.getPageNumber())
-                .pageSize(requestDto.getPageSize())
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
                 .totalPages(totalPages)
                 .build();
 

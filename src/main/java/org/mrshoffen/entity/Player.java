@@ -16,7 +16,7 @@ import org.mrshoffen.utils.DependencyManager;
 
 @Entity
 @Table(name = "player")
-public class Player implements BaseEntity<Integer> {
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

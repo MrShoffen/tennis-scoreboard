@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebFilter(servletNames = {"MatchData"})
+@WebFilter(urlPatterns = {"/api/*"})
 public class JsonContentTypeFilter   extends HttpFilter {
 
 

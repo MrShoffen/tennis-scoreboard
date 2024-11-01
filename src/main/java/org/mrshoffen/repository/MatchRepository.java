@@ -11,20 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MatchRepository extends BaseRepository<Integer, Match> {
+public class MatchRepository extends BaseRepository< Match> {
 
     @Inject
     protected MatchRepository(SessionFactory sessionFactory) {
-        super(Match.class, sessionFactory);
+        super(sessionFactory);
     }
 
     @Override
-    public Optional<Match> findById(Integer id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Match> findWithPaginationFilteredByName(int pageNumber, int pageSize, String playerName) {
+    public List<Match> getAllWithOffsetAndLimit(Integer offset, Integer limit, String playerName) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -41,8 +36,8 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
         criteria.select(matches).where(predicates.toArray(new Predicate[0]));
 
         return session.createQuery(criteria)
-                .setFirstResult((pageNumber - 1) * pageSize)
-                .setMaxResults(pageSize)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .list();
 
     }
@@ -56,7 +51,6 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
         CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
 
         Root<Match> matches = criteria.from(Match.class);
-
 
         List<Predicate> predicates = calculateNameFilterPredicate(name, cb, matches);
 
@@ -76,14 +70,4 @@ public class MatchRepository extends BaseRepository<Integer, Match> {
         return predicates;
     }
 
-    @Override
-    public List<Match> findAll() {
-        @Cleanup Session session = sessionFactory.openSession();
-
-        return session.createQuery("select m from Match m" +
-                        " JOIN FETCH m.firstPlayer f " +
-                        " JOIN FETCH m.secondPlayer s " +
-                        " JOIN FETCH m.winner w ", Match.class)
-                .list();
-    }
 }

@@ -21,7 +21,7 @@ body {
     width: 100%;
     outline: none;
     margin-top: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     height: 50px;
     font-size: 18px;
     letter-spacing: 2px;
@@ -93,14 +93,14 @@ body {
 
 .error-popup {
     position: absolute;
-    height: 30px;
-    top: -25px; /* Расположите под полем ввода или где удобно */
+    height: 40px;
+    top: -35px; /* Расположите под полем ввода или где удобно */
     left: 0;
     background-color: #f44336;
     color: white;
     padding: 5px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
     z-index: 1000;
 
 

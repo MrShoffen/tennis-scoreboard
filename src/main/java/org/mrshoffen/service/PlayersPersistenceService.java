@@ -32,23 +32,23 @@ public class PlayersPersistenceService {
         //todo add validation
 
 
-        List<PlayerResponseDto> players = playerRepository.findWithPaginationFilteredByName(
-                        requestDto.getPageNumber(),
-                        requestDto.getPageSize(),
-                        requestDto.getPlayerName()
-                ).stream()
+        Integer pageNumber = requestDto.getPageNumber();
+        Integer pageSize = requestDto.getPageSize();
+        String playerName = requestDto.getPlayerName();
+
+        List<PlayerResponseDto> players = playerRepository.getAllWithOffsetAndLimit(
+                        (pageNumber - 1) * pageSize, pageSize, playerName).stream()
                 .map(playerMapper::toDto)
                 .peek(dto -> dto.setMatchesPlayed(matchRepository.numberOfEntitiesWithName(dto.getName())))
                 .toList();
 
-        int totalPages = (int) ceilDiv(playerRepository.numberOfEntitiesWithName(requestDto.getPlayerName()),
-                requestDto.getPageSize());
+        int totalPages = ceilDiv(playerRepository.numberOfEntitiesWithName(playerName), pageSize);
 
 
-        return  PageResponseDto.builder()
+        return PageResponseDto.builder()
                 .entities(players)
-                .pageNumber(requestDto.getPageNumber())
-                .pageSize(requestDto.getPageSize())
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
                 .totalPages(totalPages)
                 .build();
     }

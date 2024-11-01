@@ -20,7 +20,7 @@ public class MatchesServlet extends BaseHttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         PageRequestDto pageRequestDto = extractPageRequestDto(req);
 
