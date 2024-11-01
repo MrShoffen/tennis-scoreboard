@@ -1,0 +1,107 @@
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+
+    background-color: #333;
+    color: rgb(210, 210, 210);
+}
+
+.item-container {
+    padding-top: 80px;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.player_form {
+    width: 100%;
+    outline: none;
+    margin-top: 8px;
+    margin-bottom: 30px;
+    height: 50px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    padding: 10px 40px 10px 10px;
+    color: rgb(210, 210, 210);
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, .5);
+    transition: box-shadow 0.5s ease,
+    all 150ms linear;
+}
+
+
+@keyframes gradientBorderBlink {
+    0%, 100% {
+        box-shadow: 0 0 0px 0px rgba(255, 0, 0, 0.23); /* Без эффекта */
+    }
+    50% {
+        box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.49); /* Красная расплывчатая граница */
+    }
+}
+
+.player_form.invalid {
+    animation: gradientBorderBlink 1s ease-out 1; /* Анимация длится 1 секунду и повторяется только один раз */
+}
+
+
+.player_ac {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 55px;
+}
+
+.ac-element {
+    background-color: #27272b;
+    color: rgb(210, 210, 210);
+    z-index: 999;
+}
+
+.ac-element:hover {
+    font-family: "Roboto", sans-serif !important;
+    color: #548a35;
+}
+
+
+.text-info {
+    /*color: #0dcaf0 !important;*/
+    background-color: #548a35;
+    color: #333 !important;
+}
+
+.btn-start {
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: rgb(210, 210, 210);;
+    background-color: #548a35;
+    pointer-events: painted;
+    transition: transform 0.2s ease-in-out;
+}
+
+
+/**/
+
+.error-popup {
+    position: absolute;
+    height: 30px;
+    top: -25px; /* Расположите под полем ввода или где удобно */
+    left: 0;
+    background-color: #f44336;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 1000;
+
+
+}

@@ -41,7 +41,7 @@ function highlightText() {
                 let winner = link.children.length === 1;
 
                 link.innerHTML = link.textContent.replace(regex, (matched) => `<span class="highlight">${matched}</span>`);
-                if(winner) {
+                if (winner) {
                     link.innerHTML += '<i class="fa-solid fa-trophy"></i>'
                 }
 
@@ -117,10 +117,10 @@ function configureSearchBarPlugin() {
 
     inputForm.addEventListener(
         'keydown', (event) => {
-        if (event.key === 'Enter') {
-            handleSearch();
-        }
-    });
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        });
 
     buttonClearCurrentSearchLabel.addEventListener('click', function () {
         updatePage(
@@ -139,6 +139,7 @@ function configureSearchBarPlugin() {
         }
     });
 }
+
 
 function updateUrl(params) {
     let url = context + frontend + '?' + new URLSearchParams(params);
@@ -171,6 +172,7 @@ function updatePage(params) {
             fillDataTables(json.entities);
             highlightText();
             configurePaginationPlugin(json.totalPages, params);
+            configureGoButton(json.totalPages);
         })
         .catch(error => {
             alert("hee")
@@ -181,6 +183,7 @@ function updatePage(params) {
 
 
 function configurePaginationPlugin(totalPages, params) {
+
     let pagination = document.querySelector('.match_pagination');
 
     pagination.innerHTML = '';
@@ -214,7 +217,71 @@ function configurePaginationPlugin(totalPages, params) {
             updatePage(buildRequest(++params.page_number, params.page_size, params.player_name))
         });
     }
+
 }
+
+function configureGoButton(totalPages) {
+
+
+    const goBox = document.querySelector('.go-box');
+
+    goBox.innerHTML = '';
+
+    const buttonGo = document.createElement('button');
+    buttonGo.classList.add('btn-go');
+    buttonGo.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+
+    const inputForm = document.createElement('input');
+    inputForm.classList.add('input-go');
+    inputForm.setAttribute('type', 'text');
+    inputForm.setAttribute('placeholder', 'Page...');
+
+    goBox.appendChild(buttonGo);
+    goBox.appendChild(inputForm);
+
+
+    function handleGo(currentTotalPages) {
+        inputForm.classList.remove('invalid');
+
+        let backgroundColor = window.getComputedStyle(inputForm).backgroundColor;
+        if (backgroundColor === "rgba(0, 0, 0, 0)" && inputForm.value.trim()) {
+            let targetPage = +inputForm.value.trim();
+
+            if(Number.isInteger(targetPage) &&   targetPage >= 1 && targetPage <= currentTotalPages){
+                updatePage(
+                    buildRequest(targetPage, currentRequest().page_size, currentRequest().player_name)
+                )
+            } else {
+                inputForm.value = '';
+                inputForm.classList.add('invalid');
+                inputForm.focus();
+
+            }
+        } else {
+            inputForm.focus();
+            inputForm.classList.add('input-go-full')
+        }
+
+    }
+
+
+    buttonGo.addEventListener('click', () => handleGo(totalPages));
+
+    inputForm.addEventListener(
+        'keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleGo(totalPages);
+            }
+        });
+
+
+    document.addEventListener('click', function (event) {
+        if (!goBox.contains(event.target)) {  // Если клик вне формы
+            inputForm.classList.remove('input-go-full');
+        }
+    });
+}
+
 
 function setupFiveOrLessPages(totalPages, params, pagination) {
     for (let i = 1; i <= totalPages; i++) {

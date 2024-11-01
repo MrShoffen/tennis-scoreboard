@@ -11,7 +11,7 @@ import org.mrshoffen.utils.JspHelper;
 import java.io.IOException;
 
 
-@WebFilter(urlPatterns = {"/matches", "/players", "/hello"})
+@WebFilter(urlPatterns = {"/matches", "/players", "/new-match"})
 public class JspDispatcherFilter extends HttpFilter {
 
 

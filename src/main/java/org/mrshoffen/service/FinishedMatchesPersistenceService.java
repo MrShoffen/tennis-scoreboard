@@ -44,7 +44,7 @@ public class FinishedMatchesPersistenceService {
                 .map(matchMapper::toDto)
                 .collect(toList());
 
-        int totalPages = (int) ceilDiv(matchRepository.numberOfEntitiesWithName(requestDto.getPlayerName()),
+        int totalPages = ceilDiv(matchRepository.numberOfEntitiesWithName(requestDto.getPlayerName()),
                 requestDto.getPageSize());
 
         return  PageResponseDto.builder()

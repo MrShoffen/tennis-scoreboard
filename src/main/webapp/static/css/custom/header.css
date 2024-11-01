@@ -8,13 +8,13 @@ body {
 }
 
 .nav-item {
-    transition: background-color 0.3s ease, color 0.3s ease; /* Указываем, какие свойства анимировать и длительность */
+    transition: background-color 0.4s ease, color 0.4s ease; /* Указываем, какие свойства анимировать и длительность */
     border-radius: 8px;
 }
 
 .nav-item:hover {
     background-color: #a6d388;
-    color: #333;
+
     border-radius: 8px;
 }
 
@@ -27,7 +27,27 @@ body {
 }
 
 .nav-link {
+    color: rgb(210, 210, 210);
     display: block;
     width: 100%;
     text-decoration: none
 }
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.nav-item:hover img {
+    animation: rotate 0.4s linear;
+    filter: brightness(90%);
+}
+
+.main-page-link:hover img{
+    animation: rotate 0.4s linear;
+}
+

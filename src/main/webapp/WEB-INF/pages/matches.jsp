@@ -77,8 +77,8 @@
     <%@ include file="util/pagination_plugin.html" %>
 
 </div>
-
 <%@ include file="util/footer.html" %>
+
 
 <script src="static/js/bootstrap.bundle.min.js"></script>
 

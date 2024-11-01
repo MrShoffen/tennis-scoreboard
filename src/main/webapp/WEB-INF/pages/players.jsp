@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
 
-    <title>Matches</title>
+    <title>Players</title>
 
     <%-- bootstrap --%>
     <link href="static/css/bootstrap.css" rel="stylesheet"/>
@@ -70,19 +70,18 @@
                 <img src="static/img/main_icon.svg" alt="Tennis" width="28" height="28"/>
             </div>
 
+        </div>
+
+        <%@ include file="util/pagination_plugin.html" %>
+        <%@ include file="util/footer.html" %>
     </div>
-    
-    <%@ include file="util/pagination_plugin.html"%>
 
-</div>
 
-<%@ include file="util/footer.html" %>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
 
-<script src="static/js/bootstrap.bundle.min.js"></script>
-
-<script src="app.js"></script>
-<script src="static/js/players.js"></script>
-<script src="static/js/info_page.js"></script>
+    <script src="app.js"></script>
+    <script src="static/js/players.js"></script>
+    <script src="static/js/info_page.js"></script>
 
 </body>
 </html>
