@@ -17,7 +17,6 @@ public class JspDispatcherFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        System.out.println();
 
         String page = req.getRequestURI().substring(req.getContextPath().length()+1);
 

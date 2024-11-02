@@ -2,8 +2,8 @@ package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
 import org.mrshoffen.dto.request.PageRequestDto;
-import org.mrshoffen.dto.response.PageResponseDto;
-import org.mrshoffen.dto.response.PlayerResponseDto;
+import org.mrshoffen.dto.response.pageable.PageResponseDto;
+import org.mrshoffen.dto.response.pageable.PlayerResponseDto;
 import org.mrshoffen.mapper.PlayerMapper;
 import org.mrshoffen.repository.MatchRepository;
 import org.mrshoffen.repository.PlayerRepository;

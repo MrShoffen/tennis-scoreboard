@@ -49,7 +49,7 @@
     </div>
 
     <div class="row justify-content-md-center mb-3 ">
-        <div class="col-lg-9 themed-grid-col text-center">
+        <div class="col-lg-9 themed-grid-col text-center table-container">
 
             <table class="table item-table">
 
@@ -60,7 +60,7 @@
                     <th scope="col">Count</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody >
                 <%-- table content--%>
                 </tbody>
             </table>

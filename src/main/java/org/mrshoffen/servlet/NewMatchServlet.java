@@ -1,7 +1,6 @@
 package org.mrshoffen.servlet;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @WebServlet("/api/new-match")
-public class NewMatchServlet extends BaseHttpServlet {
+public class NewMatchServlet extends BaseJsonApiServlet {
 
     @Inject
     private OngoingMatchesService ongoingMatchesService;

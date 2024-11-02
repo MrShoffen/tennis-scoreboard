@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Custom page styles -->
-    <link href="static/css/custom/info_page.css" rel="stylesheet"/>
+    <link href="static/css/custom/match-score.css" rel="stylesheet"/>
 </head>
 
 
@@ -28,60 +28,117 @@
 
 <%@ include file="util/header.html" %>
 
-<div class="container item-container">
 
-    <div class="row justify-content-md-center mb-3 item-title">
-        <div class="col-lg-9  themed-grid-col ">
-            <div class="d-flex justify-content-center align-items-center">
-                <h3>Players</h3>
-            </div>
+<div class="container page-content">
 
-        </div>
-    </div>
 
-    <div class="row justify-content-md-center mb-3 items-per-page">
-        <div class="col-lg-9  themed-grid-col ">
-            <div class="d-flex justify-content-between align-items-center">
-                <%@ include file="util/page_size_selector_plugin.html" %>
-                <%@ include file="util/search_bar_plugin.html" %>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-md-center mb-3 ">
+    <div class="row justify-content-md-center">
+        <!-- Используйте 'col-lg-9' для того, чтобы ширина соответствовала вашему столбцу -->
         <div class="col-lg-9 themed-grid-col text-center">
 
-            <table class="table item-table">
+            <div id="first-player">
+                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
+                    <!-- Один сплошной элемент на всю ширину контейнера -->
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <h4>Player 1</h4>
+                    </div>
+                </div>
 
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Player</th>
-                    <th scope="col">Count</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%-- table content--%>
-                </tbody>
-            </table>
+                <div class="d-grid first-player-score" style="grid-template-columns: repeat(4, 1fr);">
+                    <!-- Каждый отдельный элемент -->
+                    <div class="points score-element d-flex justify-content-center align-items-center">
+                       45
+                    </div>
+                    <div class="set1 score-element d-flex justify-content-center align-items-center">
+                        6
+                    </div>
+                    <div class="set2 score-element d-flex justify-content-center align-items-center">
+                        8
+                    </div>
+                    <div class="set3 score-element d-flex justify-content-center align-items-center">
+                        9
+                    </div>
+                </div>
 
-            <div class="bouncing-ball-loader">
-                <!-- Вставьте ваш SVG-код ниже -->
-                <img src="static/img/main_icon.svg" alt="Tennis" width="28" height="28"/>
             </div>
+
+
+            <div class="d-grid score-names" style="grid-template-columns: repeat(4, 1fr);">
+                <!-- Каждый отдельный элемент -->
+                <div class="points score-element d-flex justify-content-center align-items-center">
+                    <span>GAME</span>
+                </div>
+                <div class="set1 score-element d-flex justify-content-center align-items-center">
+                    <span>SET 1</span>
+                </div>
+                <div class="set2 score-element d-flex justify-content-center align-items-center">
+                    <span>SET 2</span>
+                </div>
+                <div class="set3 score-element d-flex justify-content-center align-items-center">
+                    <span>SET 3</span>
+                </div>
+
+            </div>
+
+            <div id="second-player">
+
+                <div class="d-grid second-player-score" style="grid-template-columns: repeat(4, 1fr);">
+                    <!-- Каждый отдельный элемент -->
+                    <div class="points score-element d-flex justify-content-center align-items-center">
+                        45
+                    </div>
+                    <div class="set1 score-element d-flex justify-content-center align-items-center">
+                        6
+                    </div>
+                    <div class="set2 score-element d-flex justify-content-center align-items-center">
+                        8
+                    </div>
+                    <div class="set3 score-element d-flex justify-content-center align-items-center">
+                        9
+                    </div>
+                </div>
+
+                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
+                    <!-- Один сплошной элемент на всю ширину контейнера -->
+                    <div class="col score-element d-flex justify-content-center align-items-center">
+                        <h4>Player 2</h4>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="button-group d-grid" style="grid-template-columns: repeat(2, 1fr);">
+
+                <div class="first-player-point-button d-flex justify-content-center align-items-center">
+                    <button class="btn-point">Player 1  <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+
+                <div class="second-player-point-button d-flex justify-content-center align-items-center">
+                    <button class="btn-point">Player 2 <i class="fa-solid fa-arrow-right"></i></button>
+
+                </div>
+
+            </div>
+
 
         </div>
 
+
     </div>
-    <%@ include file="util/pagination_plugin.html" %>
+
+
 </div>
+
+
 <%@ include file="util/footer.html" %>
 
 <script src="static/js/bootstrap.bundle.min.js"></script>
 
 <script src="app.js"></script>
-<script src="static/js/players.js"></script>
-<script src="static/js/info_page.js"></script>
+<script src="static/js/match-score.js"></script>
 
 </body>
 </html>

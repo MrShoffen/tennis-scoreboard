@@ -67,3 +67,50 @@ td a:hover{
     animation-timing-function: cubic-bezier(.5, 0.05, 1, .5);
     animation-iteration-count: infinite;
 }
+
+/* ffffffffffffffffffffffff*/
+
+.table-container {
+    overflow: hidden; /* Скрыть выходящий за пределы контент */
+    position: relative;
+}
+
+.fade-out-next {
+    animation: fadeOutLeft 0.15s forwards;
+}
+
+/* Анимация появления для кнопки "next" */
+.fade-in-next {
+    animation: fadeInLeft 0.15s forwards;
+}
+
+
+/* Анимация исчезновения для кнопки "prev" */
+.fade-out-prev {
+    animation: fadeOutRight 0.15s forwards;
+}
+
+/* Анимация появления для кнопки "prev" */
+.fade-in-prev {
+    animation: fadeInRight 0.15s forwards;
+}
+
+@keyframes fadeOutRight {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(100px); }
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(-100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeOutLeft {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-100px); }
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}

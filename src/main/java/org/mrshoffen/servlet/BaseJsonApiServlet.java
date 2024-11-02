@@ -10,7 +10,7 @@ import org.mrshoffen.utils.DependencyManager;
 
 import java.io.IOException;
 
-public abstract class BaseHttpServlet extends HttpServlet {
+public abstract class BaseJsonApiServlet extends HttpServlet {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

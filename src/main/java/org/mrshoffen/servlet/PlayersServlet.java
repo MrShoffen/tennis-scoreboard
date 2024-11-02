@@ -6,13 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.request.PageRequestDto;
-import org.mrshoffen.dto.response.PageResponseDto;
+import org.mrshoffen.dto.response.pageable.PageResponseDto;
 import org.mrshoffen.service.PlayersPersistenceService;
 
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/api/players", name = "PlayerData")
-public class PlayersServlet extends BaseHttpServlet {
+public class PlayersServlet extends BaseJsonApiServlet {
 
     @Inject
     private PlayersPersistenceService playerService;

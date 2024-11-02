@@ -2,9 +2,9 @@ package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
 import org.mrshoffen.dto.request.PageRequestDto;
-import org.mrshoffen.dto.response.PageResponseDto;
+import org.mrshoffen.dto.response.pageable.PageResponseDto;
 import org.mrshoffen.mapper.MatchMapper;
-import org.mrshoffen.dto.response.MatchResponseDto;
+import org.mrshoffen.dto.response.pageable.MatchResponseDto;
 import org.mrshoffen.repository.MatchRepository;
 
 import java.util.List;

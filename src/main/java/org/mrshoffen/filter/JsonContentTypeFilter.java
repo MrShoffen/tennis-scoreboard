@@ -17,6 +17,7 @@ public class JsonContentTypeFilter   extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
         res.setContentType("application/json");
         res.setCharacterEncoding(StandardCharsets.UTF_8.name());
 

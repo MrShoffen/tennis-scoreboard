@@ -2,7 +2,7 @@ package org.mrshoffen.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mrshoffen.dto.response.MatchResponseDto;
+import org.mrshoffen.dto.response.pageable.MatchResponseDto;
 import org.mrshoffen.entity.Match;
 
 @Mapper

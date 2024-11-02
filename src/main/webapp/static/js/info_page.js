@@ -60,9 +60,7 @@ function updateCurrentSearch() {
     const player = currentRequest().player_name;
     if (player.trim()) {
         const currentSearchLabel = document.querySelector('.current-search-label');
-        let searchedText = player.endsWith('%') ? player.slice(0, -1) : player;
-
-        currentSearchLabel.textContent = searchedText;
+        currentSearchLabel.textContent = player.endsWith('%') ? player.slice(0, -1) : player;
         currentSearch.style.display = 'block';
     } else {
         currentSearch.style.display = 'none';
@@ -161,7 +159,7 @@ function removeLoader() {
     }
 }
 
-function updatePage(params) {
+async function updatePage(params) {
 
     const url = context + apiJSON + '?' + new URLSearchParams(params).toString();
 
@@ -189,15 +187,16 @@ function configurePaginationPlugin(totalPages, params) {
     pagination.innerHTML = '';
 
 
+
+
     let prevElement = createPageButton(pagination, 'Prev');
     if (params.page_number === 1) {
         prevElement.classList.add('disabled')
     } else {
-        prevElement.addEventListener('click', function (event) {
+        prevElement.addEventListener('click', async function (event) {
             event.preventDefault();
-            updatePage(
-                buildRequest(--params.page_number, params.page_size, params.player_name)
-            );
+            await changePageWithAnimation('prev', buildRequest(--params.page_number, params.page_size, params.player_name));
+
         });
     }
 
@@ -212,12 +211,29 @@ function configurePaginationPlugin(totalPages, params) {
     if (params.page_number === totalPages) {
         nextElement.classList.add('disabled');
     } else {
-        nextElement.addEventListener('click', function (event) {
+        nextElement.addEventListener('click', async function (event) {
             event.preventDefault();
-            updatePage(buildRequest(++params.page_number, params.page_size, params.player_name))
+
+            await changePageWithAnimation('next', buildRequest(++params.page_number, params.page_size, params.player_name));
         });
     }
 
+}
+
+async function changePageWithAnimation(direction, request) {
+    let table = document.querySelector('.item-table');
+    table.classList.add('fade-out-' + direction);
+
+    await new Promise(resolve => setTimeout(resolve, 200)); // Время совпадает с длительностью анимации
+
+    await updatePage(request);
+
+    table.classList.remove('fade-out-' + direction);
+    table.classList.add('fade-in-' + direction);
+
+    setTimeout(() => {
+        table.classList.remove('fade-in-' + direction);
+    }, 200);
 }
 
 function configureGoButton(totalPages) {
@@ -246,11 +262,14 @@ function configureGoButton(totalPages) {
         let backgroundColor = window.getComputedStyle(inputForm).backgroundColor;
         if (backgroundColor === "rgba(0, 0, 0, 0)" && inputForm.value.trim()) {
             let targetPage = +inputForm.value.trim();
+            let currentPage = currentRequest().page_number;
+            if(Number.isInteger(targetPage) &&   targetPage >= 1 && targetPage <= currentTotalPages && targetPage !== currentPage){
 
-            if(Number.isInteger(targetPage) &&   targetPage >= 1 && targetPage <= currentTotalPages){
-                updatePage(
-                    buildRequest(targetPage, currentRequest().page_size, currentRequest().player_name)
-                )
+
+                let direction = targetPage > currentPage ? 'next' : 'prev';
+
+                changePageWithAnimation( direction, buildRequest(targetPage, currentRequest().page_size, currentRequest().player_name));
+
             } else {
                 inputForm.value = '';
                 inputForm.classList.add('invalid');
@@ -306,9 +325,11 @@ function checkCurrentNumberPageActive(params, checkedNumber, pageElement) {
     } else {
         pageElement.addEventListener('click', function (event) {
             event.preventDefault();
-            updatePage(
-                buildRequest(checkedNumber, params.page_size, params.player_name)
-            )
+
+            let direction = checkedNumber > params.page_number ? 'next' : 'prev';
+
+             changePageWithAnimation( direction, buildRequest(checkedNumber, params.page_size, params.player_name));
+
         });
     }
 }
@@ -329,9 +350,12 @@ function setupSixOrMorePages(totalPages, params, pagination) {
         let middle = createPageButton(pagination, middlePage);
         middle.addEventListener('click', function (event) {
             event.preventDefault();
-            updatePage(
-                buildRequest(middlePage, params.page_size, params.player_name)
-            );
+
+            let direction = middlePage > params.page_number ? 'next' : 'prev';
+
+            changePageWithAnimation( direction, buildRequest(middlePage, params.page_size, params.player_name));
+
+
         });
     }
 

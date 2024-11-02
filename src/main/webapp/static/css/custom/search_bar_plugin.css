@@ -83,10 +83,24 @@
     color: rgb(210, 210, 210);
     background-color: transparent;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: nowrap;        /* Не переносить текст на новую строку */
+    overflow: hidden;           /* Скрывать содержимое, выходящее за границы элемента */
+    text-overflow: ellipsis;    /* Показывать многоточие в конце, если текст не влезает */
 
     z-index: -1;
+}
+
+
+
+.btn-clear-current-search:hover{
+    transform: scale(1.08);
+    font-weight: bold;
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.btn-clear-current-search:active{
+    transform: scale(0.95);
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .btn-clear-current-search {
@@ -105,6 +119,8 @@
 
     color: rgb(210, 210, 210);
     background-color: transparent;
+
+    transition: all 0.1s ease-in-out;
 
 }
 

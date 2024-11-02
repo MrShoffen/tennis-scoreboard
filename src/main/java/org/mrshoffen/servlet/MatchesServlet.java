@@ -1,19 +1,18 @@
 package org.mrshoffen.servlet;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.request.PageRequestDto;
-import org.mrshoffen.dto.response.PageResponseDto;
+import org.mrshoffen.dto.response.pageable.PageResponseDto;
 import org.mrshoffen.service.FinishedMatchesPersistenceService;
 
 import java.io.IOException;
 
 
 @WebServlet(urlPatterns = "/api/matches", name = "MatchData")
-public class MatchesServlet extends BaseHttpServlet {
+public class MatchesServlet extends BaseJsonApiServlet {
 
     @Inject
     private FinishedMatchesPersistenceService matchService;
