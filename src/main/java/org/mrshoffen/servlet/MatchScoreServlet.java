@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mrshoffen.dto.request.NewMatchRequestDto;
+import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.service.OngoingMatchesService;
 
@@ -28,6 +30,15 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
 
         writeJsonValueToResponse(resp, currentMatch);
 
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var scoredPlayer = readDtoFromJsonRequest(req, PointScoreDto.class);
+        UUID uuid = UUID.fromString(req.getParameter("uuid"));
+
+        System.out.println();
 
     }
 }

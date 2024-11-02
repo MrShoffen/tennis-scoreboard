@@ -112,13 +112,12 @@
             <div class="button-group d-grid" style="grid-template-columns: repeat(2, 1fr);">
 
                 <div class="first-player-point-button d-flex justify-content-center align-items-center">
-                    <button class="btn-point">Player 1  <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-point">Player 1  </button>
                 </div>
 
 
                 <div class="second-player-point-button d-flex justify-content-center align-items-center">
-                    <button class="btn-point">Player 2 <i class="fa-solid fa-arrow-right"></i></button>
-
+                    <button class="btn-point">Player 2</button>
                 </div>
 
             </div>
