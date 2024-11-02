@@ -38,7 +38,17 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
         var scoredPlayer = readDtoFromJsonRequest(req, PointScoreDto.class);
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
 
-        System.out.println();
+
+        OngoingMatchResponseDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoredPlayer);
+
+        if (updatedMatch.isEnded()) {
+            ongoingMatchesService.saveMatch(uuid);
+
+            resp.sendRedirect(req.getContextPath() + "/matches");
+
+        }
+
+        writeJsonValueToResponse(resp, updatedMatch);
 
     }
 }

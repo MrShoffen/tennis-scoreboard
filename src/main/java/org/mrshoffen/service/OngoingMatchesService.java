@@ -2,6 +2,7 @@ package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
 import org.mrshoffen.dto.request.NewMatchRequestDto;
+import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.entity.Match;
 import org.mrshoffen.entity.OngoingMatch;
@@ -23,11 +24,14 @@ public class OngoingMatchesService {
 
     private final OngoingMatchMapper ongoingMatchMapper;
 
+    private final MatchScoreCalculationService matchScoreCalculationService;
+
     @Inject
-    public OngoingMatchesService(MatchRepository matchRepository, PlayerRepository playerRepository, OngoingMatchMapper ongoingMatchMapper) {
+    public OngoingMatchesService(MatchRepository matchRepository, PlayerRepository playerRepository, OngoingMatchMapper ongoingMatchMapper, MatchScoreCalculationService matchScoreCalculationService) {
         this.matchRepository = matchRepository;
         this.playerRepository = playerRepository;
         this.ongoingMatchMapper = ongoingMatchMapper;
+        this.matchScoreCalculationService = matchScoreCalculationService;
     }
 
 
@@ -41,7 +45,9 @@ public class OngoingMatchesService {
                 .name(newMatchRequestDto.getSecondPlayer())
                 .build();
 
-        var match = new OngoingMatch(firstPlayer,secondPlayer);
+        var match = new OngoingMatch(firstPlayer, secondPlayer);
+
+
 
         UUID uuid = UUID.randomUUID();
 
@@ -53,27 +59,50 @@ public class OngoingMatchesService {
     public OngoingMatchResponseDto getMatchById(UUID uuid) {
         //todo handle non existing match
 
-        var match = ongoingMatches.get(uuid);
-        return ongoingMatchMapper.toDto(match);
+        return ongoingMatchMapper.toDto(ongoingMatches.get(uuid));
+
 
     }
 
 
-    public void saveMatch(Match match) {
-        Player firstPlayer = playerRepository.findByName(match.getFirstPlayer().getName())
-                .orElseGet(() -> playerRepository.save(match.getFirstPlayer()));
+    public void saveMatch(UUID uuid) {
 
-        Player secondPlayer = playerRepository.findByName(match.getSecondPlayer().getName())
-                .orElseGet(() -> playerRepository.save(match.getSecondPlayer()));
-
-        System.out.println();
+        OngoingMatch currentMatch = ongoingMatches.get(uuid);
 
 
-        match.setFirstPlayer(firstPlayer);
-        match.setWinner(firstPlayer);
-        match.setSecondPlayer(secondPlayer);
+        Player firstPlayer = playerRepository.findByName(currentMatch.getFirstPlayer().getName())
+                .orElseGet(() -> playerRepository.save(currentMatch.getFirstPlayer()));
+
+        Player secondPlayer = playerRepository.findByName(currentMatch.getSecondPlayer().getName())
+                .orElseGet(() -> playerRepository.save(currentMatch.getSecondPlayer()));
+
+        Player winner = playerRepository.findByName(currentMatch.getWinner().getName()).get();
+
+
+
+        Match match = Match.builder()
+                .firstPlayer(firstPlayer)
+                .secondPlayer(secondPlayer)
+                .winner(winner)
+                .build();
 
         matchRepository.save(match);
 
     }
+
+    public OngoingMatchResponseDto updateMatch(UUID uuid, PointScoreDto pointScoreDto) {
+
+        //todo add validation
+        OngoingMatch currentMatch = ongoingMatches.get(uuid);
+
+        matchScoreCalculationService.updateMatchScore(currentMatch, pointScoreDto.getPointWinner());
+
+        //
+//        currentMatch.wonBy(currentMatch.getFirstPlayer().getName());
+
+        return ongoingMatchMapper.toDto(currentMatch);
+
+    }
+
+
 }

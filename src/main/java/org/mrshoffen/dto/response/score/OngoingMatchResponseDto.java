@@ -15,4 +15,6 @@ public class OngoingMatchResponseDto {
     private Integer firstPlayerCurrentPoints;
     private Integer secondPlayerCurrentPoints;
 
+    private boolean ended;
+
 }

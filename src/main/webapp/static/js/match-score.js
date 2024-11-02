@@ -36,7 +36,8 @@ function buildScoreRequest(pointWinner) {
 }
 
 function sendScoreRequest(request) {
-    let url = context + match_score_api + window.location.search;
+    let uuid = window.location.search;
+    let url = context + match_score_api + uuid;
 
     fetch(url, {
         method: 'POST',
@@ -45,8 +46,25 @@ function sendScoreRequest(request) {
         },
         body: JSON.stringify(request)
     }).then(response => {
+        console.log(response.status);
+        // alert(response.url);
+        console.log(response.url);
+        if (!response.url.includes(uuid)) {
+            alert('heeere');
+            window.location.href = response.url;
+        } else {
+            return response.json().then(json => {
+                console.log('Получен JSON:', json);
+                setUpPlayerScore(firstPlayerBlock, json.firstPlayer, json.firstPlayerSets, json.firstPlayerCurrentPoints);
+                setUpPlayerScore(secondPlayerBlock, json.secondPlayer, json.secondPlayerSets, json.secondPlayerCurrentPoints);
 
-    });
+            });
+        }
+
+    })
+        .catch(error => {
+            console.error('err', error);
+        });
 
 
 }
@@ -58,7 +76,7 @@ function setupPlayerScoreButton(element, name) {
 
     button.addEventListener('click', function () {
 
-       sendScoreRequest(buildScoreRequest(name));
+        sendScoreRequest(buildScoreRequest(name));
     })
 
 
