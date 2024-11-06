@@ -123,16 +123,30 @@ hr {
 
 
 .btn-point:hover {
-    /*box-shadow: 0px 15px 25px -5px #213714;*/
-    /*transform: scale(1.03);*/
     background: #538c34;
     box-shadow: -2px 2px 16px rgba(0, 0, 0, 0.6);
 
 }
 
 .btn-point:active {
-    /*box-shadow: 0px 4px 8px #2f4c1e;*/
     transform: scale(0.98);
 
     box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.7);
 }
+
+.highlight {
+    animation: gradientBorderBlink 0.3s ease-out 1; /* Анимация длится 1 секунду и повторяется только один раз */
+    z-index: 999;
+}
+
+
+
+@keyframes gradientBorderBlink {
+    0%, 100% {
+        box-shadow: 0 0 0px 0px rgba(255, 98, 0, 0.23); /* Без эффекта */
+    }
+    50% {
+        box-shadow: 0 0 15px 7px rgba(255, 98, 0, 0.62); /* Красная расплывчатая граница */
+    }
+}
+

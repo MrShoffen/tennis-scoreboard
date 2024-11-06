@@ -40,23 +40,23 @@
                 <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
                     <!-- Один сплошной элемент на всю ширину контейнера -->
                     <div class="col d-flex justify-content-center align-items-center">
-                        <h4>Player 1</h4>
+                        <h4>...</h4>
                     </div>
                 </div>
 
                 <div class="d-grid first-player-score" style="grid-template-columns: repeat(4, 1fr);">
                     <!-- Каждый отдельный элемент -->
                     <div class="points score-element d-flex justify-content-center align-items-center">
-                       45
+
                     </div>
                     <div class="set1 score-element d-flex justify-content-center align-items-center">
-                        6
+
                     </div>
                     <div class="set2 score-element d-flex justify-content-center align-items-center">
-                        8
+
                     </div>
                     <div class="set3 score-element d-flex justify-content-center align-items-center">
-                        9
+
                     </div>
                 </div>
 
@@ -85,23 +85,23 @@
                 <div class="d-grid second-player-score" style="grid-template-columns: repeat(4, 1fr);">
                     <!-- Каждый отдельный элемент -->
                     <div class="points score-element d-flex justify-content-center align-items-center">
-                        45
+
                     </div>
                     <div class="set1 score-element d-flex justify-content-center align-items-center">
-                        6
+
                     </div>
                     <div class="set2 score-element d-flex justify-content-center align-items-center">
-                        8
+
                     </div>
                     <div class="set3 score-element d-flex justify-content-center align-items-center">
-                        9
+
                     </div>
                 </div>
 
                 <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
                     <!-- Один сплошной элемент на всю ширину контейнера -->
-                    <div class="col score-element d-flex justify-content-center align-items-center">
-                        <h4>Player 2</h4>
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <h4>...</h4>
                     </div>
                 </div>
 

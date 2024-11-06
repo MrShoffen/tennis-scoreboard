@@ -9,21 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
-// window.addEventListener('beforeunload', function (event) {
-//     // Показываем сообщение о потерянных данных
-//     const message = "Match information will be lost. Are you sure?";
-//
-//     // Стандарт требует, чтобы preventDefault() был вызван.
-//
-//         event.preventDefault();
-//
-//
-//     // Установка возвращаемого значения на event.returnValue - это требование
-//     // для старых браузеров, чтобы отобразить пользовательское сообщение.
-//
-//     // Выводим сообщение в современных браузерах
-//     return message;
-// });
 
 document.addEventListener('click', function (event) {
     let startButton = document.querySelector('.btn-start');

@@ -95,6 +95,7 @@ public class OngoingMatchesService {
         //todo add validation
         OngoingMatch currentMatch = ongoingMatches.get(uuid);
 
+        //todo send player as second argument?
         matchScoreCalculationService.updateMatchScore(currentMatch, pointScoreDto.getPointWinner());
 
         //
