@@ -45,7 +45,7 @@ public class OngoingMatchesService {
                 .name(newMatchRequestDto.getSecondPlayer())
                 .build();
 
-        var match = new OngoingMatch(firstPlayer, secondPlayer);
+        var match = new OngoingMatch(firstPlayer.getName(), secondPlayer.getName());
 
 
 
@@ -69,24 +69,24 @@ public class OngoingMatchesService {
 
         OngoingMatch currentMatch = ongoingMatches.get(uuid);
 
-
-        Player firstPlayer = playerRepository.findByName(currentMatch.getFirstPlayer().getName())
-                .orElseGet(() -> playerRepository.save(currentMatch.getFirstPlayer()));
-
-        Player secondPlayer = playerRepository.findByName(currentMatch.getSecondPlayer().getName())
-                .orElseGet(() -> playerRepository.save(currentMatch.getSecondPlayer()));
-
-        Player winner = playerRepository.findByName(currentMatch.getWinner().getName()).get();
-
-
-
-        Match match = Match.builder()
-                .firstPlayer(firstPlayer)
-                .secondPlayer(secondPlayer)
-                .winner(winner)
-                .build();
-
-        matchRepository.save(match);
+//
+//        Player firstPlayer = playerRepository.findByName(currentMatch.getFirstPlayer())
+//                .orElseGet(() -> playerRepository.save(currentMatch.getFirstPlayer()));
+//
+//        Player secondPlayer = playerRepository.findByName(currentMatch.getSecondPlayer())
+//                .orElseGet(() -> playerRepository.save(currentMatch.getSecondPlayer()));
+//
+//        Player winner = playerRepository.findByName(currentMatch.getWinner()).get();
+//
+//
+//
+//        Match match = Match.builder()
+//                .firstPlayer(firstPlayer)
+//                .secondPlayer(secondPlayer)
+//                .winner(winner)
+//                .build();
+//
+//        matchRepository.save(match);
 
     }
 
