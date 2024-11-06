@@ -62,7 +62,7 @@ public class OngoingMatch {
         secondPlayerCurrentPoints = 0;
     }
 
-    public void scoreGameInSet(String playerName) {
+    public void scoreGameInCurrentSet(String playerName) {
         if (playerName.equals(firstPlayer.getName())) {
             firstPlayerSets[currentSet-1]++;
         } else {
@@ -78,13 +78,11 @@ public class OngoingMatch {
         clearPoints();
     }
 
-    public void wonBy(String playerName) {
+    public void setWinner(String playerName) {
         if (playerName.equals(firstPlayer.getName())) {
             winner = firstPlayer;
         } else {
             winner = secondPlayer;
         }
-
-        ended = true;
     }
 }

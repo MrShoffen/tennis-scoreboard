@@ -25,9 +25,9 @@ public interface OngoingMatchMapper {
 
         match.scorePoint("first");
 
-        match.scoreGameInSet("second");
+        match.scoreGameInCurrentSet("second");
         match.startNextSet();
-        match.scoreGameInSet("first");
+        match.scoreGameInCurrentSet("first");
 
         var dto = mapper.toDto(match);
 
