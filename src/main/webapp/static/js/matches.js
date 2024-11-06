@@ -19,14 +19,14 @@ function fillDataTables(data) {
 
         let player1 = document.createElement('td');
         let player1Link = document.createElement('a');
-        player1Link.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
+        player1Link.innerHTML = match.firstPlayer + (match.firstPlayer === match.winner ? ` <i class="fa-solid fa-trophy" style="color: rgb(214,154,0)"></i>` : "");
         player1Link.href = context + matches_frontend + '?player_name=' + match.firstPlayer + '&page_size=' + selectedSize();
         player1.appendChild(player1Link)
         row.appendChild(player1);
 
         let player2 = document.createElement('td');
         let player2Link = document.createElement('a');
-        player2Link.innerHTML = match.secondPlayer + (match.secondPlayer === match.winner ? " <i class=\"fa-solid fa-trophy\"></i>" : "");
+        player2Link.innerHTML = match.secondPlayer + (match.secondPlayer === match.winner ? ` <i class="fa-solid fa-trophy" style="color: rgb(214,154,0)"></i>` : "");
         player2Link.href = context + matches_frontend + '?player_name=' + match.secondPlayer + '&page_size=' + selectedSize();
         player2.appendChild(player2Link)
         row.appendChild(player2);

@@ -1,4 +1,4 @@
-package org.mrshoffen.entity;
+package org.mrshoffen.entity.persistence;
 
 
 import jakarta.persistence.*;

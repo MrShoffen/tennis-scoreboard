@@ -42,7 +42,7 @@ function highlightText() {
 
                 link.innerHTML = link.textContent.replace(regex, (matched) => `<span class="highlight">${matched}</span>`);
                 if (winner) {
-                    link.innerHTML += '<i class="fa-solid fa-trophy"></i>'
+                    link.innerHTML += `<i class="fa-solid fa-trophy" style="color: rgb(214,154,0)"></i>`
                 }
 
             }

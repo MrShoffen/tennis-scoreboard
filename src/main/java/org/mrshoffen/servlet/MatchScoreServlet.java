@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
+import org.mrshoffen.dto.response.pageable.MatchResponseDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
+import org.mrshoffen.service.FinishedMatchesPersistenceService;
 import org.mrshoffen.service.OngoingMatchesService;
 
 import java.io.IOException;
@@ -18,6 +20,9 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
 
     @Inject
     private OngoingMatchesService ongoingMatchesService;
+
+    @Inject
+    private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
 
 
     @Override
@@ -42,8 +47,11 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
         OngoingMatchResponseDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoredPlayer);
 
         if (updatedMatch.isEnded()) {
-            ongoingMatchesService.saveMatch(uuid);
 
+            MatchResponseDto matchResponseDto
+                    = finishedMatchesPersistenceService.saveFinishedMatch(updatedMatch);
+
+            //todo add redirect to special page
             resp.sendRedirect(req.getContextPath() + "/matches");
 
         }

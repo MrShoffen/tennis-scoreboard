@@ -1,10 +1,8 @@
-package org.mrshoffen.entity;
+package org.mrshoffen.entity.persistence;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.mrshoffen.repository.PlayerRepository;
-import org.mrshoffen.utils.DependencyManager;
 
 @Data
 @NoArgsConstructor

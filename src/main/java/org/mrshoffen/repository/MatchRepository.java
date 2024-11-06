@@ -5,11 +5,10 @@ import jakarta.persistence.criteria.*;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mrshoffen.entity.Match;
+import org.mrshoffen.entity.persistence.Match;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MatchRepository extends BaseRepository< Match> {
 

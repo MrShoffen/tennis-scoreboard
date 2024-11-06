@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.pageable.PageResponseDto;
 import org.mrshoffen.dto.response.pageable.PlayerResponseDto;
+import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.mapper.PlayerMapper;
 import org.mrshoffen.repository.MatchRepository;
 import org.mrshoffen.repository.PlayerRepository;
@@ -54,4 +55,10 @@ public class PlayersPersistenceService {
     }
 
 
+    public Player findByNameOrSave(String name) {
+        Player playerForSave = Player.builder().name(name).build();
+        return playerRepository.findByName(name)
+                .orElseGet(() -> playerRepository.save(playerForSave));
+
+    }
 }

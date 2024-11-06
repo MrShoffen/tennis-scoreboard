@@ -10,6 +10,7 @@ public class OngoingMatchResponseDto {
 
     private String firstPlayer;
     private String secondPlayer;
+    private String winner;
 
     private boolean ended;
 

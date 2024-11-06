@@ -1,11 +1,10 @@
 package org.mrshoffen.service;
 
-import org.mrshoffen.entity.OngoingMatch;
+import org.mrshoffen.entity.domain.OngoingMatch;
 
 public class MatchScoreCalculationService {
 
     public void updateMatchScore(OngoingMatch match, String pointWinner) {
-
         match.setPointWinner(pointWinner);
         match.scoreToPointWinner();
 
@@ -17,7 +16,7 @@ public class MatchScoreCalculationService {
     }
 
     private void handleGameEnd(OngoingMatch match) {
-        if (match.isInTiebreak()) {
+        if (match.getState().isInTiebreak()) {
             handleTiebreakEnd(match);
         } else {
             handleRegularGameEnd(match);
@@ -25,36 +24,36 @@ public class MatchScoreCalculationService {
     }
 
     private void handleSetEnd(OngoingMatch match) {
-        if (match.currentSetEnded()) {
+        if (match.getState().currentSetEnded()) {
             match.startNextSet();
         }
     }
 
     private void handleMatchEnd(OngoingMatch match) {
-        if (match.isWonByPointWinner()) {
+        if (match.getState().isWonByPointWinner()) {
             match.setPointWinnerAsMatchWinner();
-            match.setEnded(true);
+            match.getState().setEnded(true);
         }
     }
 
     private void handleRegularGameEnd(OngoingMatch match) {
-        if (match.gameEnded()) {
+        if (match.getState().regularGameEnded()) {
             match.scoreGameInCurrentSet();
             match.startNextGame();
         }
     }
 
     private void handleTiebreakEnd(OngoingMatch match) {
-        if (match.tiebreakEnded()) {
+        if (match.getState().tiebreakEnded()) {
             match.scoreGameInCurrentSet();
             match.startNextGame();
-            match.setInTiebreak(false);
+            match.getState().setInTiebreak(false);
         }
     }
 
     private void checkForTiebreak(OngoingMatch match) {
-        if (match.inTieBreak()) {
-            match.setInTiebreak(true);
+        if (match.getState().setInTiebreak()) {
+            match.getState().setInTiebreak(true);
         }
     }
 }

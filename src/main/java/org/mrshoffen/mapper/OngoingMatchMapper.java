@@ -3,13 +3,13 @@ package org.mrshoffen.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
-import org.mrshoffen.entity.OngoingMatch;
+import org.mrshoffen.entity.domain.OngoingMatch;
 
 @Mapper
 public interface OngoingMatchMapper {
 
-    @Mapping(target = "firstPlayer", source = "firstPlayer")
-    @Mapping(target = "secondPlayer", source = "secondPlayer")
+    @Mapping(target = "ended" , source = "state.ended")
+    @Mapping(target = "inTiebreak" , source = "state.inTiebreak")
     OngoingMatchResponseDto toDto(OngoingMatch ongoingMatch);
 
 }

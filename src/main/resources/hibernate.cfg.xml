@@ -13,8 +13,8 @@
     <property name="hibernate.hbm2ddl.auto">create</property>
     <property name="hibernate.hbm2ddl.import_files">database/fill_tables.sql</property>
 
-    <mapping class="org.mrshoffen.entity.Player"/>
-    <mapping class="org.mrshoffen.entity.Match"/>
+    <mapping class="org.mrshoffen.entity.persistence.Player"/>
+    <mapping class="org.mrshoffen.entity.persistence.Match"/>
 
 
 

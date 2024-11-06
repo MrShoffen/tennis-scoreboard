@@ -5,8 +5,7 @@ import jakarta.persistence.criteria.*;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mrshoffen.entity.Match;
-import org.mrshoffen.entity.Player;
+import org.mrshoffen.entity.persistence.Player;
 
 import java.util.ArrayList;
 import java.util.List;
