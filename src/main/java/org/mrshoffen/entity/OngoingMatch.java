@@ -1,10 +1,7 @@
 package org.mrshoffen.entity;
 
 
-import lombok.Builder;
 import lombok.Data;
-
-import java.util.Arrays;
 
 @Data
 public class OngoingMatch {
@@ -14,7 +11,7 @@ public class OngoingMatch {
 
     private Player winner = null;
 
-    private int currentSet = 0;
+    private int currentSet = 1;
 
     private Integer[] firstPlayerSets = new Integer[]{0, 0, 0};
     private Integer[] secondPlayerSets = new Integer[]{0, 0, 0};
@@ -23,6 +20,8 @@ public class OngoingMatch {
     private Integer secondPlayerCurrentPoints = 0;
 
     private boolean ended = false;
+
+    private boolean inTiebreak = false;
 
 
     public void scorePoint(String playerName) {
@@ -33,10 +32,6 @@ public class OngoingMatch {
         }
     }
 
-    public boolean isOver(){
-        return winner != null;
-    }
-
     public Integer currentPoints(String playerName) {
         if (playerName.equals(firstPlayer.getName())) {
             return firstPlayerCurrentPoints;
@@ -45,11 +40,11 @@ public class OngoingMatch {
         }
     }
 
-    public Integer currentGamesWinned(String playerName) {
+    public Integer currentGamesWon(String playerName) {
         if (playerName.equals(firstPlayer.getName())) {
-            return firstPlayerSets[currentSet];
+            return firstPlayerSets[currentSet-1];
         } else {
-            return secondPlayerSets[currentSet];
+            return secondPlayerSets[currentSet-1];
         }
     }
 
@@ -69,9 +64,9 @@ public class OngoingMatch {
 
     public void scoreGameInSet(String playerName) {
         if (playerName.equals(firstPlayer.getName())) {
-            firstPlayerSets[currentSet]++;
+            firstPlayerSets[currentSet-1]++;
         } else {
-            secondPlayerSets[currentSet]++;
+            secondPlayerSets[currentSet-1]++;
         }
     }
 

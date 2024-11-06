@@ -20,8 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(json => {
 
-            setUpPlayerScore(firstPlayerBlock, json.firstPlayer, json.firstPlayerSets, json.firstPlayerCurrentPoints);
-            setUpPlayerScore(secondPlayerBlock, json.secondPlayer, json.secondPlayerSets, json.secondPlayerCurrentPoints);
+
+            setupScore(json);
+
 
             setupPlayerScoreButton(firstPlayerScoreButton, json.firstPlayer);
             setupPlayerScoreButton(secondPlayerScoreButton, json.secondPlayer);
@@ -35,6 +36,63 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 })
+
+function setupScore(score) {
+
+    function lessThan4Points(points) {
+        switch (points) {
+            case 0:
+                return "0";
+            case 1:
+                return "15";
+            case 2:
+                return "30";
+            case 3:
+                return "40";
+            default:
+                throw new Error("Invalid score: " + score);
+        }
+    }
+
+    function parseIntToTennisPoint(first, second) {
+        if (first <= 3 && second <= 3) {
+            return lessThan4Points(first);
+        } else if (first > second) {
+            return "AD";
+        } else if (first < second) {
+            return "40";
+        } else if (first === second) {
+            return "40"
+        }
+        return "err";
+
+
+    }
+
+    let firstPlayerStringScore = score.inTiebreak ? score.firstPlayerCurrentPoints :
+        parseIntToTennisPoint(+score.firstPlayerCurrentPoints, +score.secondPlayerCurrentPoints);
+
+    let secondPlayerStringScore =  score.inTiebreak ? score.secondPlayerCurrentPoints :
+        parseIntToTennisPoint(+score.secondPlayerCurrentPoints, +score.firstPlayerCurrentPoints);
+
+
+    setupGameLabel(score.inTiebreak);
+    setUpPlayerScore(firstPlayerBlock, score.firstPlayer, score.firstPlayerSets, firstPlayerStringScore);
+    setUpPlayerScore(secondPlayerBlock, score.secondPlayer, score.secondPlayerSets, secondPlayerStringScore);
+
+}
+
+function setupGameLabel(inTiebreak) {
+    const gameLabel = document.querySelector('.score-names .points');
+
+    if(inTiebreak){
+        updateElement(gameLabel,"TIEBREAK");
+        gameLabel.style.color = 'red';
+    } else{
+        updateElement(gameLabel,"GAME");
+        gameLabel.style.color = 'rgb(210, 210, 210)';
+    }
+}
 
 
 function setupPointListeners(playerBlock,) {
@@ -53,7 +111,7 @@ function setupPointListeners(playerBlock,) {
         const callback = function (mutationsList, observer) {
             for (const mutation of mutationsList) {
                 const newValue = mutation.target.textContent;
-                if ((mutation.type === 'childList' || mutation.type === 'characterData') && newValue !== '0' ) {
+                if ((mutation.type === 'childList' || mutation.type === 'characterData') && newValue !== '0') {
                     targetNode.classList.add('highlight');
 
                     setTimeout(() => {
@@ -69,37 +127,36 @@ function setupPointListeners(playerBlock,) {
 
 }
 
-function setUpPlayerScore(playerBlock, name, sets, currentPoints) {
-    function updateElement(element, newValue) {
-        let oldValue = element.innerHTML;
-        let newValueStr = String(newValue).trim();
-        if(oldValue !== newValueStr){
-            console.log('inside' + element);
-            console.log(oldValue);
-            console.log(newValue);
-            element.innerHTML = newValue;
-        }
+function updateElement(element, newValue) {
+    let oldValue = element.innerHTML;
+    let newValueStr = String(newValue).trim();
+    if (oldValue !== newValueStr) {
+        console.log('inside' + element);
+        console.log(oldValue);
+        console.log(newValue);
+        element.innerHTML = newValue;
     }
+}
+
+
+function setUpPlayerScore(playerBlock, name, sets, currentPoints) {
+
 
     let nameElement = playerBlock.querySelector('h4');
-    updateElement(nameElement,name);
+    updateElement(nameElement, name);
 
     let pointsElement = playerBlock.querySelector('.points');
-    updateElement(pointsElement,currentPoints);
+    updateElement(pointsElement, currentPoints);
 
     let set1Element = playerBlock.querySelector('.set1');
-    updateElement(set1Element,sets[0])
+    updateElement(set1Element, sets[0])
 
     let set2Element = playerBlock.querySelector('.set2');
-    updateElement(set2Element,sets[1])
+    updateElement(set2Element, sets[1])
 
 
     let set3Element = playerBlock.querySelector('.set3');
-    updateElement(set3Element,sets[2])
-
-
-
-
+    updateElement(set3Element, sets[2])
 
 
 }
@@ -123,8 +180,11 @@ function sendScoreRequest(request) {
         } else {
             return response.json().then(json => {
                 console.log('Получен JSON:', json);
-                setUpPlayerScore(firstPlayerBlock, json.firstPlayer, json.firstPlayerSets, json.firstPlayerCurrentPoints);
-                setUpPlayerScore(secondPlayerBlock, json.secondPlayer, json.secondPlayerSets, json.secondPlayerCurrentPoints);
+
+                setupScore(json);
+
+                // setUpPlayerScore(firstPlayerBlock, json.firstPlayer, json.firstPlayerSets, json.firstPlayerCurrentPoints);
+                // setUpPlayerScore(secondPlayerBlock, json.secondPlayer, json.secondPlayerSets, json.secondPlayerCurrentPoints);
 
             });
         }

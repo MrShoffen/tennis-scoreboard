@@ -12,9 +12,11 @@ public class OngoingMatchResponseDto {
     private Integer[] firstPlayerSets;
     private Integer[] secondPlayerSets;
 
-    private Integer firstPlayerCurrentPoints;
-    private Integer secondPlayerCurrentPoints;
+    private String firstPlayerCurrentPoints;
+    private String secondPlayerCurrentPoints;
 
     private boolean ended;
+
+    private boolean inTiebreak;
 
 }
