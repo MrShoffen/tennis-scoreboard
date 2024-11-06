@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(json => {
 
-
             setupScore(json);
-
 
             setupPlayerScoreButton(firstPlayerScoreButton, json.firstPlayer);
             setupPlayerScoreButton(secondPlayerScoreButton, json.secondPlayer);
@@ -72,7 +70,7 @@ function setupScore(score) {
     let firstPlayerStringScore = score.inTiebreak ? score.currentPoints[score.firstPlayer] :
         parseIntToTennisPoint(+score.currentPoints[score.firstPlayer], +score.currentPoints[score.secondPlayer]);
 
-    let secondPlayerStringScore =  score.inTiebreak ? score.currentPoints[score.secondPlayer] :
+    let secondPlayerStringScore = score.inTiebreak ? score.currentPoints[score.secondPlayer] :
         parseIntToTennisPoint(+score.currentPoints[score.secondPlayer], +score.currentPoints[score.firstPlayer]);
 
 
@@ -85,17 +83,17 @@ function setupScore(score) {
 function setupGameLabel(inTiebreak) {
     const gameLabel = document.querySelector('.score-names .points');
 
-    if(inTiebreak){
-        updateElement(gameLabel,"TIEBREAK");
+    if (inTiebreak) {
+        updateElement(gameLabel, "TIEBREAK");
         gameLabel.style.color = 'red';
-    } else{
-        updateElement(gameLabel,"GAME");
+    } else {
+        updateElement(gameLabel, "GAME");
         gameLabel.style.color = 'rgb(210, 210, 210)';
     }
 }
 
 
-function setupPointListeners(playerBlock,) {
+function setupPointListeners() {
     let mutableScoreElements = document.querySelectorAll('.score-element');
 
 
@@ -113,9 +111,13 @@ function setupPointListeners(playerBlock,) {
                 const newValue = mutation.target.textContent;
                 if ((mutation.type === 'childList' || mutation.type === 'characterData') && newValue !== '0') {
                     targetNode.classList.add('highlight');
-
+                    firstPlayerScoreButton.querySelector('button').disabled = true;
+                    secondPlayerScoreButton.querySelector('button').disabled = true;
                     setTimeout(() => {
                         targetNode.classList.remove('highlight');
+                        firstPlayerScoreButton.querySelector('button').disabled = false;
+                        secondPlayerScoreButton.querySelector('button').disabled = false;
+
                     }, 300); // Длительность анимации 1 секунда
                 }
             }
@@ -131,9 +133,6 @@ function updateElement(element, newValue) {
     let oldValue = element.innerHTML;
     let newValueStr = String(newValue).trim();
     if (oldValue !== newValueStr) {
-        console.log('inside' + element);
-        console.log(oldValue);
-        console.log(newValue);
         element.innerHTML = newValue;
     }
 }
@@ -172,23 +171,15 @@ function sendScoreRequest(request) {
         },
         body: JSON.stringify(request)
     }).then(response => {
-        console.log(response.status);
-        // alert(response.url);
-        console.log(response.url);
+
         if (!response.url.includes(uuid)) {
             window.location.href = response.url;
         } else {
-            return response.json().then(json => {
-                console.log('Получен JSON:', json);
-
-                setupScore(json);
-
-                // setUpPlayerScore(firstPlayerBlock, json.firstPlayer, json.firstPlayerSets, json.firstPlayerCurrentPoints);
-                // setUpPlayerScore(secondPlayerBlock, json.secondPlayer, json.secondPlayerSets, json.secondPlayerCurrentPoints);
-
-            });
+            return response.json();
         }
 
+    }).then(json => {
+        setupScore(json);
     })
         .catch(error => {
             console.error('err', error);

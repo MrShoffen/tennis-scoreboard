@@ -10,6 +10,4 @@ public class PageRequestDto {
     Integer pageNumber;
     Integer pageSize;
     String playerName;
-
-    String orderBy;
 }

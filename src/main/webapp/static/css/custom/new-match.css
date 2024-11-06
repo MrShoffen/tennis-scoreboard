@@ -122,3 +122,32 @@ body {
 
 
 }
+
+.input-container {
+    position: relative;
+    /*display: inline-block;*/
+}
+
+.input-container input {
+    padding-right: 45px; /* Отступ для иконки */
+}
+
+.input-container .icon-info {
+    font-size: 30px;
+    position: absolute;
+    top: 33px;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.tooltip-inner {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px; /* Изменение размера текста */
+    background-color: rgba(0, 0, 0, 0.56); /* Цвет фона */
+    /*color: #333; !* Цвет текста *!*/
+}
+
+.tooltip-arrow::before {
+    border-top-color: #f0f0f0; /* Цвет стрелки */
+}

@@ -7,6 +7,7 @@
     <meta name="description" content=""/>
 
     <title>New Match</title>
+    <link rel="icon" href="static/img/main_icon.svg" type="image/x-icon">
 
     <%-- bootstrap --%>
     <link href="static/css/bootstrap.css" rel="stylesheet"/>
@@ -47,16 +48,25 @@
 
                 <label for="player_1_form"><h5>Player 1</h5></label>
                 <div style="position: relative;">
-                    <input class="player_form" id="player_1_form" type="text" placeholder="Player 1 Name..." data-bs-toggle="tooltip" data-bs-placement="top" title="Latin Letters, '.', '-'">
+                    <div class="input-container">
+                        <input class="player_form" id="player_1_form" type="text" placeholder="Player 1 Name...">
+                        <i class="fa-solid fa-circle-info icon-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                           title=" English letters only. 4 to 30 characters long. Periods (.) and dashes (-) are permitted."></i>
+                    </div>
                     <div class="invisible player_ac" id="player_1_ac"></div>
-                    <div class="invisible error-popup" >Error</div>
+                    <div class="invisible error-popup">Error</div>
                 </div>
 
                 <label for="player_2_form"><h5>Player 2</h5></label>
                 <div style="position: relative;">
-                    <input class="player_form" id="player_2_form" type="text" placeholder="Player 2 Name..." data-bs-toggle="tooltip" data-bs-placement="top" title="Latin Letters, '.', '-'">
+
+                    <div class="input-container">
+                        <input class="player_form" id="player_2_form" type="text" placeholder="Player 2 Name...">
+                        <i class="fa-solid fa-circle-info icon-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                           title=" English letters only. 4 to 30 characters long. Periods (.) and dashes (-) are permitted."></i>
+                    </div>
                     <div class="position-absolute invisible player_ac" id="player_2_ac"></div>
-                    <div class="invisible error-popup" >Error</div>
+                    <div class="invisible error-popup">Error</div>
                 </div>
 
                 <div class="form-group">

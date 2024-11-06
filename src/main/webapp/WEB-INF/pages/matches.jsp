@@ -7,6 +7,7 @@
     <meta name="description" content=""/>
 
     <title>Matches</title>
+    <link rel="icon" href="static/img/main_icon.svg" type="image/x-icon">
 
     <%-- bootstrap --%>
     <link href="static/css/bootstrap.css" rel="stylesheet"/>

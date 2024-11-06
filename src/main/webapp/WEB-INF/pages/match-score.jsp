@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
 
-    <title>Players</title>
+    <title>Match Score</title>
+    <link rel="icon" href="static/img/main_icon.svg" type="image/x-icon">
+
 
     <%-- bootstrap --%>
     <link href="static/css/bootstrap.css" rel="stylesheet"/>
-
-    <%-- Font awesome style --%>
-    <link rel="stylesheet" href="static/css/all.min.css">
 
     <%-- Roboto font --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,19 +32,19 @@
 
 
     <div class="row justify-content-md-center">
-        <!-- Используйте 'col-lg-9' для того, чтобы ширина соответствовала вашему столбцу -->
+
         <div class="col-lg-9 themed-grid-col text-center">
 
             <div id="first-player">
                 <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
-                    <!-- Один сплошной элемент на всю ширину контейнера -->
+
                     <div class="col d-flex justify-content-center align-items-center">
                         <h4>...</h4>
                     </div>
                 </div>
 
                 <div class="d-grid first-player-score" style="grid-template-columns: repeat(4, 1fr);">
-                    <!-- Каждый отдельный элемент -->
+
                     <div class="points score-element d-flex justify-content-center align-items-center">
 
                     </div>
@@ -64,7 +63,7 @@
 
 
             <div class="d-grid score-names" style="grid-template-columns: repeat(4, 1fr);">
-                <!-- Каждый отдельный элемент -->
+
                 <div class="points score-element d-flex justify-content-center align-items-center">
                     <span>GAME</span>
                 </div>
@@ -83,7 +82,7 @@
             <div id="second-player">
 
                 <div class="d-grid second-player-score" style="grid-template-columns: repeat(4, 1fr);">
-                    <!-- Каждый отдельный элемент -->
+
                     <div class="points score-element d-flex justify-content-center align-items-center">
 
                     </div>
@@ -112,7 +111,7 @@
             <div class="button-group d-grid" style="grid-template-columns: repeat(2, 1fr);">
 
                 <div class="first-player-point-button d-flex justify-content-center align-items-center">
-                    <button class="btn-point">Player 1  </button>
+                    <button class="btn-point">Player 1</button>
                 </div>
 
 

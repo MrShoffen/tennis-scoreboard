@@ -12,14 +12,13 @@ public class OngoingMatch {
     private final String secondPlayer;
     private String winner = null;
 
+    private Map<String, Integer[]> sets = new HashMap<>(2);
+    private Map<String, Integer> currentPoints = new HashMap<>(2);
+
     private String pointWinner;
     private String pointLoser;
 
     private int currentSet = 1;
-
-    private Map<String, Integer[]> sets = new HashMap<>(2);
-
-    private Map<String, Integer> currentPoints = new HashMap<>(2);
 
     private OngoingMatchState state;
 

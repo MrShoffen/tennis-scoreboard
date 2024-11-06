@@ -8,7 +8,6 @@ import org.mrshoffen.mapper.MatchMapper;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.mapstruct.factory.Mappers;
-import org.mrshoffen.mapper.MatchMapperImpl;
 import org.mrshoffen.mapper.OngoingMatchMapper;
 import org.mrshoffen.mapper.PlayerMapper;
 
@@ -23,12 +22,10 @@ public class DependencyManager extends AbstractModule {
 
 
     @Provides @Singleton
-    private SessionFactory buildSessionFactory() {
-        SessionFactory sessionFactory = new Configuration()
+    private SessionFactory getSessionFactory() {
+        return new Configuration()
                 .configure("hibernate.cfg.xml")
                 .buildSessionFactory();
-
-        return sessionFactory;
     }
 
     @Provides @Singleton

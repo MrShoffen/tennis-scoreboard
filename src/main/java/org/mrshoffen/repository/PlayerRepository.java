@@ -38,39 +38,13 @@ public class PlayerRepository extends BaseRepository<Player> {
 
         List<Predicate> predicates = buildFilterPredicate(playerName, cb, players);
 
-
-        List<Order> orders = getOrders(cb, criteria, players);
-
-        criteria.select(players).where(predicates.toArray(new Predicate[0])).orderBy(orders.get(0));
+        criteria.select(players).where(predicates.toArray(new Predicate[0])).orderBy(cb.asc(players.get("id")));
 
         return session.createQuery(criteria)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .list();
 
-    }
-
-    private static List<Order> getOrders(CriteriaBuilder cb, CriteriaQuery<Player> criteria, Root<Player> players) {
-        List<Order> orders = new ArrayList<>();
-
-//        Subquery<Long> subquery = criteria.subquery(Long.class);
-//        Root<Match> from = subquery.from(Match.class);
-//
-//        Predicate first = cb.equal(from.get("firstPlayer").get("id"), players.get("id"));
-//        Predicate second = cb.equal(from.get("secondPlayer").get("id"), players.get("id"));
-//
-//        Predicate finalPredicate = cb.or(first, second);
-//
-//        subquery.select(cb.count(from.get("id"))).where(finalPredicate);
-//
-//        orders.add(cb.desc(subquery));
-
-        //
-
-        orders.add(cb.asc(players.get("id")));
-
-
-        return orders;
     }
 
     private List<Predicate> buildFilterPredicate(String playerName, CriteriaBuilder cb, Root<Player> player) {

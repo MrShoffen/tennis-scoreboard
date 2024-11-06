@@ -76,4 +76,7 @@ public class OngoingMatchesService {
     }
 
 
+    public void removeMatchById(UUID uuid) {
+        ongoingMatches.remove(uuid);
+    }
 }

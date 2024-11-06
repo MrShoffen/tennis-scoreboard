@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
+document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+
 
 document.addEventListener('click', function (event) {
     let startButton = document.querySelector('.btn-start');
@@ -62,7 +69,7 @@ function checkInputForm(player) {
     let name = player.value;
 
 
-    let errorPop = player.parentElement.querySelector('.error-popup');
+    let errorPop = player.parentElement.parentElement.querySelector('.error-popup');
 
 
     if (name.trim() === '') {
