@@ -9,12 +9,27 @@ import org.mrshoffen.entity.persistence.Match;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class MatchRepository extends BaseRepository< Match> {
+public class MatchRepository extends BaseRepository<Match> {
 
     @Inject
     protected MatchRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    @Override
+    public Optional<Match> findById(Integer id) {
+        @Cleanup Session session = sessionFactory.openSession();
+
+
+        return session.createQuery("FROM Match m JOIN FETCH m.firstPlayer f " +
+                        "JOIN FETCH m.secondPlayer s " +
+                        "JOIN FETCH m.winner " +
+                        "WHERE m.id = :id", Match.class)
+                .setParameter("id", id)
+                .uniqueResultOptional();
+
     }
 
     @Override
@@ -41,6 +56,7 @@ public class MatchRepository extends BaseRepository< Match> {
 
     }
 
+    //todo mv move to parent
     @Override
     public Integer numberOfEntitiesWithName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
@@ -61,8 +77,8 @@ public class MatchRepository extends BaseRepository< Match> {
     private List<Predicate> calculateNameFilterPredicate(String playerName, CriteriaBuilder cb, Root<Match> matches) {
         List<Predicate> predicates = new ArrayList<>();
         if (playerName != null && !playerName.isBlank()) {
-            Predicate firstLike = cb.like(cb.lower(matches.get("firstPlayer").get("name")), "%" + playerName.toLowerCase() );
-            Predicate secondLike = cb.like(cb.lower(matches.get("secondPlayer").get("name")), "%" + playerName.toLowerCase() );
+            Predicate firstLike = cb.like(cb.lower(matches.get("firstPlayer").get("name")), "%" + playerName.toLowerCase());
+            Predicate secondLike = cb.like(cb.lower(matches.get("secondPlayer").get("name")), "%" + playerName.toLowerCase());
 
             predicates.add(cb.or(firstLike, secondLike));
         }

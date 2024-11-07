@@ -11,3 +11,5 @@ const players_api = "/api/players";
 const new_match_api = "/api/new-match"
 
 const match_score_api = "/api/match-score"
+
+const finished_match_api = "/api/match"

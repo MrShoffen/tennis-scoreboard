@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.*;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
 
 import java.util.ArrayList;
@@ -16,6 +17,15 @@ public class PlayerRepository extends BaseRepository<Player> {
     @Inject
     protected PlayerRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    @Override
+    public Optional<Player> findById(Integer id) {
+        @Cleanup Session session = sessionFactory.openSession();
+
+        return Optional.ofNullable(session.find(Player.class, id));
+
+
     }
 
 

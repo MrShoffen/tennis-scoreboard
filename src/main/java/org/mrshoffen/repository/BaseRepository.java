@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public abstract class BaseRepository<E> {
@@ -24,6 +25,8 @@ public abstract class BaseRepository<E> {
         session.getTransaction().commit();
         return entity;
     }
+
+    public abstract Optional<E> findById(Integer id);
 
     public abstract List<E> getAllWithOffsetAndLimit(Integer offset, Integer limit, String playerName);
 

@@ -72,4 +72,14 @@ public class FinishedMatchesPersistenceService {
     }
 
 
+    public MatchResponseDto findById(Integer id) {
+
+        //todo throw no such match
+        Match match = matchRepository.findById(id).orElse(null);
+
+
+        System.out.println();
+        return matchMapper.toDto(match);
+
+    }
 }

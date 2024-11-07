@@ -90,9 +90,10 @@ function checkInputForm(player) {
 
         return false;
     }
-    if (name.trim().length <= 3) {
+
+    if (name.trim().length <= 3 || name.trim().length > 30) {
         errorPop.innerHTML = '';
-        errorPop.innerHTML = `Name is too short`;
+        errorPop.innerHTML = `Incorrect length!`;
         errorPop.classList.remove('invisible');
         player.classList.add('invalid');
 
@@ -120,7 +121,7 @@ async function fetchPlayers() {
 
         return players; // возвращаем массив игроков
     } catch (error) {
-        console.error('Ошибка при получении данных о игроках:', error);
+        console.error('err', error);
         return []; // возвращаем пустой массив в случае ошибки
     }
 }
