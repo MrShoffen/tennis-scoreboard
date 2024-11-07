@@ -23,7 +23,7 @@ public class FinishedMatchServlet extends BaseJsonApiServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idString = req.getParameter("id");
 
-        int id = Integer.parseInt(idString);
+        Integer id = Integer.parseInt(idString);
 
         MatchResponseDto match = matchService.findById(id);
 

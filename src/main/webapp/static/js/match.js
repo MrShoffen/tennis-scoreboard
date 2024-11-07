@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
-
-
 function buildRequest(matchId) {
     return {
         id: +matchId
@@ -24,12 +22,22 @@ function updatePage(params) {
     const url = context + finished_match_api + '?' + new URLSearchParams(params).toString();
 
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => {
+                    throw new Error(error.message)
+                });
+            }
+
+             return response.json();
+        })
         .then(json => {
+
             fillMatchData(json);
         })
         .catch(error => {
-            alert("hee")
+            alert(error.message)
+            // window.location.href = context;
         });
 }
 

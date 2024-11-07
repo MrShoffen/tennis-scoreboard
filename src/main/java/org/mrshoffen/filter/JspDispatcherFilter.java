@@ -9,11 +9,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.utils.JspHelper;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 
 @WebFilter(urlPatterns = {"/matches", "/players",
-        "/new-match", "/match-score", "/match"})
+        "/new-match", "/match-score", "/match", "/error-page"})
 public class JspDispatcherFilter extends HttpFilter {
+
 
 
     @Override

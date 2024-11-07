@@ -7,6 +7,7 @@ import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.entity.domain.OngoingMatch;
 import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
+import org.mrshoffen.exception.EntityNotFoundException;
 import org.mrshoffen.mapper.OngoingMatchMapper;
 import org.mrshoffen.repository.MatchRepository;
 import org.mrshoffen.repository.PlayerRepository;
@@ -53,11 +54,15 @@ public class OngoingMatchesService {
     }
 
     public OngoingMatchResponseDto getMatchById(UUID uuid) {
-        //todo handle non existing match
+        //todo validate uuid
 
-        return ongoingMatchMapper.toDto(ongoingMatches.get(uuid));
+        OngoingMatch ongoingMatch = ongoingMatches.get(uuid);
 
+        if(ongoingMatch == null){
+            throw new EntityNotFoundException("No much with such id!");
+        }
 
+        return ongoingMatchMapper.toDto(ongoingMatch);
     }
 
 

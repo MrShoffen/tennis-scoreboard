@@ -17,8 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => {
+                    throw new Error(error.message)
+                });
+            }
+
+            return response.json();
+        })
         .then(json => {
+
 
             setupScore(json);
 
@@ -29,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         })
         .catch(error => {
-            alert("hee")
+            alert(error.message)
         });
 
 

@@ -7,6 +7,7 @@ import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.entity.domain.OngoingMatch;
 import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
+import org.mrshoffen.exception.EntityNotFoundException;
 import org.mrshoffen.mapper.MatchMapper;
 import org.mrshoffen.dto.response.pageable.MatchResponseDto;
 import org.mrshoffen.repository.MatchRepository;
@@ -73,12 +74,12 @@ public class FinishedMatchesPersistenceService {
 
 
     public MatchResponseDto findById(Integer id) {
+        //todo add validation
 
-        //todo throw no such match
-        Match match = matchRepository.findById(id).orElse(null);
+        Match match = matchRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Error! No such match with id: " + id));
 
 
-        System.out.println();
         return matchMapper.toDto(match);
 
     }

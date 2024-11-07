@@ -1,0 +1,54 @@
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+
+    background-color: #333;
+    color: rgb(210, 210, 210);
+}
+
+.page-content {
+    padding-top: 80px;
+    font-size: 18px;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#first-player > .name , #second-player > .name, #vs >.name, #win-label > .name{
+    padding: 8px;
+    border-left: 2px solid #548a35;
+    border-right: 2px solid #548a35;
+}
+
+#first-player > .name {
+    border-top: 2px solid #548a35;
+
+}
+
+#second-player > .name{
+    border-bottom: 2px solid #548a35;
+}
+
+#vs >.name, #win-label > .name {
+    border-top: 2px solid #548a35;
+    border-bottom: 2px solid #548a35;
+    background-color: #548a35;
+    padding-top: 20px;
+}
+
+#winner > .name{
+    border: 2px solid #548a35;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+a {
+    color: rgb(210, 210, 210);
+    /*text-decoration: none;*/
+}
+
+a:hover{
+    color: #548a35;
+}
