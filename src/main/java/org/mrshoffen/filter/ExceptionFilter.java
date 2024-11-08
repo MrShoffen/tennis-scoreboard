@@ -16,7 +16,7 @@ import java.io.IOException;
 import static jakarta.servlet.http.HttpServletResponse.*;
 import static jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter("/*")
 public class ExceptionFilter extends HttpFilter {
 
     private final ObjectMapper objectMapper = new ObjectMapper();

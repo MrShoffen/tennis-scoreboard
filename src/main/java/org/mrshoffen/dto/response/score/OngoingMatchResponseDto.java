@@ -16,7 +16,7 @@ public class OngoingMatchResponseDto {
 
     private boolean inTiebreak;
 
-    private Map<String, Integer[]> sets;
-    private Map<String, Integer> currentPoints;
+    private Map<Integer, Integer[]> sets;
+    private Map<Integer, Integer> currentPoints;
 
 }

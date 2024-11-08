@@ -5,18 +5,13 @@ import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.entity.domain.OngoingMatch;
-import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.EntityNotFoundException;
 import org.mrshoffen.mapper.OngoingMatchMapper;
-import org.mrshoffen.repository.MatchRepository;
-import org.mrshoffen.repository.PlayerRepository;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 
 public class OngoingMatchesService {
 
@@ -54,12 +49,11 @@ public class OngoingMatchesService {
     }
 
     public OngoingMatchResponseDto getMatchById(UUID uuid) {
-        //todo validate uuid
 
         OngoingMatch ongoingMatch = ongoingMatches.get(uuid);
 
         if(ongoingMatch == null){
-            throw new EntityNotFoundException("No match with such id!");
+            throw new EntityNotFoundException("No Match with such id!");
         }
 
         return ongoingMatchMapper.toDto(ongoingMatch);
@@ -74,8 +68,8 @@ public class OngoingMatchesService {
         //todo mb add returning value
         matchScoreCalculationService.updateMatchScore(currentMatch, pointScoreDto.getPointWinner());
 
-        currentMatch.getState().setEnded(true);
-        currentMatch.setWinner(currentMatch.getFirstPlayer());
+//        currentMatch.getMatchState().setEnded(true);
+//        currentMatch.setWinner(currentMatch.getFirstPlayer());
 
         return ongoingMatchMapper.toDto(currentMatch);
     }

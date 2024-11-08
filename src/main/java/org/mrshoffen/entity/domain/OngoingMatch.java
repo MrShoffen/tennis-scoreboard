@@ -2,9 +2,6 @@ package org.mrshoffen.entity.domain;
 
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Data
 public class OngoingMatch {
 
@@ -12,65 +9,71 @@ public class OngoingMatch {
     private final String secondPlayer;
     private String winner = null;
 
-    private Map<String, Integer[]> sets = new HashMap<>(2);
-    private Map<String, Integer> currentPoints = new HashMap<>(2);
-
-    private String pointWinner;
-    private String pointLoser;
-
-    private int currentSet = 1;
-
-    private OngoingMatchState state;
+    private OngoingMatchScore score;
+    private OngoingMatchState matchState;
 
     public OngoingMatch(String firstPlayer, String secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
 
-        sets.put(firstPlayer, new Integer[]{0, 0, 0});
-        sets.put(secondPlayer, new Integer[]{0, 0, 0});
-
-        currentPoints.put(firstPlayer, 0);
-        currentPoints.put(secondPlayer, 0);
-
-        state = new OngoingMatchState(this);
-    }
-
-    public void setPointWinner(String pointWinner) {
-        this.pointWinner = firstPlayer.equals(pointWinner) ? firstPlayer : secondPlayer;
-        this.pointLoser = firstPlayer.equals(pointWinner) ? secondPlayer : firstPlayer;
+        score  = new OngoingMatchScore();
+        matchState = new OngoingMatchState(score);
     }
 
 
-    public void scoreToPointWinner() {
-        currentPoints.put(pointWinner, currentPoints.get(pointWinner) + 1);
+    public void scorePoint(String pointWinner) {
+        int pointWinnerNo = pointWinner.equals(firstPlayer) ? 1 : 2;
+
+        score.scorePoint(pointWinnerNo);
+
+        handleGameEnd();
+
+        handleSetEnd();
+
+        if (matchState.isWonByPointWinner()) {
+            matchState.setEnded(true);
+            winner = pointWinner;
+            return;
+        }
+
+        checkForTiebreak();
     }
 
-    public void scoreGameInCurrentSet() {
-        sets.get(pointWinner)[currentSet - 1]++;
+
+    private void handleGameEnd() {
+        if (matchState.isInTiebreak()) {
+            handleTiebreakEnd();
+        } else {
+            handleRegularGameEnd();
+        }
     }
 
-    public void startNextGame() {
-        currentPoints.put(firstPlayer, 0);
-        currentPoints.put(secondPlayer, 0);
+    private void handleSetEnd() {
+        if (matchState.setEnded()) {
+            score.startNextSet();
+        }
     }
 
-    public void startNextSet() {
-        currentSet++;
+
+    private void handleRegularGameEnd() {
+        if (matchState.regularGameEnded()) {
+            score.scoreGameInCurrentSet();
+            score.startNextGame();
+        }
     }
 
-    public void setPointWinnerAsMatchWinner() {
-        winner = pointWinner;
+    private void handleTiebreakEnd() {
+        if (matchState.tiebreakEnded()) {
+            score.scoreGameInCurrentSet();
+            score.startNextGame();
+            matchState.setInTiebreak(false);
+        }
     }
 
-    public Integer currentPoints(String playerName) {
-        return currentPoints.get(playerName);
+    private void checkForTiebreak() {
+        if (matchState.tiebreak()) {
+            matchState.setInTiebreak(true);
+        }
     }
 
-    public Integer gamesInCurrentSetWon(String playerName) {
-        return sets.get(playerName)[currentSet - 1];
-    }
-
-    public boolean isSetWon(int setNumber) {
-        return sets.get(pointWinner)[setNumber - 1] == 7;
-    }
 }

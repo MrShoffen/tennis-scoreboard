@@ -32,34 +32,15 @@
 
 <div class="container page-content">
 
-    <div class="row justify-content-md-center mb-3 item-title">
-        <div class="col-lg-9  themed-grid-col ">
-            <div class="d-flex justify-content-center align-items-center">
-                <h3>Match</h3>
-            </div>
-
-        </div>
-    </div>
-
 
     <div class="row justify-content-md-center">
 
         <div class="col-lg-9 themed-grid-col text-center">
 
-            <div id="first-player">
-                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
-
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <h4>ERROR 404</h4>
-                    </div>
-                </div>
-            </div>
-
-
+            <h1>ERROR 404</h1>
+            <h3>No such page!</h3>
 
         </div>
-
-
     </div>
 
 

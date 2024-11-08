@@ -8,8 +8,12 @@ import org.mrshoffen.entity.domain.OngoingMatch;
 @Mapper
 public interface OngoingMatchMapper {
 
-    @Mapping(target = "ended" , source = "state.ended")
-    @Mapping(target = "inTiebreak" , source = "state.inTiebreak")
+    @Mapping(target = "ended" , source = "matchState.ended")
+    @Mapping(target = "inTiebreak" , source = "matchState.inTiebreak")
+    @Mapping(target = "sets", source = "score.sets")
+    @Mapping(target = "currentPoints", source = "score.currentPoints")
     OngoingMatchResponseDto toDto(OngoingMatch ongoingMatch);
+
+
 
 }

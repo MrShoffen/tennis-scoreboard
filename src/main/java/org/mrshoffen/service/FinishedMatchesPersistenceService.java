@@ -77,7 +77,7 @@ public class FinishedMatchesPersistenceService {
         //todo add validation
 
         Match match = matchRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Error! No such match with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Error! No such Match with id: " + id));
 
 
         return matchMapper.toDto(match);

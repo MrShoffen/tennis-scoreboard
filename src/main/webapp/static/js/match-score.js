@@ -77,16 +77,16 @@ function setupScore(score) {
 
     }
 
-    let firstPlayerStringScore = score.inTiebreak ? score.currentPoints[score.firstPlayer] :
-        parseIntToTennisPoint(+score.currentPoints[score.firstPlayer], +score.currentPoints[score.secondPlayer]);
+    let firstPlayerStringScore = score.inTiebreak ? score.currentPoints[1] :
+        parseIntToTennisPoint(+score.currentPoints[1], +score.currentPoints[2]);
 
-    let secondPlayerStringScore = score.inTiebreak ? score.currentPoints[score.secondPlayer] :
-        parseIntToTennisPoint(+score.currentPoints[score.secondPlayer], +score.currentPoints[score.firstPlayer]);
+    let secondPlayerStringScore = score.inTiebreak ? score.currentPoints[2] :
+        parseIntToTennisPoint(+score.currentPoints[2], +score.currentPoints[1]);
 
 
     setupGameLabel(score.inTiebreak);
-    setUpPlayerScore(firstPlayerBlock, score.firstPlayer, score.sets[score.firstPlayer], firstPlayerStringScore);
-    setUpPlayerScore(secondPlayerBlock, score.secondPlayer, score.sets[score.secondPlayer], secondPlayerStringScore);
+    setUpPlayerScore(firstPlayerBlock, score.firstPlayer, score.sets[1], firstPlayerStringScore);
+    setUpPlayerScore(secondPlayerBlock, score.secondPlayer, score.sets[2], secondPlayerStringScore);
 
 }
 
