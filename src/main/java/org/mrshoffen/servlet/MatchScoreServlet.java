@@ -5,10 +5,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.pageable.MatchResponseDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
+import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.service.FinishedMatchesPersistenceService;
 import org.mrshoffen.service.OngoingMatchesService;
 
@@ -28,7 +28,12 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        UUID uuid = UUID.fromString(req.getParameter("uuid"));
+        UUID uuid = null;
+        try {
+            uuid = UUID.fromString(req.getParameter("uuid"));
+        } catch (IllegalArgumentException e) {
+            throw new ValidationException("Invalid UUID!");
+        }
 
         OngoingMatchResponseDto currentMatch = ongoingMatchesService.getMatchById(uuid);
 

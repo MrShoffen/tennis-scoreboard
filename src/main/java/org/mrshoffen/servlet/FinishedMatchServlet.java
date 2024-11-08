@@ -12,7 +12,7 @@ import org.mrshoffen.service.FinishedMatchesPersistenceService;
 
 import java.io.IOException;
 
-@WebServlet("/api/match")
+@WebServlet("/api/finished-match")
 public class FinishedMatchServlet extends BaseJsonApiServlet {
 
     @Inject

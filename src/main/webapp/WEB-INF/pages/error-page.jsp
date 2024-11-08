@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
 
-    <title>Error</title>
+    <title>Error!</title>
     <link rel="icon" href="static/img/main_icon.svg" type="image/x-icon">
 
     <%-- bootstrap --%>
@@ -50,49 +50,12 @@
                 <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
 
                     <div class="col d-flex justify-content-center align-items-center">
-                        <h4>...</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div id="vs">
-                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
-
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <h4>VS</h4>
+                        <h4>ERROR 404</h4>
                     </div>
                 </div>
             </div>
 
 
-            <div id="second-player">
-                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <h4>...</h4>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            <div id="win-label">
-                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
-
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <h4><i class="fa-solid fa-trophy" style="color: rgb(214,154,0)"></i> WINNER <i
-                                class="fa-solid fa-trophy" style="color: rgb(214,154,0)"></i></h4>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="winner">
-                <div class="name d-grid" style="grid-template-columns: repeat(1, 1fr);">
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <h4>...</h4>
-                    </div>
-                </div>
-            </div>
 
         </div>
 

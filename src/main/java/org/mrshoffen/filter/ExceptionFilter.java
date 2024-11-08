@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.response.ErrorResponseDto;
 import org.mrshoffen.exception.EntityNotFoundException;
-import org.mrshoffen.utils.JspHelper;
+import org.mrshoffen.exception.ValidationException;
 
 import java.io.IOException;
 
@@ -28,7 +28,8 @@ public class ExceptionFilter extends HttpFilter {
         } catch (Exception exception) {
             int responseCode =
                     switch (exception) {
-                        case EntityNotFoundException _ -> SC_NOT_FOUND;
+                        case EntityNotFoundException _,
+                             ValidationException _ -> SC_BAD_REQUEST;
                         default -> SC_INTERNAL_SERVER_ERROR;
                     };
 

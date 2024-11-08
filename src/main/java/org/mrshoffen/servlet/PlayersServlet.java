@@ -11,7 +11,7 @@ import org.mrshoffen.service.PlayersPersistenceService;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/api/players", name = "PlayerData")
+@WebServlet("/api/players")
 public class PlayersServlet extends BaseJsonApiServlet {
 
     @Inject

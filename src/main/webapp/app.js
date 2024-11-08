@@ -12,4 +12,4 @@ const new_match_api = "/api/new-match"
 
 const match_score_api = "/api/match-score"
 
-const finished_match_api = "/api/match"
+const finished_match_api = "/api/finished-match"

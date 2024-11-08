@@ -11,7 +11,7 @@ import org.mrshoffen.service.FinishedMatchesPersistenceService;
 import java.io.IOException;
 
 
-@WebServlet(urlPatterns = "/api/matches", name = "MatchData")
+@WebServlet("/api/matches")
 public class MatchesServlet extends BaseJsonApiServlet {
 
     @Inject

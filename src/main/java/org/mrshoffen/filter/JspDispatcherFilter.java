@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.utils.JspHelper;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 
 @WebFilter(urlPatterns = {"/matches", "/players",
@@ -18,11 +16,10 @@ import java.util.List;
 public class JspDispatcherFilter extends HttpFilter {
 
 
-
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 
-        String page = req.getRequestURI().substring(req.getContextPath().length()+1);
+        String page = req.getRequestURI().substring(req.getContextPath().length() + 1);
 
         req.getRequestDispatcher(JspHelper.getPath(page)).forward(req, res);
     }

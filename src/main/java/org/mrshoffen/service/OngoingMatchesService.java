@@ -59,7 +59,7 @@ public class OngoingMatchesService {
         OngoingMatch ongoingMatch = ongoingMatches.get(uuid);
 
         if(ongoingMatch == null){
-            throw new EntityNotFoundException("No much with such id!");
+            throw new EntityNotFoundException("No match with such id!");
         }
 
         return ongoingMatchMapper.toDto(ongoingMatch);
