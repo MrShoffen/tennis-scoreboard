@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Custom page styles -->
-    <link href="static/css/custom/info_page.css" rel="stylesheet"/>
+    <link href="static/css/custom/table-page.css" rel="stylesheet"/>
 </head>
 
 
@@ -55,7 +55,7 @@
             <table class="table item-table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">№</th>
                     <th scope="col">Player 1</th>
                     <th scope="col">Player 2</th>
                 </tr>
@@ -68,6 +68,7 @@
             <div class="bouncing-ball-loader">
                 <img src="static/img/main_icon.svg" alt="Tennis" width="28" height="28"/>
             </div>
+
 
         </div>
     </div>
@@ -85,7 +86,7 @@
 
 <script src="app.js"></script>
 <script src="static/js/matches.js"></script>
-<script src="static/js/info_page.js"></script>
+<script src="static/js/table-page.js"></script>
 
 </body>
 </html>

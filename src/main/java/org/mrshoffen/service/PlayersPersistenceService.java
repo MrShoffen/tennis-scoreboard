@@ -1,18 +1,16 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Validator;
 import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.pageable.PageResponseDto;
-import org.mrshoffen.dto.response.pageable.PlayerResponseDto;
 import org.mrshoffen.entity.persistence.Player;
+import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.mapper.PlayerMapper;
 import org.mrshoffen.repository.MatchRepository;
 import org.mrshoffen.repository.PlayerRepository;
 
-import java.util.List;
-
-import static java.lang.Integer.parseInt;
-import static java.lang.Math.*;
+import static java.lang.Math.ceilDiv;
 
 public class PlayersPersistenceService {
 
@@ -20,30 +18,38 @@ public class PlayersPersistenceService {
     private final MatchRepository matchRepository;
 
     private final PlayerMapper playerMapper;
+    private final Validator validator;
 
     @Inject
-    public PlayersPersistenceService(PlayerRepository playerRepository, MatchRepository matchRepository, PlayerMapper playerMapper) {
+    public PlayersPersistenceService(PlayerRepository playerRepository, MatchRepository matchRepository, PlayerMapper playerMapper, Validator validator) {
         this.playerRepository = playerRepository;
         this.matchRepository = matchRepository;
         this.playerMapper = playerMapper;
+        this.validator = validator;
     }
 
-    //todo problem with LIKE -
     public PageResponseDto findPageFilteredByName(PageRequestDto requestDto) {
-        //todo add validation
+
+        var validationResult = validator.validate(requestDto);
+
+        if (!validationResult.isEmpty()) {
+            throw new ValidationException(validationResult);
+        }
 
 
         Integer pageNumber = requestDto.getPageNumber();
         Integer pageSize = requestDto.getPageSize();
-        String playerName = requestDto.getPlayerName();
+        String nameForFilter = requestDto.getPlayerNameFilterBy();
 
-        List<PlayerResponseDto> players = playerRepository.getAllWithOffsetAndLimit(
-                        (pageNumber - 1) * pageSize, pageSize, playerName).stream()
+        var players = playerRepository.getAllWithOffsetAndLimit(
+                        (pageNumber - 1) * pageSize, pageSize, nameForFilter)
+                .stream()
                 .map(playerMapper::toDto)
-                .peek(dto -> dto.setMatchesPlayed(matchRepository.numberOfEntitiesWithName(dto.getName())))
+                .peek(dto -> dto.setMatchesPlayed(matchRepository.numberOfEntitiesContainingName(dto.getName())))
+                .peek(dto ->dto.setMatchesWon(matchRepository.numberOfWonMathcesByPlayerName(dto.getName())))
                 .toList();
 
-        int totalPages = ceilDiv(playerRepository.numberOfEntitiesWithName(playerName), pageSize);
+        int totalPages = ceilDiv(playerRepository.numberOfEntitiesContainingName(nameForFilter), pageSize);
 
 
         return PageResponseDto.builder()
@@ -57,8 +63,9 @@ public class PlayersPersistenceService {
 
     public Player findByNameOrSave(String name) {
         Player playerForSave = Player.builder().name(name).build();
-        return playerRepository.findByName(name)
-                .orElseGet(() -> playerRepository.save(playerForSave));
+
+        return playerRepository.save(playerForSave)
+                .orElseGet(() -> playerRepository.findByName(name).get());
 
     }
 }

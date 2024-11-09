@@ -44,8 +44,22 @@ function sendMatchCreationRequest(player1, player2) {
         },
         body: JSON.stringify(request)
     }).then(response => {
-        window.location.href = response.url;
-    });
+        if (!response.ok) {
+            return response.json().then(error => {
+                throw new Error(error.message)
+            });
+        }
+
+        return response;
+    })
+        .then(response => {
+            window.location.href = response.url;
+        })
+        .catch(error => {
+            alert(error.message);
+            window.location.href = window.location.href;
+
+        });
 
 }
 
@@ -56,12 +70,41 @@ function setupNewMatchButton() {
     let startButton = document.querySelector('.btn-start');
 
     startButton.addEventListener('click', function () {
-        let firstCheck = checkInputForm(player1);
-        let secondCheck = checkInputForm(player2);
-        if (firstCheck && secondCheck) {
+
+        let correctNames = checkForms(player1, player2);
+
+        if (correctNames) {
             sendMatchCreationRequest(player1.value.trim(), player2.value.trim());
         }
     })
+
+}
+
+
+function checkForms(player1, player2) {
+
+
+    let firstCheck = checkInputForm(player1);
+    let secondCheck = checkInputForm(player2);
+    let thirdCheck = true;
+
+    let name1 = player1.value;
+    let name2 = player2.value;
+
+    let errorPop1 = player1.parentElement.parentElement.querySelector('.error-popup');
+
+    if (name1.trim() === name2.trim()) {
+        errorPop1.innerHTML = '';
+        errorPop1.innerHTML = `Players should not be the same! `;
+        errorPop1.classList.remove('invisible');
+        player1.classList.add('invalid');
+        player2.classList.add('invalid');
+
+        thirdCheck = false;
+    }
+
+
+    return firstCheck && secondCheck && thirdCheck;
 
 }
 

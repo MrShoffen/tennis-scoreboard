@@ -1,15 +1,19 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.entity.domain.OngoingMatch;
 import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.EntityNotFoundException;
+import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.mapper.OngoingMatchMapper;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,16 +23,23 @@ public class OngoingMatchesService {
 
     private final OngoingMatchMapper ongoingMatchMapper;
 
-    private final MatchScoreCalculationService matchScoreCalculationService;
+    private final Validator validator;
+
 
     @Inject
-    public OngoingMatchesService( OngoingMatchMapper ongoingMatchMapper, MatchScoreCalculationService matchScoreCalculationService) {
+    public OngoingMatchesService(OngoingMatchMapper ongoingMatchMapper, Validator validator) {
         this.ongoingMatchMapper = ongoingMatchMapper;
-        this.matchScoreCalculationService = matchScoreCalculationService;
+        this.validator = validator;
     }
 
 
     public UUID createMatch(NewMatchRequestDto newMatchRequestDto) {
+
+        var validationResult = validator.validate(newMatchRequestDto);
+
+        if(!validationResult.isEmpty()){
+            throw new ValidationException(validationResult);
+        }
 
         var firstPlayer = Player.builder()
                 .name(newMatchRequestDto.getFirstPlayer())
@@ -50,11 +61,7 @@ public class OngoingMatchesService {
 
     public OngoingMatchResponseDto getMatchById(UUID uuid) {
 
-        OngoingMatch ongoingMatch = ongoingMatches.get(uuid);
-
-        if(ongoingMatch == null){
-            throw new EntityNotFoundException("No Match with such id!");
-        }
+        OngoingMatch ongoingMatch = tryToGetMatchById(uuid);
 
         return ongoingMatchMapper.toDto(ongoingMatch);
     }
@@ -62,16 +69,24 @@ public class OngoingMatchesService {
 
     public OngoingMatchResponseDto updateMatch(UUID uuid, PointScoreDto pointScoreDto) {
 
-        //todo add validation
-        OngoingMatch currentMatch = ongoingMatches.get(uuid);
+        OngoingMatch currentMatch = tryToGetMatchById(uuid);
 
-        //todo mb add returning value
-        matchScoreCalculationService.updateMatchScore(currentMatch, pointScoreDto.getPointWinner());
+        currentMatch.scorePoint(pointScoreDto.getPointWinner());
 
-//        currentMatch.getMatchState().setEnded(true);
-//        currentMatch.setWinner(currentMatch.getFirstPlayer());
+        currentMatch.getMatchState().setEnded(true);
+        currentMatch.setWinner(currentMatch.getFirstPlayer());
 
         return ongoingMatchMapper.toDto(currentMatch);
+    }
+
+    private OngoingMatch tryToGetMatchById(UUID uuid) {
+        OngoingMatch ongoingMatch = ongoingMatches.get(uuid);
+
+        if (ongoingMatch == null) {
+            throw new EntityNotFoundException("No Match with such id!");
+        }
+
+        return ongoingMatch;
     }
 
 

@@ -2,6 +2,7 @@ package org.mrshoffen.repository;
 
 import jakarta.inject.Inject;
 import lombok.Cleanup;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -18,18 +19,21 @@ public abstract class BaseRepository<E> {
         this.sessionFactory = sessionFactory;
     }
 
-    public E save(E entity) {
-        @Cleanup Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.persist(entity);
-        session.getTransaction().commit();
-        return entity;
-    }
+    public Optional<E> save(E entity) {
+        try {
+            @Cleanup Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.persist(entity);
+            session.getTransaction().commit();
+            return Optional.of(entity);
+        } catch (HibernateException e) {
+            return Optional.empty();
+        }
 
-    public abstract Optional<E> findById(Integer id);
+    }
 
     public abstract List<E> getAllWithOffsetAndLimit(Integer offset, Integer limit, String playerName);
 
-    public abstract Integer numberOfEntitiesWithName(String name);
+    public abstract Integer numberOfEntitiesContainingName(String name);
 
 }

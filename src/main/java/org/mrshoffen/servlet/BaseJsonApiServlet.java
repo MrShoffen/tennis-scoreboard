@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.request.PageRequestDto;
+import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.utils.DependencyManager;
 
 import java.io.IOException;
@@ -36,21 +37,26 @@ public abstract class BaseJsonApiServlet extends HttpServlet {
 
     protected PageRequestDto extractPageRequestDto(HttpServletRequest req) {
         return PageRequestDto.builder()
-                .pageNumber(parsePageNumber(req.getParameter("page_number")))
-                .pageSize(parsePageSize(req.getParameter("page_size")))
-                .playerName(req.getParameter("player_name"))
+                .pageNumber(tryToExtractPositiveInt(req.getParameter("page_number")))
+                .pageSize(tryToExtractPositiveInt(req.getParameter("page_size")))
+                .playerNameFilterBy(req.getParameter("player_name"))
                 .build();
     }
 
-    private int parsePageNumber(String pageNumber) {
-        return pageNumber == null || pageNumber.isBlank()
-                ? DEFAULT_PAGE_NUMBER
-                : Integer.parseInt(pageNumber.trim());
+    protected Integer tryToExtractPositiveInt(String idString) {
+        int id;
+
+        try {
+            id = Integer.parseInt(idString);
+        } catch (NumberFormatException e) {
+            throw new ValidationException("Incorrect parameter format!", e);
+        }
+
+        if (id <= 0) {
+            throw new ValidationException("Missing or incorrect parameter format!");
+        }
+
+        return id;
     }
 
-    private int parsePageSize(String pageSize) {
-        return pageSize == null || pageSize.isBlank()
-                ? DEFAULT_PAGE_SIZE
-                : Integer.parseInt(pageSize.trim());
-    }
 }

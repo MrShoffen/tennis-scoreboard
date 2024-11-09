@@ -18,7 +18,6 @@ public class MatchRepository extends BaseRepository<Match> {
         super(sessionFactory);
     }
 
-    @Override
     public Optional<Match> findById(Integer id) {
         @Cleanup Session session = sessionFactory.openSession();
 
@@ -58,7 +57,7 @@ public class MatchRepository extends BaseRepository<Match> {
 
     //todo mv move to parent
     @Override
-    public Integer numberOfEntitiesWithName(String name) {
+    public Integer numberOfEntitiesContainingName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -83,6 +82,16 @@ public class MatchRepository extends BaseRepository<Match> {
             predicates.add(cb.or(firstLike, secondLike));
         }
         return predicates;
+    }
+
+    public Integer numberOfWonMathcesByPlayerName(String name) {
+        @Cleanup Session session = sessionFactory.openSession();
+
+        return session.createQuery("SELECT COUNT(m) FROM Match m " +
+                        "JOIN m.winner w " +
+                        "WHERE w.name = :name",Long.class)
+                .setParameter("name", name)
+                .uniqueResult().intValue();
     }
 
 }

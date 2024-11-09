@@ -23,10 +23,16 @@ function fillDataTables(data) {
         name.appendChild(nameLink);
         row.appendChild(name);
 
-        let winRate = document.createElement('td');
-        winRate.innerHTML = player.matchesPlayed;
-        row.appendChild(winRate);
+        let matchesPlayed = document.createElement('td');
+        matchesPlayed.innerHTML = player.matchesPlayed;
+        matchesPlayed.classList.add("text-center");
+        row.appendChild(matchesPlayed);
 
+
+        let matchesWon = document.createElement('td');
+        matchesWon.innerHTML = player.matchesWon;
+        matchesWon.classList.add("text-center");
+        row.appendChild(matchesWon);
 
 
         tbody.appendChild(row);

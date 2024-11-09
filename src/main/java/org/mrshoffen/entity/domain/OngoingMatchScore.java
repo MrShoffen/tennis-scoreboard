@@ -13,8 +13,8 @@ public class OngoingMatchScore {
     private Map<Integer, Integer[]> sets = new HashMap<>(2);
     private Map<Integer, Integer> currentPoints = new HashMap<>(2);
 
-    private int pointWinner;
-    private int pointLoser;
+    private int pointWinnerNo;
+    private int pointLoserNo;
 
     public OngoingMatchScore() {
         sets.put(1, new Integer[]{0, 0, 0});
@@ -27,7 +27,7 @@ public class OngoingMatchScore {
 
 
     public void scoreGameInCurrentSet() {
-        sets.get(pointWinner)[currentSet - 1]++;
+        sets.get(pointWinnerNo)[currentSet - 1]++;
     }
 
     public void startNextGame() {
@@ -49,12 +49,12 @@ public class OngoingMatchScore {
     }
 
     public boolean isSetWon(int setNumber) {
-        return sets.get(pointWinner)[setNumber - 1] >= 6;
+        return sets.get(pointWinnerNo)[setNumber - 1] >= 6;
     }
 
     public void scorePoint(int pointWinner) {
-        this.pointWinner = pointWinner;
-        this.pointLoser = pointWinner == 1 ? 2 : 1;
+        this.pointWinnerNo = pointWinner;
+        this.pointLoserNo = pointWinner == 1 ? 2 : 1;
 
         currentPoints.put(pointWinner, currentPoints.get(pointWinner) + 1);
 

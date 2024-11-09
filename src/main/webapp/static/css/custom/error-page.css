@@ -10,3 +10,43 @@ body {
     padding-top: 80px;
     font-size: 18px;
 }
+
+.bouncing-ball-loader {
+    display: flex;
+    align-items: flex-start;
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+
+}
+
+@keyframes bounce {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, 100px, 0);
+    }
+}
+
+.bouncing-ball{
+
+    animation: bounce 0.5s;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(.5, 0.05, 1, .5);
+    animation-iteration-count: infinite;
+}
+
+.bouncing-ball img {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

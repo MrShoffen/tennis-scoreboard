@@ -9,5 +9,6 @@ public final class PlayerResponseDto {
     private Integer id;
     private String name;
     private Integer matchesPlayed;
+    private Integer matchesWon;
 
 }

@@ -40,6 +40,13 @@
             <h1>ERROR 404</h1>
             <h3>No such page!</h3>
 
+            <div class="bouncing-ball-loader">
+                <div class="bouncing-ball">
+                    <img src="static/img/main_icon.svg" alt="Tennis" width="28" height="28"/>
+                </div>
+            </div>
+            <hr>
+
         </div>
     </div>
 

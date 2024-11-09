@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Custom page styles -->
-    <link href="static/css/custom/info_page.css" rel="stylesheet"/>
+    <link href="static/css/custom/table-page.css" rel="stylesheet"/>
 </head>
 
 
@@ -56,9 +56,10 @@
 
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">№</th>
                     <th scope="col">Player</th>
-                    <th scope="col">Count</th>
+                    <th class = "text-center" scope="col">Mathces played</th>
+                    <th class = "text-center" scope="col">Mathces won</th>
                 </tr>
                 </thead>
                 <tbody >
@@ -82,7 +83,7 @@
 
 <script src="app.js"></script>
 <script src="static/js/players.js"></script>
-<script src="static/js/info_page.js"></script>
+<script src="static/js/table-page.js"></script>
 
 </body>
 </html>

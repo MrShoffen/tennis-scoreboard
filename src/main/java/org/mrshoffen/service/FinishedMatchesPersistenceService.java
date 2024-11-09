@@ -1,13 +1,14 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Validator;
 import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.pageable.PageResponseDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
-import org.mrshoffen.entity.domain.OngoingMatch;
 import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.EntityNotFoundException;
+import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.mapper.MatchMapper;
 import org.mrshoffen.dto.response.pageable.MatchResponseDto;
 import org.mrshoffen.repository.MatchRepository;
@@ -21,31 +22,40 @@ public class FinishedMatchesPersistenceService {
 
     private final MatchRepository matchRepository;
 
-    private final MatchMapper matchMapper;
-
     private final PlayersPersistenceService playersPersistenceService;
 
+    private final MatchMapper matchMapper;
+
+    private final Validator validator;
+
     @Inject
-    public FinishedMatchesPersistenceService(MatchRepository matchRepository, MatchMapper matchMapper, PlayersPersistenceService playersPersistenceService) {
+    public FinishedMatchesPersistenceService(MatchRepository matchRepository, MatchMapper matchMapper, PlayersPersistenceService playersPersistenceService, Validator validator) {
         this.matchRepository = matchRepository;
         this.matchMapper = matchMapper;
         this.playersPersistenceService = playersPersistenceService;
+        this.validator = validator;
     }
 
 
     public PageResponseDto findPageFilteredByName(PageRequestDto requestDto) {
-        //todo add validation
+
+        var validationResult = validator.validate(requestDto);
+
+        if(!validationResult.isEmpty()){
+            throw new ValidationException(validationResult);
+        }
 
         Integer pageNumber = requestDto.getPageNumber();
         Integer pageSize = requestDto.getPageSize();
-        String playerName = requestDto.getPlayerName();
+        String nameForFilter = requestDto.getPlayerNameFilterBy();
 
         List<MatchResponseDto> matches = matchRepository.getAllWithOffsetAndLimit(
-                        (pageNumber - 1) * pageSize, pageSize, playerName).stream()
+                        (pageNumber - 1) * pageSize, pageSize, nameForFilter)
+                .stream()
                 .map(matchMapper::toDto)
                 .collect(toList());
 
-        int totalPages = ceilDiv(matchRepository.numberOfEntitiesWithName(playerName), pageSize);
+        int totalPages = ceilDiv(matchRepository.numberOfEntitiesContainingName(nameForFilter), pageSize);
 
         return PageResponseDto.builder()
                 .entities(matches)
@@ -74,13 +84,11 @@ public class FinishedMatchesPersistenceService {
 
 
     public MatchResponseDto findById(Integer id) {
-        //todo add validation
 
         Match match = matchRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Error! No such Match with id: " + id));
 
 
         return matchMapper.toDto(match);
-
     }
 }

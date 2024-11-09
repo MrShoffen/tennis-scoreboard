@@ -19,15 +19,6 @@ public class PlayerRepository extends BaseRepository<Player> {
         super(sessionFactory);
     }
 
-    @Override
-    public Optional<Player> findById(Integer id) {
-        @Cleanup Session session = sessionFactory.openSession();
-
-        return Optional.ofNullable(session.find(Player.class, id));
-
-
-    }
-
 
     public Optional<Player> findByName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
@@ -67,7 +58,7 @@ public class PlayerRepository extends BaseRepository<Player> {
     }
 
     @Override
-    public Integer numberOfEntitiesWithName(String name) {
+    public Integer numberOfEntitiesContainingName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -83,6 +74,8 @@ public class PlayerRepository extends BaseRepository<Player> {
 
         return session.createQuery(criteria).getSingleResult().intValue();
     }
+
+
 
 
 }

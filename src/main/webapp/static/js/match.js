@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const currentRequest = buildRequest(urlParams.get('id'));
 
-    if (currentRequest.id != null && currentRequest.id > 0) {
+    // if (currentRequest.id != null && currentRequest.id > 0) {
         updatePage(currentRequest);
-    }
+    // }
 
 
 })
@@ -37,7 +37,7 @@ function updatePage(params) {
         })
         .catch(error => {
             alert(error.message)
-            // window.location.href = context;
+            window.location.href = context;
         });
 }
 

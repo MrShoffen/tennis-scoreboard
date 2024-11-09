@@ -2,8 +2,11 @@ package org.mrshoffen.utils;
 
 import com.google.inject.*;
 import jakarta.inject.Singleton;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.HibernateValidator;
 import org.mrshoffen.mapper.MatchMapper;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -41,6 +44,14 @@ public class DependencyManager extends AbstractModule {
     @Provides @Singleton
     private OngoingMatchMapper getOngoingMatchMapper(){
         return Mappers.getMapper(OngoingMatchMapper.class);
+    }
+
+    @Provides @Singleton
+    private Validator getValidator(){
+        return Validation.byProvider(HibernateValidator.class)
+                .configure()
+                .buildValidatorFactory()
+                .getValidator();
     }
 
 
