@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(error.message);
             window.location.href = context;
 
+
         });
 
 

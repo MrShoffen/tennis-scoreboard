@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(player_list.length);
     });
 
+
     setupNewMatchButton();
 
 })
