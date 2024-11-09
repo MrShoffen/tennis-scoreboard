@@ -84,7 +84,7 @@ public class MatchRepository extends BaseRepository<Match> {
         return predicates;
     }
 
-    public Integer numberOfWonMathcesByPlayerName(String name) {
+    public Integer numberOfWonMatchesByPlayerName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
 
         return session.createQuery("SELECT COUNT(m) FROM Match m " +

@@ -58,8 +58,8 @@
                 <tr>
                     <th scope="col">№</th>
                     <th scope="col">Player</th>
-                    <th class = "text-center" scope="col">Mathces played</th>
-                    <th class = "text-center" scope="col">Mathces won</th>
+                    <th class = "text-center" scope="col">Matches played</th>
+                    <th class = "text-center" scope="col">Matches won</th>
                 </tr>
                 </thead>
                 <tbody >
