@@ -71,9 +71,6 @@ public class OngoingMatchesService {
 
         currentMatch.scorePoint(pointScoreDto.getPointWinner());
 
-        currentMatch.getMatchState().setEnded(true);
-        currentMatch.setWinner(currentMatch.getFirstPlayer());
-
         return ongoingMatchMapper.toDto(currentMatch);
     }
 
