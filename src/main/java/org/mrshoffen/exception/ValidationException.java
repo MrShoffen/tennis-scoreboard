@@ -12,10 +12,6 @@ public class ValidationException extends RuntimeException {
         super(message);
     }
 
-    public ValidationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public ValidationException(Set<? extends ConstraintViolation<?>> violations) {
         super(
                 violations.stream()

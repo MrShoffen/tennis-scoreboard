@@ -15,9 +15,6 @@ public abstract class BaseJsonApiServlet extends HttpServlet {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final static int DEFAULT_PAGE_NUMBER = 1;
-    private final static int DEFAULT_PAGE_SIZE = 10;
-
     @Override
     public final void init() throws ServletException {
         super.init();
@@ -49,7 +46,7 @@ public abstract class BaseJsonApiServlet extends HttpServlet {
         try {
             id = Integer.parseInt(idString);
         } catch (NumberFormatException e) {
-            throw new ValidationException("Incorrect parameter format!", e);
+            throw new ValidationException("Incorrect parameter format!");
         }
 
         if (id <= 0) {

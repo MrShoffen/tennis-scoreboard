@@ -1,16 +1,12 @@
 package org.mrshoffen.dto.request;
 
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.validator.HibernateValidator;
-
-import java.util.Set;
 
 @Data
 public class PointScoreDto {

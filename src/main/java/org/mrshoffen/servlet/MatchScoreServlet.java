@@ -1,7 +1,6 @@
 package org.mrshoffen.servlet;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,9 +25,9 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        UUID uuid = null;
+        UUID uuid;
         try {
             uuid = UUID.fromString(req.getParameter("uuid"));
         } catch (IllegalArgumentException e) {
@@ -44,7 +43,7 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         var scoredPlayer = readDtoFromJsonRequest(req, PointScoreDto.class);
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
 

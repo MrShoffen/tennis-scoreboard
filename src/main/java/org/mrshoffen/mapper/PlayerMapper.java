@@ -9,6 +9,7 @@ import org.mrshoffen.entity.persistence.Player;
 public interface PlayerMapper {
 
     @Mapping(target = "matchesPlayed", ignore = true)
+    @Mapping(target = "matchesWon", ignore = true)
     PlayerResponseDto toDto(Player player);
 
 }

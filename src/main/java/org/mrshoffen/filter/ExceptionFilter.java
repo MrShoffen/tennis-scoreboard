@@ -13,7 +13,7 @@ import org.mrshoffen.exception.ValidationException;
 
 import java.io.IOException;
 
-import static jakarta.servlet.http.HttpServletResponse.*;
+import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
 @WebFilter("/*")
@@ -22,7 +22,7 @@ public class ExceptionFilter extends HttpFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException {
         try {
             chain.doFilter(req, res);
         } catch (Exception exception) {

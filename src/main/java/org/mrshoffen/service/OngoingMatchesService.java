@@ -1,7 +1,6 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
@@ -13,7 +12,6 @@ import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.mapper.OngoingMatchMapper;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 

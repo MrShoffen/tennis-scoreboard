@@ -1,11 +1,13 @@
 package org.mrshoffen.repository;
 
 import jakarta.inject.Inject;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
 
 import java.util.ArrayList;
