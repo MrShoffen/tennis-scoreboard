@@ -46,6 +46,7 @@ function sendMatchCreationRequest(player1, player2) {
         },
         body: JSON.stringify(request)
     }).then(response => {
+        console.log(response)
         if (!response.ok) {
             console.log(response);
             return response.json().then(error => {
@@ -56,9 +57,10 @@ function sendMatchCreationRequest(player1, player2) {
         return response;
     })
         .then(response => {
-            window.location.href = response.url;
+            // window.location.href = response.url;
         })
         .catch(error => {
+            console.log(error);
             alert(error.message);
 
 
