@@ -1,4 +1,4 @@
-const context = "89.223.127.8:8080/tennis-scoreboard";
+const context = "/tennis-scoreboard";
 
 
 const matches_frontend = "/matches";
