@@ -37,8 +37,6 @@ function sendMatchCreationRequest(player1, player2) {
 
     const urlRequest = context + new_match_api;
 
-    alert(urlRequest);
-
     fetch(urlRequest, {
         method: 'POST',
         headers: {
@@ -46,9 +44,7 @@ function sendMatchCreationRequest(player1, player2) {
         },
         body: JSON.stringify(request)
     }).then(response => {
-        console.log(response)
         if (!response.ok) {
-            console.log(response);
             return response.json().then(error => {
                 throw new Error(error.message)
             });
@@ -57,14 +53,11 @@ function sendMatchCreationRequest(player1, player2) {
         return response;
     })
         .then(response => {
-            // window.location.href = response.url;
+            window.location.href = response.url;
         })
         .catch(error => {
-            console.log(error);
             alert(error.message);
-
-
-            // window.location.href = window.location.href;
+            window.location.href = window.location.href;
 
         });
 

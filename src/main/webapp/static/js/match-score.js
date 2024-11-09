@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetch(url)
         .then(response => {
-            console.log(response)
             if (!response.ok) {
                 return response.json().then(error => {
                     throw new Error(error.message)
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             alert(error.message);
-            // window.location.href = context;
+            window.location.href = context;
 
         });
 
