@@ -151,3 +151,36 @@ JSON тело запроса на создание нового матча (эн
   "secondPlayer": "Second Name"
 }
 ```
+---
+JSON тело запроса для подсчета очков (эндпоинт POST /api/match-score?uuid=321c75ce-e727-47b3-b7dc-97b9d7a503b5) 
+```json
+{
+  "pointWinner": "PointWinnerName"
+}
+```
+JSON ответ после обновления счета в матче
+```json
+{
+    "firstPlayer": "First Name",
+    "secondPlayer": "Second Name",
+    "winner": null,
+    "ended": false,
+    "inTiebreak": false,
+    "sets": {
+        "TWO": [
+            0,
+            0,
+            0
+        ],
+        "ONE": [
+            0,
+            0,
+            0
+        ]
+    },
+    "currentPoints": {
+        "TWO": 0,
+        "ONE": 1
+    }
+}
+```
