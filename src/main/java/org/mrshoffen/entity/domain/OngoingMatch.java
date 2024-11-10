@@ -1,6 +1,8 @@
 package org.mrshoffen.entity.domain;
 
 import lombok.Data;
+import org.mrshoffen.entity.persistence.Player;
+import org.mrshoffen.exception.ValidationException;
 
 @Data
 public class OngoingMatch {
@@ -19,6 +21,8 @@ public class OngoingMatch {
         score  = new OngoingMatchScore();
         matchState = new OngoingMatchState(score);
     }
+
+
 
 
     public void scorePointToPlayer(PlayerNumber pointWinnerNo) {

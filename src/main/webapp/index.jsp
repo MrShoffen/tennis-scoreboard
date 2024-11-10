@@ -91,6 +91,7 @@
             <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Guice <a href="https://github.com/google/guice/wiki/">Dependency Injection</a><br>
             <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  MapStruct <a href="https://mapstruct.org/">Mapping</a><br>
             <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  Apache Tomcat 10 <a href="https://tomcat.apache.org/tomcat-10.1-doc/index.html">Servlet Container</a><br>
+            <img src="static/img/sep.svg" alt="Tennis" width="12" height="12"/>  JUnit 5 and AssertJ Library for Tests<br>
         </div>
     </div>
 

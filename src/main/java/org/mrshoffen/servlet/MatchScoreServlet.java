@@ -51,15 +51,12 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
         OngoingMatchResponseDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoredPlayer);
 
         if (updatedMatch.isEnded()) {
-
             ongoingMatchesService.removeMatchById(uuid);
 
             MatchResponseDto matchResponseDto
                     = finishedMatchesPersistenceService.saveFinishedMatch(updatedMatch);
 
-            //todo add redirect to special page
             resp.sendRedirect(req.getContextPath() + "/match?id=" + matchResponseDto.getId());
-
         }
 
         writeJsonValueToResponse(resp, updatedMatch);

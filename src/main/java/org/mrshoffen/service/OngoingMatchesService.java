@@ -36,7 +36,7 @@ public class OngoingMatchesService {
 
         var validationResult = validator.validate(newMatchRequestDto);
 
-        if(!validationResult.isEmpty()){
+        if (!validationResult.isEmpty()) {
             throw new ValidationException(validationResult);
         }
 
@@ -70,15 +70,23 @@ public class OngoingMatchesService {
 
         OngoingMatch currentMatch = tryToGetMatchById(uuid);
 
-        String pointWinner = pointScoreDto.getPointWinner();
-        PlayerNumber pointWinnerNo = pointWinner.equals(currentMatch.getFirstPlayer()) ? PlayerNumber.ONE : PlayerNumber.TWO;
+        PlayerNumber pointWinnerNo = tryToGetPlayerNumberByName(pointScoreDto.getPointWinner(), currentMatch);
 
         currentMatch.scorePointToPlayer(pointWinnerNo);
 
         return ongoingMatchMapper.toDto(currentMatch);
     }
 
+    //todo remove match if 2 hours expired
+    public void removeMatchById(UUID uuid) {
+        ongoingMatches.remove(uuid);
+    }
+
     private OngoingMatch tryToGetMatchById(UUID uuid) {
+        if (uuid == null) {
+            throw new EntityNotFoundException("Match id is null!");
+        }
+
         OngoingMatch ongoingMatch = ongoingMatches.get(uuid);
 
         if (ongoingMatch == null) {
@@ -88,8 +96,14 @@ public class OngoingMatchesService {
         return ongoingMatch;
     }
 
-
-    public void removeMatchById(UUID uuid) {
-        ongoingMatches.remove(uuid);
+    public PlayerNumber tryToGetPlayerNumberByName(String name, OngoingMatch match) {
+        if (name.equals(match.getFirstPlayer())) {
+            return PlayerNumber.ONE;
+        } else if (name.equals(match.getSecondPlayer())) {
+            return PlayerNumber.TWO;
+        } else {
+            throw new EntityNotFoundException("No player with name " + name + " in this match!");
+        }
     }
+
 }
