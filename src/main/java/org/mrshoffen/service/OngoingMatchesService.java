@@ -69,7 +69,7 @@ public class OngoingMatchesService {
 
         OngoingMatch currentMatch = tryToGetMatchById(uuid);
 
-        currentMatch.scorePoint(pointScoreDto.getPointWinner());
+        currentMatch.scorePointToPlayer(pointScoreDto.getPointWinner());
 
         return ongoingMatchMapper.toDto(currentMatch);
     }

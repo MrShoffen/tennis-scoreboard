@@ -21,16 +21,16 @@ public class OngoingMatch {
     }
 
 
-    public void scorePoint(String pointWinner) {
-        int pointWinnerNo = pointWinner.equals(firstPlayer) ? 1 : 2;
+    public void scorePointToPlayer(String pointWinner) {
+        PlayerNumber pointWinnerNo = pointWinner.equals(firstPlayer) ? PlayerNumber.ONE : PlayerNumber.TWO;
 
-        score.scorePoint(pointWinnerNo);
+        score.scorePointToPlayer(pointWinnerNo);
 
-        handleGameEnd();
+        handleGameEnd(pointWinnerNo);
 
-        handleSetEnd();
+        handleSetEnd(pointWinnerNo);
 
-        if (matchState.isWonByPointWinner()) {
+        if (matchState.isMatchWonByPointWinner(pointWinnerNo)) {
             matchState.setEnded(true);
             winner = pointWinner;
             return;
@@ -40,31 +40,31 @@ public class OngoingMatch {
     }
 
 
-    private void handleGameEnd() {
+    private void handleGameEnd(PlayerNumber pointWinnerNo) {
         if (matchState.isInTiebreak()) {
-            handleTiebreakEnd();
+            handleTiebreakEnd(pointWinnerNo);
         } else {
-            handleRegularGameEnd();
+            handleRegularGameEnd(pointWinnerNo);
         }
     }
 
-    private void handleSetEnd() {
-        if (matchState.setEnded()) {
+    private void handleSetEnd(PlayerNumber pointWinnerNo) {
+        if (matchState.setWonByPointWinner(pointWinnerNo)) {
             score.startNextSet();
         }
     }
 
 
-    private void handleRegularGameEnd() {
-        if (matchState.regularGameEnded()) {
-            score.scoreGameInCurrentSet();
+    private void handleRegularGameEnd(PlayerNumber pointWinnerNo) {
+        if (matchState.regularGameWonByPointWinner(pointWinnerNo)) {
+            score.scoreGameToPlayerInCurrentSet(pointWinnerNo);
             score.startNextGame();
         }
     }
 
-    private void handleTiebreakEnd() {
-        if (matchState.tiebreakEnded()) {
-            score.scoreGameInCurrentSet();
+    private void handleTiebreakEnd(PlayerNumber pointWinnerNo) {
+        if (matchState.tiebreakWonByPointWinner(pointWinnerNo)) {
+            score.scoreGameToPlayerInCurrentSet(pointWinnerNo);
             score.startNextGame();
             matchState.setInTiebreak(false);
         }

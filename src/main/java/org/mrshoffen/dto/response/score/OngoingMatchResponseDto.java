@@ -2,6 +2,7 @@ package org.mrshoffen.dto.response.score;
 
 
 import lombok.Data;
+import org.mrshoffen.entity.domain.PlayerNumber;
 
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class OngoingMatchResponseDto {
 
     private boolean inTiebreak;
 
-    private Map<Integer, Integer[]> sets;
-    private Map<Integer, Integer> currentPoints;
+    private Map<PlayerNumber, Integer[]> sets;
+    private Map<PlayerNumber, Integer> currentPoints;
 
 }

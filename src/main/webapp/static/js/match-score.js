@@ -1,1 +1,216 @@
-const firstPlayerBlock=document.getElementById("first-player"),secondPlayerBlock=document.getElementById("second-player"),firstPlayerScoreButton=document.querySelector(".first-player-point-button"),secondPlayerScoreButton=document.querySelector(".second-player-point-button");function buildScoreRequest(e){return{pointWinner:e}}function setupScore(e){function t(t,r){return t<=3&&r<=3?function(t){switch(t){case 0:return"0";case 1:return"15";case 2:return"30";case 3:return"40";default:throw new Error("Invalid score: "+e)}}(t):t>r?"AD":t<r||t===r?"40":"err"}let r=e.inTiebreak?e.currentPoints[1]:t(+e.currentPoints[1],+e.currentPoints[2]),n=e.inTiebreak?e.currentPoints[2]:t(+e.currentPoints[2],+e.currentPoints[1]);setupGameLabel(e.inTiebreak),setUpPlayerScore(firstPlayerBlock,e.firstPlayer,e.sets[1],r),setUpPlayerScore(secondPlayerBlock,e.secondPlayer,e.sets[2],n)}function setupGameLabel(e){const t=document.querySelector(".score-names .points");e?(updateElement(t,"TIEBREAK"),t.style.color="red"):(updateElement(t,"GAME"),t.style.color="rgb(210, 210, 210)")}function setupPointListeners(){document.querySelectorAll(".score-element").forEach((e=>{new MutationObserver((function(t,r){for(const r of t){const t=r.target.textContent;"childList"!==r.type&&"characterData"!==r.type||"0"===t||(e.classList.add("highlight"),firstPlayerScoreButton.querySelector("button").disabled=!0,secondPlayerScoreButton.querySelector("button").disabled=!0,setTimeout((()=>{e.classList.remove("highlight"),firstPlayerScoreButton.querySelector("button").disabled=!1,secondPlayerScoreButton.querySelector("button").disabled=!1}),300))}})).observe(e,{childList:!0,characterData:!0,subtree:!0})}))}function updateElement(e,t){e.innerHTML!==String(t).trim()&&(e.innerHTML=t)}function setUpPlayerScore(e,t,r,n){updateElement(e.querySelector("h4"),t),updateElement(e.querySelector(".points"),n),updateElement(e.querySelector(".set1"),r[0]),updateElement(e.querySelector(".set2"),r[1]),updateElement(e.querySelector(".set3"),r[2])}function sendScoreRequest(e){let t=window.location.search,r=context+match_score_api+t;fetch(r,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(e)}).then((e=>{if(e.url.includes(t))return e.json();window.location.href=e.url})).then((e=>{setupScore(e)})).catch((e=>{console.error("err",e)}))}function setupPlayerScoreButton(e,t){let r=e.querySelector(".btn-point");r.innerHTML="Point to "+t,r.addEventListener("click",(function(){sendScoreRequest(buildScoreRequest(t))}))}document.addEventListener("DOMContentLoaded",(function(){let e=context+match_score_api+window.location.search;fetch(e).then((e=>e.ok?e.json():e.json().then((e=>{throw new Error(e.message)})))).then((e=>{setupScore(e),setupPlayerScoreButton(firstPlayerScoreButton,e.firstPlayer),setupPlayerScoreButton(secondPlayerScoreButton,e.secondPlayer),setupPointListeners()})).catch((e=>{alert(e.message),window.location.href=context}))}));
+const firstPlayerBlock = document.getElementById('first-player');
+const secondPlayerBlock = document.getElementById('second-player');
+
+const firstPlayerScoreButton = document.querySelector('.first-player-point-button');
+const secondPlayerScoreButton = document.querySelector('.second-player-point-button');
+
+
+function buildScoreRequest(pointWinner) {
+    return {
+        pointWinner: pointWinner
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    let url = context + match_score_api + window.location.search;
+
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => {
+                    throw new Error(error.message)
+                });
+            }
+
+            return response.json();
+        })
+        .then(json => {
+
+
+            setupScore(json);
+
+            setupPlayerScoreButton(firstPlayerScoreButton, json.firstPlayer);
+            setupPlayerScoreButton(secondPlayerScoreButton, json.secondPlayer);
+
+            setupPointListeners();
+
+        })
+        .catch(error => {
+            alert(error.message);
+            window.location.href = context;
+
+
+        });
+
+
+})
+
+function setupScore(score) {
+
+    function lessThan4Points(points) {
+        switch (points) {
+            case 0:
+                return "0";
+            case 1:
+                return "15";
+            case 2:
+                return "30";
+            case 3:
+                return "40";
+            default:
+                throw new Error("Invalid score: " + score);
+        }
+    }
+
+    function parseIntToTennisPoint(first, second) {
+        if (first <= 3 && second <= 3) {
+            return lessThan4Points(first);
+        } else if (first > second) {
+            return "AD";
+        } else if (first < second) {
+            return "40";
+        } else if (first === second) {
+            return "40"
+        }
+        return "err";
+
+
+    }
+
+    let firstPlayerStringScore = score.inTiebreak ? score.currentPoints.ONE :
+        parseIntToTennisPoint(+score.currentPoints.ONE, +score.currentPoints.TWO);
+
+    let secondPlayerStringScore = score.inTiebreak ? score.currentPoints.TWO :
+        parseIntToTennisPoint(+score.currentPoints.TWO, +score.currentPoints.ONE);
+
+
+    setupGameLabel(score.inTiebreak);
+    setUpPlayerScore(firstPlayerBlock, score.firstPlayer, score.sets.ONE, firstPlayerStringScore);
+    setUpPlayerScore(secondPlayerBlock, score.secondPlayer, score.sets.TWO, secondPlayerStringScore);
+
+}
+
+function setupGameLabel(inTiebreak) {
+    const gameLabel = document.querySelector('.score-names .points');
+
+    if (inTiebreak) {
+        updateElement(gameLabel, "TIEBREAK");
+        gameLabel.style.color = 'red';
+    } else {
+        updateElement(gameLabel, "GAME");
+        gameLabel.style.color = 'rgb(210, 210, 210)';
+    }
+}
+
+
+function setupPointListeners() {
+    let mutableScoreElements = document.querySelectorAll('.score-element');
+
+
+    mutableScoreElements.forEach((targetNode) => {
+
+        const config = {
+            childList: true,
+            characterData: true,
+            subtree: true
+        };
+
+
+        const callback = function (mutationsList, observer) {
+            for (const mutation of mutationsList) {
+                const newValue = mutation.target.textContent;
+                if ((mutation.type === 'childList' || mutation.type === 'characterData') && newValue !== '0') {
+                    targetNode.classList.add('highlight');
+                    firstPlayerScoreButton.querySelector('button').disabled = true;
+                    secondPlayerScoreButton.querySelector('button').disabled = true;
+                    setTimeout(() => {
+                        targetNode.classList.remove('highlight');
+                        firstPlayerScoreButton.querySelector('button').disabled = false;
+                        secondPlayerScoreButton.querySelector('button').disabled = false;
+
+                    }, 300); // Длительность анимации 1 секунда
+                }
+            }
+        };
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+
+    })
+
+}
+
+function updateElement(element, newValue) {
+    let oldValue = element.innerHTML;
+    let newValueStr = String(newValue).trim();
+    if (oldValue !== newValueStr) {
+        element.innerHTML = newValue;
+    }
+}
+
+
+function setUpPlayerScore(playerBlock, name, sets, currentPoints) {
+
+
+    let nameElement = playerBlock.querySelector('h4');
+    updateElement(nameElement, name);
+
+    let pointsElement = playerBlock.querySelector('.points');
+    updateElement(pointsElement, currentPoints);
+
+    let set1Element = playerBlock.querySelector('.set1');
+    updateElement(set1Element, sets[0])
+
+    let set2Element = playerBlock.querySelector('.set2');
+    updateElement(set2Element, sets[1])
+
+
+    let set3Element = playerBlock.querySelector('.set3');
+    updateElement(set3Element, sets[2])
+
+
+}
+
+function sendScoreRequest(request) {
+    let uuid = window.location.search;
+    let url = context + match_score_api + uuid;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(request)
+    }).then(response => {
+
+        if (!response.url.includes(uuid)) {
+            window.location.href = response.url;
+        } else {
+            return response.json();
+        }
+
+    }).then(json => {
+        setupScore(json);
+    })
+        .catch(error => {
+            console.error('err', error);
+        });
+
+
+}
+
+function setupPlayerScoreButton(element, name) {
+
+    let button = element.querySelector('.btn-point');
+    button.innerHTML = 'Point to ' + name;
+
+    button.addEventListener('click', function () {
+
+        sendScoreRequest(buildScoreRequest(name));
+    })
+
+
+}
+
+

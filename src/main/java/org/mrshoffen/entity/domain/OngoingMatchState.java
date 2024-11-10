@@ -32,28 +32,28 @@ public class OngoingMatchState {
 
     public boolean tiebreak() {
         return score.getCurrentSet() <= MAX_SETS_IN_MATCH
-                && score.gamesInCurrentSetWon(1) == GAMES_FOR_TIEBREAK_START
-                && score.gamesInCurrentSetWon(2) == GAMES_FOR_TIEBREAK_START;
+                && score.gamesWonInSetByPlayer(PlayerNumber.ONE, score.getCurrentSet()) == GAMES_FOR_TIEBREAK_START
+                && score.gamesWonInSetByPlayer(PlayerNumber.TWO, score.getCurrentSet()) == GAMES_FOR_TIEBREAK_START;
     }
 
 
-    public boolean tiebreakEnded() {
-        return tiebreakWonClear() || tiebreakWonAfterAdditionalRounds();
+    public boolean tiebreakWonByPointWinner(PlayerNumber pointWinnerNo) {
+        return tiebreakWonClear(pointWinnerNo) || tiebreakWonAfterAdditionalRounds(pointWinnerNo);
     }
 
-    public boolean regularGameEnded() {
-        return gameWonClear() || gameWonAfterAdditionalRounds();
+    public boolean regularGameWonByPointWinner(PlayerNumber pointWinnerNo) {
+        return gameWonClear(pointWinnerNo) || gameWonAfterAdditionalRounds(pointWinnerNo);
     }
 
-    public boolean setEnded() {
-        return setWonClear() || setWonAfterTiebreak();
+    public boolean setWonByPointWinner(PlayerNumber pointWinnerNo) {
+        return setWonByPlayer(pointWinnerNo, score.getCurrentSet());
     }
 
 
-    public boolean isWonByPointWinner() {
+    public boolean isMatchWonByPointWinner(PlayerNumber pointWinnerNo) {
         int wonSets = 0;
         for (int i = 1; i < score.getCurrentSet(); i++) {
-            if (score.isSetWon(i)) {
+            if (setWonByPlayer(pointWinnerNo, i)) {
                 wonSets++;
             }
         }
@@ -61,39 +61,42 @@ public class OngoingMatchState {
         return wonSets == SETS_FOR_MATCH_WIN;
     }
 
-
-
-    public boolean setWonClear() {
-        return score.gamesInCurrentSetWon(score.getPointWinnerNo()) == GAMES_FOR_SET_WIN
-                && (score.gamesInCurrentSetWon(score.getPointWinnerNo())  - score.gamesInCurrentSetWon(score.getPointLoserNo()) >= GAMES_DIF_FOR_SET_WIN);
-    }
-
-    private boolean setWonAfterTiebreak() {
-        return score.gamesInCurrentSetWon(score.getPointWinnerNo()) > GAMES_FOR_TIEBREAK_START
-                && (score.gamesInCurrentSetWon(score.getPointWinnerNo())  - score.gamesInCurrentSetWon(score.getPointLoserNo()) == 1);
-
+    private boolean setWonByPlayer(PlayerNumber playerNo, int setNumber) {
+        return setWonClear(playerNo, setNumber) || setWonAfterTiebreak(playerNo, setNumber);
     }
 
 
-    private boolean tiebreakWonClear() {
-        return score.currentPoints(score.getPointWinnerNo()) == POINTS_FOR_TIEBREAK_WIN
-                && (score.currentPoints(score.getPointWinnerNo()) - score.currentPoints(score.getPointLoserNo())) >= POINTS_DIF_FOR_TIEBREAK_WIN;
+    private boolean setWonClear(PlayerNumber pointWinnerNo, int setNumber) {
+        return score.gamesWonInSetByPlayer( pointWinnerNo, setNumber) >= GAMES_FOR_SET_WIN
+                && (score.gamesWonInSetByPlayer( pointWinnerNo, setNumber) - score.gamesWonInSetByPlayer( pointWinnerNo.opponent(), setNumber) >= GAMES_DIF_FOR_SET_WIN);
     }
 
-    private boolean tiebreakWonAfterAdditionalRounds() {
-        return score.currentPoints(score.getPointWinnerNo()) > POINTS_FOR_TIEBREAK_WIN
-                && (score.currentPoints(score.getPointWinnerNo()) - score.currentPoints(score.getPointLoserNo())) == POINTS_DIF_FOR_TIEBREAK_WIN;
+    private boolean setWonAfterTiebreak(PlayerNumber pointWinnerNo, int setNumber) {
+        return score.gamesWonInSetByPlayer( pointWinnerNo, setNumber) > GAMES_FOR_TIEBREAK_START
+                && (score.gamesWonInSetByPlayer( pointWinnerNo, setNumber) - score.gamesWonInSetByPlayer(pointWinnerNo.opponent(), setNumber) == 1);
+
     }
 
 
-    private boolean gameWonClear() {
-        return score.currentPoints(score.getPointWinnerNo()) == POINTS_FOR_REGULAR_GAME_WIN
-                && (score.currentPoints(score.getPointWinnerNo()) - score.currentPoints(score.getPointLoserNo())) >= POINTS_DIF_FOR_REGULAR_GAME_WIN;
+    private boolean tiebreakWonClear(PlayerNumber pointWinnerNo) {
+        return score.pointsWonInCurrentGame(pointWinnerNo) == POINTS_FOR_TIEBREAK_WIN
+                && (score.pointsWonInCurrentGame(pointWinnerNo) - score.pointsWonInCurrentGame(pointWinnerNo.opponent())) >= POINTS_DIF_FOR_TIEBREAK_WIN;
     }
 
-    private boolean gameWonAfterAdditionalRounds() {
-        return score.currentPoints(score.getPointWinnerNo()) > POINTS_FOR_REGULAR_GAME_WIN
-                && (score.currentPoints(score.getPointWinnerNo()) - score.currentPoints(score.getPointLoserNo())) == POINTS_DIF_FOR_REGULAR_GAME_WIN;
+    private boolean tiebreakWonAfterAdditionalRounds(PlayerNumber pointWinnerNo) {
+        return score.pointsWonInCurrentGame(pointWinnerNo) > POINTS_FOR_TIEBREAK_WIN
+                && (score.pointsWonInCurrentGame(pointWinnerNo) - score.pointsWonInCurrentGame(pointWinnerNo.opponent())) == POINTS_DIF_FOR_TIEBREAK_WIN;
+    }
+
+
+    private boolean gameWonClear(PlayerNumber pointWinnerNo) {
+        return score.pointsWonInCurrentGame(pointWinnerNo) == POINTS_FOR_REGULAR_GAME_WIN
+                && (score.pointsWonInCurrentGame(pointWinnerNo) - score.pointsWonInCurrentGame(pointWinnerNo.opponent())) >= POINTS_DIF_FOR_REGULAR_GAME_WIN;
+    }
+
+    private boolean gameWonAfterAdditionalRounds(PlayerNumber pointWinnerNo) {
+        return score.pointsWonInCurrentGame(pointWinnerNo) > POINTS_FOR_REGULAR_GAME_WIN
+                && (score.pointsWonInCurrentGame(pointWinnerNo) - score.pointsWonInCurrentGame(pointWinnerNo.opponent())) == POINTS_DIF_FOR_REGULAR_GAME_WIN;
     }
 
 }
