@@ -21,8 +21,8 @@ public class OngoingMatch {
     }
 
 
-    public void scorePointToPlayer(String pointWinner) {
-        PlayerNumber pointWinnerNo = pointWinner.equals(firstPlayer) ? PlayerNumber.ONE : PlayerNumber.TWO;
+    public void scorePointToPlayer(PlayerNumber pointWinnerNo) {
+
 
         score.scorePointToPlayer(pointWinnerNo);
 
@@ -32,7 +32,7 @@ public class OngoingMatch {
 
         if (matchState.isMatchWonByPointWinner(pointWinnerNo)) {
             matchState.setEnded(true);
-            winner = pointWinner;
+            winner = pointWinnerNo == PlayerNumber.ONE ? firstPlayer : secondPlayer;
             return;
         }
 

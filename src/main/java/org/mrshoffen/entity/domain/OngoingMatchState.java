@@ -61,7 +61,7 @@ public class OngoingMatchState {
         return wonSets == SETS_FOR_MATCH_WIN;
     }
 
-    private boolean setWonByPlayer(PlayerNumber playerNo, int setNumber) {
+    public boolean setWonByPlayer(PlayerNumber playerNo, int setNumber) {
         return setWonClear(playerNo, setNumber) || setWonAfterTiebreak(playerNo, setNumber);
     }
 

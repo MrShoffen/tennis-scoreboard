@@ -6,6 +6,7 @@ import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
 import org.mrshoffen.entity.domain.OngoingMatch;
+import org.mrshoffen.entity.domain.PlayerNumber;
 import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.EntityNotFoundException;
 import org.mrshoffen.exception.ValidationException;
@@ -69,7 +70,10 @@ public class OngoingMatchesService {
 
         OngoingMatch currentMatch = tryToGetMatchById(uuid);
 
-        currentMatch.scorePointToPlayer(pointScoreDto.getPointWinner());
+        String pointWinner = pointScoreDto.getPointWinner();
+        PlayerNumber pointWinnerNo = pointWinner.equals(currentMatch.getFirstPlayer()) ? PlayerNumber.ONE : PlayerNumber.TWO;
+
+        currentMatch.scorePointToPlayer(pointWinnerNo);
 
         return ongoingMatchMapper.toDto(currentMatch);
     }
