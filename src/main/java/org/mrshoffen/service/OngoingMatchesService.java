@@ -1,7 +1,9 @@
 package org.mrshoffen.service;
 
 import jakarta.inject.Inject;
+import jakarta.servlet.ServletContextEvent;
 import jakarta.validation.Validator;
+import lombok.Getter;
 import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
@@ -11,13 +13,18 @@ import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.EntityNotFoundException;
 import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.mapper.OngoingMatchMapper;
+import org.mrshoffen.utils.DependencyManager;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class OngoingMatchesService {
 
+    @Getter
     private static final Map<UUID, OngoingMatch> ongoingMatches = new ConcurrentHashMap<>();
 
     private final OngoingMatchMapper ongoingMatchMapper;

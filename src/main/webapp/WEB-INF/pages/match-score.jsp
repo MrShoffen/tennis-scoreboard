@@ -13,6 +13,9 @@
     <%-- bootstrap --%>
     <link href="static/css/bootstrap.css" rel="stylesheet"/>
 
+    <%-- Font awesome style --%>
+    <link rel="stylesheet" href="static/css/all.min.css">
+
     <%-- Roboto font --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

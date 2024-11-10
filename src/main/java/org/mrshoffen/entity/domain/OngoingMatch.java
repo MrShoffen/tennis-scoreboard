@@ -4,6 +4,8 @@ import lombok.Data;
 import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.ValidationException;
 
+import java.time.LocalDateTime;
+
 @Data
 public class OngoingMatch {
 
@@ -14,12 +16,16 @@ public class OngoingMatch {
     private OngoingMatchScore score;
     private OngoingMatchState matchState;
 
+    private LocalDateTime createdTime;
+
     public OngoingMatch(String firstPlayer, String secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
 
         score  = new OngoingMatchScore();
         matchState = new OngoingMatchState(score);
+
+        this.createdTime = LocalDateTime.now();
     }
 
 

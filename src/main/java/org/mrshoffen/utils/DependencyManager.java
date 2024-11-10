@@ -4,6 +4,7 @@ import com.google.inject.*;
 import jakarta.inject.Singleton;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.HibernateValidator;
@@ -48,11 +49,15 @@ public class DependencyManager extends AbstractModule {
 
     @Provides @Singleton
     private Validator getValidator(){
-        return Validation.byProvider(HibernateValidator.class)
-                .configure()
-                .buildValidatorFactory()
+        return buildValidatorFactory()
                 .getValidator();
     }
 
+    @Provides @Singleton
+    private ValidatorFactory buildValidatorFactory() {
+        return Validation.byProvider(HibernateValidator.class)
+                .configure()
+                .buildValidatorFactory();
+    }
 
 }
