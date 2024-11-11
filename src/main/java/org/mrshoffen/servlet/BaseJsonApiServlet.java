@@ -32,15 +32,15 @@ public abstract class BaseJsonApiServlet extends HttpServlet {
     }
 
 
-    protected PageRequestDto extractPageRequestDto(HttpServletRequest req) {
+    protected final PageRequestDto extractPageRequestDto(HttpServletRequest req) {
         return PageRequestDto.builder()
-                .pageNumber(tryToExtractPositiveInt(req.getParameter("page_number")))
-                .pageSize(tryToExtractPositiveInt(req.getParameter("page_size")))
+                .pageNumber(tryToExtractIntParameter(req.getParameter("page_number")))
+                .pageSize(tryToExtractIntParameter(req.getParameter("page_size")))
                 .playerNameFilterBy(req.getParameter("player_name"))
                 .build();
     }
 
-    protected Integer tryToExtractPositiveInt(String idString) {
+    protected final Integer tryToExtractIntParameter(String idString) {
         int id;
 
         try {

@@ -37,6 +37,16 @@ public class ContextListener implements ServletContextListener {
         configureNotFinishedMatchRemover();
     }
 
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+
+        validatorFactory.close();
+        sessionFactory.close();
+    }
+
     private void configureNotFinishedMatchRemover() {
 
         executorService = Executors.newSingleThreadScheduledExecutor();
@@ -52,16 +62,5 @@ public class ContextListener implements ServletContextListener {
                 }
             });
         }, 0, 1, TimeUnit.HOURS);
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        if (executorService != null) {
-            executorService.shutdown();
-        }
-
-        validatorFactory.close();
-        sessionFactory.close();
-
     }
 }

@@ -2,7 +2,6 @@ package org.mrshoffen.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +34,7 @@ public class ExceptionFilter extends HttpFilter {
 
             res.setStatus(responseCode);
 
-            objectMapper.writeValue(res.getOutputStream(), ErrorResponseDto.of(exception.getMessage()));
+            objectMapper.writeValue(res.getOutputStream(), ErrorResponseDto.of(exception.getMessage(),responseCode));
         }
 
     }

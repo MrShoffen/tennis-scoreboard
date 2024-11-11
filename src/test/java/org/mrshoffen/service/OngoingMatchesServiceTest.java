@@ -1,13 +1,11 @@
 package org.mrshoffen.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mrshoffen.dto.request.NewMatchRequestDto;
 import org.mrshoffen.dto.request.PointScoreDto;
-import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
-import org.mrshoffen.entity.domain.OngoingMatch;
+import org.mrshoffen.dto.response.score.OngoingMatchDto;
 import org.mrshoffen.entity.domain.PlayerNumber;
 import org.mrshoffen.exception.EntityNotFoundException;
 import org.mrshoffen.exception.ValidationException;
@@ -107,7 +105,7 @@ class OngoingMatchesServiceTest {
         PointScoreDto scoreDto = new PointScoreDto();
         scoreDto.setPointWinner("first");
 
-        OngoingMatchResponseDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoreDto);
+        OngoingMatchDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoreDto);
 
         assertThat(updatedMatch.getCurrentPoints().get(PlayerNumber.ONE))
                 .isEqualTo(1);

@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mrshoffen.dto.request.PointScoreDto;
 import org.mrshoffen.dto.response.pageable.MatchResponseDto;
-import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
+import org.mrshoffen.dto.response.score.OngoingMatchDto;
 import org.mrshoffen.exception.ValidationException;
 import org.mrshoffen.service.FinishedMatchesPersistenceService;
 import org.mrshoffen.service.OngoingMatchesService;
@@ -34,12 +34,10 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
             throw new ValidationException("Invalid UUID!");
         }
 
-        OngoingMatchResponseDto currentMatch = ongoingMatchesService.getMatchById(uuid);
+        OngoingMatchDto currentMatch = ongoingMatchesService.getMatchById(uuid);
 
 
         writeJsonValueToResponse(resp, currentMatch);
-
-
     }
 
     @Override
@@ -48,7 +46,7 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
 
 
-        OngoingMatchResponseDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoredPlayer);
+        OngoingMatchDto updatedMatch = ongoingMatchesService.updateMatch(uuid, scoredPlayer);
 
         if (updatedMatch.isEnded()) {
             ongoingMatchesService.removeMatchById(uuid);
@@ -60,6 +58,5 @@ public class MatchScoreServlet extends BaseJsonApiServlet {
         }
 
         writeJsonValueToResponse(resp, updatedMatch);
-
     }
 }

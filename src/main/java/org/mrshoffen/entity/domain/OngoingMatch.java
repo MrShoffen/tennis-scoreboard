@@ -1,8 +1,6 @@
 package org.mrshoffen.entity.domain;
 
 import lombok.Data;
-import org.mrshoffen.entity.persistence.Player;
-import org.mrshoffen.exception.ValidationException;
 
 import java.time.LocalDateTime;
 
@@ -28,9 +26,6 @@ public class OngoingMatch {
         this.createdTime = LocalDateTime.now();
     }
 
-
-
-
     public void scorePointToPlayer(PlayerNumber pointWinnerNo) {
 
 
@@ -48,7 +43,6 @@ public class OngoingMatch {
 
         checkForTiebreak();
     }
-
 
     private void handleGameEnd(PlayerNumber pointWinnerNo) {
         if (matchState.isInTiebreak()) {

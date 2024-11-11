@@ -22,7 +22,7 @@ public class PlayersServlet extends BaseJsonApiServlet {
 
         PageRequestDto request = extractPageRequestDto(req);
 
-        PageResponseDto responseDto  = playerService.findPageFilteredByName(request);
+        PageResponseDto responseDto = playerService.findPageFilteredByName(request);
 
         writeJsonValueToResponse(resp, responseDto);
     }

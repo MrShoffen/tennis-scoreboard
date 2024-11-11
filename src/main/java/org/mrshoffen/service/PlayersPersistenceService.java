@@ -46,7 +46,7 @@ public class PlayersPersistenceService {
                 .stream()
                 .map(playerMapper::toDto)
                 .peek(dto -> dto.setMatchesPlayed(matchRepository.numberOfEntitiesContainingName(dto.getName())))
-                .peek(dto ->dto.setMatchesWon(matchRepository.numberOfWonMatchesByPlayerName(dto.getName())))
+                .peek(dto -> dto.setMatchesWon(matchRepository.numberOfWonMatchesByPlayerName(dto.getName())))
                 .toList();
 
         int totalPages = ceilDiv(playerRepository.numberOfEntitiesContainingName(nameForFilter), pageSize);

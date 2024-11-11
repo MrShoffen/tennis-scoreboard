@@ -7,7 +7,7 @@ import org.mrshoffen.entity.domain.PlayerNumber;
 import java.util.Map;
 
 @Data
-public class OngoingMatchResponseDto {
+public class OngoingMatchDto {
 
     private String firstPlayer;
     private String secondPlayer;

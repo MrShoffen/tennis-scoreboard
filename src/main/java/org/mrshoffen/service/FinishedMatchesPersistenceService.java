@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 import org.mrshoffen.dto.request.PageRequestDto;
 import org.mrshoffen.dto.response.pageable.PageResponseDto;
-import org.mrshoffen.dto.response.score.OngoingMatchResponseDto;
+import org.mrshoffen.dto.response.score.OngoingMatchDto;
 import org.mrshoffen.entity.persistence.Match;
 import org.mrshoffen.entity.persistence.Player;
 import org.mrshoffen.exception.EntityNotFoundException;
@@ -66,7 +66,7 @@ public class FinishedMatchesPersistenceService {
 
     }
 
-    public MatchResponseDto saveFinishedMatch(OngoingMatchResponseDto finishedMatch) {
+    public MatchResponseDto saveFinishedMatch(OngoingMatchDto finishedMatch) {
         Player firstPlayer = playersPersistenceService.findByNameOrSave(finishedMatch.getFirstPlayer());
         Player secondPlayer = playersPersistenceService.findByNameOrSave(finishedMatch.getSecondPlayer());
         Player winner = playersPersistenceService.findByNameOrSave(finishedMatch.getWinner());

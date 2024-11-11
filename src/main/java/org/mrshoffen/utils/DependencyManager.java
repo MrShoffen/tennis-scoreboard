@@ -26,29 +26,29 @@ public class DependencyManager extends AbstractModule {
 
 
     @Provides @Singleton
-    private SessionFactory getSessionFactory() {
+    private SessionFactory provideSessionFactory() {
         return new Configuration()
                 .configure("hibernate.cfg.xml")
                 .buildSessionFactory();
     }
 
     @Provides @Singleton
-    private MatchMapper getMatchMapper(){
+    private MatchMapper provideMatchMapper(){
         return Mappers.getMapper(MatchMapper.class);
     }
 
     @Provides @Singleton
-    private PlayerMapper getPlayerMapper(){
+    private PlayerMapper providePlayerMapper(){
         return Mappers.getMapper(PlayerMapper.class);
     }
 
     @Provides @Singleton
-    private OngoingMatchMapper getOngoingMatchMapper(){
+    private OngoingMatchMapper provideOngoingMatchMapper(){
         return Mappers.getMapper(OngoingMatchMapper.class);
     }
 
     @Provides @Singleton
-    private Validator getValidator(){
+    private Validator provideValidator(){
         return buildValidatorFactory()
                 .getValidator();
     }

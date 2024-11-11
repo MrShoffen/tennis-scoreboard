@@ -50,15 +50,6 @@ public class PlayerRepository extends BaseRepository<Player> {
 
     }
 
-    private List<Predicate> buildFilterPredicate(String playerName, CriteriaBuilder cb, Root<Player> player) {
-        List<Predicate> predicates = new ArrayList<>();
-        if (playerName != null && !playerName.isBlank()) {
-            Predicate like = cb.like(cb.lower(player.get("name")), "%" + playerName.toLowerCase() + "%");
-            predicates.add(like);
-        }
-        return predicates;
-    }
-
     @Override
     public Integer numberOfEntitiesContainingName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
@@ -75,6 +66,15 @@ public class PlayerRepository extends BaseRepository<Player> {
         criteria.select(cb.count(matches)).where(predicates.toArray(new Predicate[0]));
 
         return session.createQuery(criteria).getSingleResult().intValue();
+    }
+
+    private List<Predicate> buildFilterPredicate(String playerName, CriteriaBuilder cb, Root<Player> player) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (playerName != null && !playerName.isBlank()) {
+            Predicate like = cb.like(cb.lower(player.get("name")), "%" + playerName.toLowerCase() + "%");
+            predicates.add(like);
+        }
+        return predicates;
     }
 
 

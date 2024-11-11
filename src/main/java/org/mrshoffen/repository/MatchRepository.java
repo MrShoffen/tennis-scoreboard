@@ -55,7 +55,7 @@ public class MatchRepository extends BaseRepository<Match> {
 
     }
 
-    //todo mv move to parent
+
     @Override
     public Integer numberOfEntitiesContainingName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
