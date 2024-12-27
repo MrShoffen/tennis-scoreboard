@@ -1,1 +1,44 @@
-body{background-color:#333;color:#d2d2d2}.page_content,body{font-family:Roboto,sans-serif;font-weight:500}.page_content{font-style:normal;padding-top:65px;padding-bottom:40px}a{color:#d2d2d2}a:hover{color:#548a35}.custom-ul{padding-left:20px;text-align:left}.custom-ul li{position:relative;padding-left:20px}.custom-ul li:before{content:"•";position:absolute;left:0;color:#000}.col-lg-9 img{margin-bottom:4px}
+body {
+    background-color: #333;
+    color: #d2d2d2
+}
+
+.page_content, body {
+    font-family: Roboto, sans-serif;
+    font-weight: 500
+}
+
+.page_content {
+    font-style: normal;
+    padding-top: 65px;
+    padding-bottom: 40px
+}
+
+a {
+    color: #d2d2d2
+}
+
+a:hover {
+    color: #548a35
+}
+
+.custom-ul {
+    padding-left: 20px;
+    text-align: left
+}
+
+.custom-ul li {
+    position: relative;
+    padding-left: 20px
+}
+
+.custom-ul li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #000
+}
+
+.col-lg-9 img {
+    margin-bottom: 4px
+}
